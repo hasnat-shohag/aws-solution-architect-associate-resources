@@ -1,6 +1,6 @@
 # SAA Bangla Study Site — Implementation Plan
 
-**Status:** Phase 0 in progress — content map being corrected; no active lesson pages committed yet.
+**Status:** Phases 0–4 complete. All 20 Microservices lessons are authored, the glossary has 146 entries, and static build/links/contrast checks pass. Phase 5 publishing remains.
 
 ## Objective
 
@@ -176,6 +176,16 @@ Acceptance:
 - glossary filter/search works;
 - Pages URL returns the correct base-prefixed routes;
 - GitHub Actions is green.
+
+## Phase 5 review checklist
+
+On publish, confirm:
+
+1. `git push origin main` succeeds.
+2. Tag `v0.1.0` is pushed and GitHub Actions completes green.
+3. Home, learning, theme, lesson, progress, glossary, about and 404 routes return `HTTP 200`.
+4. A fresh browser session shows a lesson-specific completion state after reload.
+5. Glossary search/filter returns visible rows for `microservices` and hides unmatched rows.
 
 ## Definition of done
 

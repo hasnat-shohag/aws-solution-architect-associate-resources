@@ -1,1 +1,878 @@
-[]
+[
+  {
+    "term": "Microservices",
+    "bn": "স্বাধীন, ছোট ছোট ভাগে সাজানো সার্ভিস",
+    "tip": "প্রতি সার্ভিস নিজে ডিপ্লয়, স্কেল ও ব্যর্থ হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Well-Architected",
+    "bn": "AWS-এর আর্কিটেকচারুল নির্দেশনা",
+    "tip": "পরিচালনযোগ্যতা, নির্ভরযোগ্যতা, কার্যক্ষমতা, cost ও sustainability একসাথে ভাবুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Modernization",
+    "bn": "পুরনো অ্যাপকে আধুনিক ডিজাইনে নিয়ে যাওয়া",
+    "tip": "প্রথমে সীমাবদ্ধতা ও ব্যবসায়িক প্রয়োজন চিহ্নিত করুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Monolith",
+    "bn": "একক, ঘনিষ্ঠভাবে সংযুক্ত অ্যাপ",
+    "tip": "সহজে শুরু করা যায়, কিন্তু ছোট পরিবর্তনেও পুরো ডিপ্লয় হতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Strangler Fig",
+    "bn": "পুরনো সিস্টেম ধীরে ধীরে ভাঙার প্যাটার্ন",
+    "tip": "নতুন কাজ নতুন মাইক্রোসার্ভিসে যায়, পুরনোটা পরে সরে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Bounded Context",
+    "bn": "সুস্পষ্ট ব্যবসায়িক সীমানা",
+    "tip": "এক সার্ভিসের ভেতরে এক দায়িত্ব রাখাই সুস্থ নকশা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Agile",
+    "bn": "দ্রুত ছোট ছোট ডেভেলপমেন্ট চক্র",
+    "tip": "স্বাধীন দল ও CI/CD দিয়ে এর মূল্য পাওয়া যায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Two-Pizza Team",
+    "bn": "ছোট এবং স্঵ায়ত্তশাসিত দল",
+    "tip": "ছোট দলে মালিকানা ও সদৃশ ফিডব্যাক দ্রুত হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Inverted Pyramid",
+    "bn": "মাইক্রোসার্ভিস-ভিত্তিক স্তরের মডেল",
+    "tip": "উপরের ব্যবসায়িক সার্ভিসগুলো ছোট, স্থিতিশীল বেস সার্ভিস ব্যবহার করে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Distributed Data",
+    "bn": "ভাগ করে রাখা ডেটা",
+    "tip": "প্রতি service নিজের database দিলে ownership clear হয়, কিন্তু consistency চিন্তা করতে হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Saga",
+    "bn": "বহু ধাপের workflow একত্রিত করার প্যাটার্ন",
+    "tip": "failure হলে compensation action দিয়ে আগের state ফিরিয়ে আনা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Event Sourcing",
+    "bn": "স্টেট পরিবর্তন ইভেন্ট হিসেবে রাখা",
+    "tip": "audit ও replay সুবিধা দেয়; current state event থেকে derive হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CQRS",
+    "bn": "Command Query Responsibility Segregation",
+    "tip": "write side and optimized read model ভিন্ন হতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Eventual Consistency",
+    "bn": "কিছু সময় পর সব replica consistent হয়",
+    "tip": "user action পরে read আলাদা নোড পেতে পারে; UX প্রভাব ভাবুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Idempotency",
+    "bn": "বারবার করলেও একই ফলাফল সৃষ্টি করা",
+    "tip": "event/message duplicate delivery এ safe থাকার পদ্ধতি।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Compensating Transaction",
+    "bn": "ব্যর্থ ধাপ ঠিক করার বিপরীত transaction",
+    "tip": "refund, cancel, unlock, release reservation ইত্যাদি।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Configuration Management",
+    "bn": "পরিবেশ-নির্দিষ্ট settings কেন্দ্রীয়ভাবে রাখা",
+    "tip": "code থেকে config আলাদা করা জরুরি।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS AppConfig",
+    "bn": "managed application configuration deployment service",
+    "tip": "feature flags, config deployment, validation, gradual rollout।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Parameter Store",
+    "bn": "AWS Systems Manager parameter store",
+    "tip": "nested hierarchy, tags, version, SecureString।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Secrets Manager",
+    "bn": "managed secret service",
+    "tip": "credentials rotation, versioning, cross-region replication।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Dynamic Configuration",
+    "bn": "ডিপ্লয় ছাড়া কনফিগ পরিবর্তন",
+    "tip": "AppConfig বা Parameter Store polling/watch দিয়ে করা যায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Least Privilege",
+    "bn": "যতটুকু access দরকার ততটুকু",
+    "tip": "parameter-level IAM policy/restrictions apply کرেন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CSI Secrets Driver",
+    "bn": "Kubernetes CSI provider for secrets",
+    "tip": "Kubernetes native Secret object হিসেবে external secrets।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Selective Scaling",
+    "bn": "প্রয়োজনীয় সার্ভিস শুধু স্কেল করা",
+    "tip": "monolith-এ সব এক স্কেলে চলে; microservice-এ দক্ষ হতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Graviton",
+    "bn": "AWS Arm-based processor",
+    "tip": "performance per dollar/per watt প্রায়ই ভালো; migration planning দরকার।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Cost Explorer",
+    "bn": "spending analysis service",
+    "tip": "usage-based cost visualization and forecasting।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Feedback",
+    "bn": "average utilization ও demand ডেটা",
+    "tip": "capacity plan random guess নয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Compute Savings Plans",
+    "bn": "commit-based discount",
+    "tip": "stable baseline workload এ ভালো।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Spot Instance",
+    "bn": "unused EC2 capacity সস্তায়",
+    "tip": "interruptible, stateless or fault-tolerant work এ ব্যবহার করুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Lifecycle",
+    "bn": "ডেটা aging strategy",
+    "tip": "transition to colder storage classes দরকার হলে S3 Lifecycle Rules।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Sustainability",
+    "bn": "resource usage এবং emissions awareness",
+    "tip": "rightsizing, scheduling, utilization এবং lifecycle policies।",
+    "theme": "microservices"
+  },
+  {
+    "term": "REST",
+    "bn": "HTTP resource API style",
+    "tip": "broad tooling, cacheable and human-friendly; SAA favorite.",
+    "theme": "microservices"
+  },
+  {
+    "term": "GraphQL",
+    "bn": "client-driven flexible query API",
+    "tip": "AppSync GraphQL subscription and schema federation relevant।",
+    "theme": "microservices"
+  },
+  {
+    "term": "gRPC",
+    "bn": "high-performance RPC protocol",
+    "tip": "binary protobuf, low latency, ALB/Envoy commonly used।",
+    "theme": "microservices"
+  },
+  {
+    "term": "WebSocket",
+    "bn": "persistent two-way connection",
+    "tip": "chat, live update, real-time dashboard।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SQS",
+    "bn": "managed queue",
+    "tip": "decouple producer from consumer; standard vs FIFO behavior।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SNS",
+    "bn": "pub/sub topic service",
+    "tip": "fanout to Lambda, SQS, HTTP endpoints।",
+    "theme": "microservices"
+  },
+  {
+    "term": "EventBridge",
+    "bn": "event routing bus",
+    "tip": "scheduled events, rule-based routing, cross-account/event bus।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Kinesis Data Streams",
+    "bn": "ordered real-time data stream",
+    "tip": "high throughput streaming analytics; shard based capacity।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Orchestrations",
+    "bn": "কেন্দ্রীয় workflow controller",
+    "tip": "Step Functions / Airflow; visibility, retry, branching, timeout।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Choreography",
+    "bn": "services react to each other via events",
+    "tip": "decoupled but harder to understand end-to-end।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Step Functions",
+    "bn": "workflow orchestration service",
+    "tip": "Standard workflows for long-running; Express for high-volume।",
+    "theme": "microservices"
+  },
+  {
+    "term": "State Machine",
+    "bn": "workflow state and transition definition",
+    "tip": "Task, Choice, Parallel, Map, Wait states।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Workflow Studio",
+    "bn": "visual workflow editor",
+    "tip": "drag-and-drop Step Functions workflow design।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Task Token",
+    "bn": "external callback handle",
+    "tip": "wait for external approval/process before resuming workflow।",
+    "theme": "microservices"
+  },
+  {
+    "term": "MWAA",
+    "bn": "Amazon Managed Workflows for Apache Airflow",
+    "tip": "Python Airflow DAG experience relevant।",
+    "theme": "microservices"
+  },
+  {
+    "term": "External State",
+    "bn": "স্টেট runtime এর বাইরে রাখা",
+    "tip": "DynamoDB, S3, ElastiCache or database, not inside containers।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Observability",
+    "bn": "সিস্টেমের ভেতরে চলছে কী তা বোঝার ক্ষমতা",
+    "tip": "metrics, logs, traces একসাথে দরকারের কথা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Log",
+    "bn": "স্টেটমেন্ট বা event record",
+    "tip": "JSON logs searchable, correlation IDs, request ID থাকা উচিত।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Metric",
+    "bn": "numeric health/runtime value",
+    "tip": "latency, error rate, throughput, CPU, memory।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Trace",
+    "bn": "এক request এর পুরো service path",
+    "tip": "root cause latency, dependency error, sampling strategies।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Correlation ID",
+    "bn": "এক request-কে চিনিয়ে রাখার unique ID",
+    "tip": "বহু সার্ভিস জুড়ে tracing সহজ করে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Alarm",
+    "bn": "metric threshold/event condition notify",
+    "tip": "operational event এ সাবধান করতে হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SLO",
+    "bn": "service level objective",
+    "tip": "user-facing reliability threshold; error budget।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Synthetics Canary",
+    "bn": "scheduled synthetic test",
+    "tip": "critical path regular probe।",
+    "theme": "microservices"
+  },
+  {
+    "term": "X-Ray",
+    "bn": "tracing service",
+    "tip": "service map, latency histogram, fallback trace errors।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AssumeRole",
+    "bn": "cross-account identity assuming role",
+    "tip": "temporary credentials, trust policy needed।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Resource Policy",
+    "bn": "resource-attached permission policy",
+    "tip": "S3 bucket policy, KMS key policy, SQS queue policy।",
+    "theme": "microservices"
+  },
+  {
+    "term": "IAM Policy",
+    "bn": "identity-attached permission policy",
+    "tip": "role/user/group attached।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Permission Boundary",
+    "bn": "maximum permission limit",
+    "tip": "role বা user একে কেবল boundary ভিতরে scope করতে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "KMS",
+    "bn": "key management service",
+    "tip": "key policy controls access; encrypted SQS/SNS/Kinesis।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CloudTrail",
+    "bn": "AWS API call audit log",
+    "tip": "management and data events capture; all org regions useful।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CloudTrail Lake",
+    "bn": "managed audit data lake",
+    "tip": "SQL query audit events, long-term retention।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS Config",
+    "bn": "configuration state/change recorder",
+    "tip": "resource inventory and history, timeline of relationship।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Config Rule",
+    "bn": "compliance rule checks",
+    "tip": "custom/Lambda based or managed rules।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Conformance Pack",
+    "bn": "resource config rule bundle",
+    "tip": "multi-account governance baseline।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon EventBridge",
+    "bn": "event bus",
+    "tip": "route CloudTrail event, config change, schedule operation automation।",
+    "theme": "microservices"
+  },
+  {
+    "term": "GuardDuty",
+    "bn": "threat detection service",
+    "tip": "unusual API/network activity, credentials misuse।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Security Hub",
+    "bn": "security posture aggregation",
+    "tip": "controls, standards and cross-account findings।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Business Capability",
+    "bn": "আলাদা ব্যবসায়িক দায়িত্ব",
+    "tip": "কোন service নিজে ডেটা ও deploy করার ক্ষমতা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Coupling",
+    "bn": "dependency strength",
+    "tip": "tight coupling increases failure effects।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Composable Services",
+    "bn": "তৈরি সার্ভিস পুনর্ব্যবহার যোগ্য",
+    "tip": "event/API primitives reusable।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Infrastructure as Code",
+    "bn": "resource setup automated via code",
+    "tip": "CloudFormation/CDK/Terraform।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Data Consistency",
+    "bn": "সঠিক স্টেট সাময়িক বা নিরবিচ্ছিন্ন",
+    "tip": "Strong vs eventual consistency design।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Governance",
+    "bn": "standards and controls",
+    "tip": "IAM, config rules, policy-as-code, tagging।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Layered Architecture",
+    "bn": "স্তরে ভাগ করা আর্কিটেকচার",
+    "tip": "UI, API, compute, data ও operations আলাদা দৃষ্টিতে দেখুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "UI Layer",
+    "bn": "ব্যবহারকারীর সামনের স্তর",
+    "tip": "ব্রাউজার বা মোবাইল অ্যাপ আলাদা রাখুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Static Site",
+    "bn": "ধ্রুবক ফাইল হিসেবে দেওয়া সাইট",
+    "tip": "S3 দিয়ে রাখতে পারেন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CloudFront",
+    "bn": "AWS এর CDN",
+    "tip": "নিকটতম edge location থেকে রিসপন্স আনে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "S3",
+    "bn": "AWS অবজেক্ট স্টোরেজ",
+    "tip": "স্ট্যাটিক ফাইল hosting-এর জন্য প্রচলিত স্টোর।",
+    "theme": "microservices"
+  },
+  {
+    "term": "API Layer",
+    "bn": "ব্যাকএন্ড কল পরিচালনার স্তর",
+    "tip": "API Gateway, ALB বা AppSync-এর সাথে তুলনা করুন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SPA",
+    "bn": "Single Page Application",
+    "tip": "প্রথমে সম্পূর্ণ ফাইল নামে, পরে ক্লায়েন্ট রাউটিং করে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CORS",
+    "bn": "ভিন্ন origin থেকে API ব্যবহারের নিয়ম",
+    "tip": "আলাদা UI ডোমেইন থেকে ব্যাকএন্ড কল করালে প্রয়োজন হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Document Extras",
+    "bn": "ডকুমেন্টের মূল বিষয় ছাড়া বাড়তি অংশ",
+    "tip": "contributors, document history, notices ও glossary এখানে আসে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Contributors",
+    "bn": "ডকুমেন্ট লেখক ও অবদানকারীগণ",
+    "tip": "AWS Solutions Architecture দল ও অন্যান্য অবদানকারী।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Document History",
+    "bn": "সংস্করণ ও সময়ের তালিকা",
+    "tip": "নতুন service বা pattern যুক্ত হলে whitepaper আপডেট হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Notices",
+    "bn": "অনুবাদ ও ব্যবহার সংক্রান্ত বিজ্ঞপ্তি",
+    "tip": "Amazon অনুবাদের সঠিকতা / warranty নিয়ে disclaimer দেয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Glossary",
+    "bn": "AWS শব্দকোষ",
+    "tip": "service ও প্রযুক্তির নাম পুনরায় দ্রুত দেখে নেওয়ার এলাকা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "API Gateway",
+    "bn": "managed API entry point",
+    "tip": "traffic management, auth, throttling ও monitoring করতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Application Load Balancer",
+    "bn": "HTTP/S traffic load balancer",
+    "tip": "API Gateway না চাইলে plain load balancing ভালো বিকল্প।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon ECS",
+    "bn": "managed container orchestration",
+    "tip": "AWS integration ও simplicity-র জন্য প্রচলিত।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon EKS",
+    "bn": "managed Kubernetes service",
+    "tip": "Kubernetes tooling ও ecosystem দরকার হলে ব্যবহার।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS Fargate",
+    "bn": "serverless compute engine",
+    "tip": "ECS বা EKS workload-এ compute infrastructure manage না করেও চলে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS Lambda",
+    "bn": "event-driven managed compute",
+    "tip": "short-lived stateless workload ও event routing এ শক্তিশালী।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon VPC",
+    "bn": "private AWS network",
+    "tip": "subnet, route table, security ও private networking এর বেস।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS PrivateLink",
+    "bn": "private service connection technology",
+    "tip": "VPC-কে public internet এ না ফেটে AWS services ও অন্য VPC-তে connect করতে দেয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon RDS",
+    "bn": "managed relational database service",
+    "tip": "স্ট্রাকচারযুক্ত data ও business object-এর জন্য প্রযোজ্য।",
+    "theme": "microservices"
+  },
+  {
+    "term": "DynamoDB",
+    "bn": "managed NoSQL database",
+    "tip": "key-based access, performance, scalability, availability-first workload।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS App Mesh",
+    "bn": "application networking monitor/control plane",
+    "tip": "services আলাদা রাখতে, traffic নিয়ন্ত্রণ ও observability-তে ব্যবহার।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon S3",
+    "bn": "object storage",
+    "tip": "durable storage, static assets, logs ও event data।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Amazon ElastiCache",
+    "bn": "managed in-memory caching",
+    "tip": "server/duplicate hit কমানোর জন্য Memcached বা Redis।",
+    "theme": "microservices"
+  },
+  {
+    "term": "AWS IoT",
+    "bn": "managed IoT infrastructure",
+    "tip": "sensor, devices ও telemetry-র জন্য সংশ্লিষ্ট সাপোর্ট।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Lambda",
+    "bn": "ইভেন্ট-চাহিত, সার্ভার ছাড়া compute",
+    "tip": "ছোট event-driven কাজ ও usage pattern না জানা বা বিরতিতে চলা সার্ভিসের জন্য প্রয়োজনীয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "ECS",
+    "bn": "AWS-এর managed container orchestration",
+    "tip": "AWS integration ও সহজতর অপারেশন চাইলে প্রায়ই কার্যকর।",
+    "theme": "microservices"
+  },
+  {
+    "term": "EKS",
+    "bn": "AWS managed Kubernetes",
+    "tip": "Kubernetes ecosystem, plug-in ও hybrid দৃশ্য দরকার হলে বেছে নিন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Fargate",
+    "bn": "serverless container compute",
+    "tip": "EC2 ম্যানেজ না করে container চালানোর জন্য।",
+    "theme": "microservices"
+  },
+  {
+    "term": "App Runner",
+    "bn": "সহজ web service চালানোর পরিষেবা",
+    "tip": "কম অপারেশনাল ব্যবস্থায় সোর্স বা image থেকে deploy করতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "ECR",
+    "bn": "AWS container image registry",
+    "tip": "নিরাপদে image সংরক্ষণ ও ডিপ্লয়ের জন্য।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Lift and Shift",
+    "bn": "কোড না ভেঙে অ্যাপ সরিয়ে আনা",
+    "tip": "মাঝে মাঝে প্রথম ধাপ, দীর্ঘমেয়াদি আধুনিকীকরণ নয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Serverless Container",
+    "bn": "নির্দিষ্ট সার্ভার ম্যানেজ না করা container চলানো",
+    "tip": "Fargate সার্ভারের ক্ষমতা নিজে নির্ধারণ ও প্যাচ করার কাজ কমায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CI/CD",
+    "bn": "একত্র করে নিয়মিত ডিপ্লয়ের প্রক্রিয়া",
+    "tip": "ছোট পরিবর্তন নিয়মিত পরীক্ষা ও ডিপ্লয় করা যায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CodePipeline",
+    "bn": "AWS release pipeline পরিচালনার পরিষেবা",
+    "tip": "CodeCommit/CodeBuild/CodeDeploy এর সাথে ধাপে ধাপে প্রণালী গঠন করে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CodeBuild",
+    "bn": "সোর্স থেকে artifact তৈরির পরিষেবা",
+    "tip": "test, package ও image build-এর কাজ চালায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "CodeDeploy",
+    "bn": "অ্যাপ ডিপ্লয় স্বয়ংক্রিয় করার পরিষেবা",
+    "tip": "EC2, Lambda ও ECS ডিপ্লয়ে সাপোর্ট দেয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "PrivateLink",
+    "bn": "VPC থেকে private connectionের পদ্ধতি",
+    "tip": "নির্দিষ্ট AWS সার্ভিস ও VPC endpoint সার্ভিসে প্রাইভেট সংযোগ দেয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "VPC",
+    "bn": "নিজের প্রাইভেট নেটওয়ার্ক",
+    "tip": "subnet, route table ও endpoint দিয়ে ট্রাফিক ছাঁটতে হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "ElastiCache",
+    "bn": "managed in-memory cache",
+    "tip": "Redis বা Memcached for session data.",
+    "theme": "microservices"
+  },
+  {
+    "term": "Cache",
+    "bn": "ঘন ঘন বার ব্যবহার হওয়া ডেটার কাছের স্তর",
+    "tip": "প্রথমে read কমায়, সাধারণত latency সুবিধা দেয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "RDS",
+    "bn": "managed relational database",
+    "tip": "ACID style data, SQL এবং complex join-এর জন্য বেছে নিন।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Structured Data",
+    "bn": "প্রিডিকটেবল schema তে রাখা ডেটা",
+    "tip": "relational database এ রাখা সুবিধাজনক হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Partition Key",
+    "bn": "DynamoDB তে data ভাগ করার key",
+    "tip": "—",
+    "theme": "microservices"
+  },
+  {
+    "term": "Sort Key",
+    "bn": "এক partition-এর ভেতরে item সাজানোর key",
+    "tip": "—",
+    "theme": "microservices"
+  },
+  {
+    "term": "SAM",
+    "bn": "AWS serverless application template and CLI",
+    "tip": "দ্রুত Lambda API DynamoDB বা auth সহ starter code তৈরি করতে পারে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SAM CLI",
+    "bn": "SAM local test and deploy command line",
+    "tip": "sam local invoke and sam deploy common commands.",
+    "theme": "microservices"
+  },
+  {
+    "term": "CDK",
+    "bn": "Infrastructure as code using programming languages",
+    "tip": "জটিল infrastructure এ reusable construct এবং typed programming language.",
+    "theme": "microservices"
+  },
+  {
+    "term": "CloudFormation",
+    "bn": "AWS resource deployment template engine",
+    "tip": "SAM template compile হয় CloudFormation template.",
+    "theme": "microservices"
+  },
+  {
+    "term": "Lambda Layers",
+    "bn": "shared dependency package",
+    "tip": "একই dependency বহু function এ ব্যবহার করার জন্য।",
+    "theme": "microservices"
+  },
+  {
+    "term": "SnapStart",
+    "bn": "JVM cold start acceleration",
+    "tip": "Java 11 or newer runtime and other performance options.",
+    "theme": "microservices"
+  },
+  {
+    "term": "Java Opt",
+    "bn": "Lambda Java optimization library",
+    "tip": "SnapStart সংগ্রহ এবং JVM tuning এর সাথে ব্যবহার হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Powertools",
+    "bn": "Lambda utility library",
+    "tip": "logging tracing metrics and idempotency.",
+    "theme": "microservices"
+  },
+  {
+    "term": "Multi-tenancy",
+    "bn": "এক অ্যাপ্লিকেশনে একাধিক customer group",
+    "tip": "data, log ও resource isolation নিয়ে সতর্ক থাকতে হয়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Tenant",
+    "bn": "আলাদা customer group",
+    "tip": "আলাদা tenant এর প্রয়োজন হলে separate stack বা database ভিন্ন স্তরে দরকার।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Pool model",
+    "bn": "সব tenant একই shared resources ব্যবহার করে",
+    "tip": "cost কম, isolation কম।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Silo model",
+    "bn": "প্রতি tenant আলাদা infrastructure",
+    "tip": "isolation বেশি, cost বেশি।",
+    "theme": "microservices"
+  },
+  {
+    "term": "API management",
+    "bn": "API versioning, authorization and traffic control",
+    "tip": "API Gateway এক জায়গায় অনেক কাজ করে।",
+    "theme": "microservices"
+  },
+  {
+    "term": "ALB",
+    "bn": "Application Load Balancer",
+    "tip": "HTTP routing ও path/host based rules এ ভালো।",
+    "theme": "microservices"
+  },
+  {
+    "term": "NLB",
+    "bn": "Network Load Balancer",
+    "tip": "উচ্চ throughput and static IP/TCP level operations.",
+    "theme": "microservices"
+  },
+  {
+    "term": "Throttling",
+    "bn": "request rate limit",
+    "tip": "burst-এ backend overload ঠেকায়।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Disaster Recovery",
+    "bn": "দুর্যোগ পুনরুদ্ধার",
+    "tip": "region-level failure-এ alternate AWS Region-এ recover করা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "High Availability",
+    "bn": "উচ্চ প্রাপ্যতা",
+    "tip": "component failure সহ্য করে reliability target maintain করা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "RTO",
+    "bn": "recovery time objective",
+    "tip": "disruption থেকে service restore-এর accepted maximum time।",
+    "theme": "microservices"
+  },
+  {
+    "term": "RPO",
+    "bn": "recovery point objective",
+    "tip": "disaster ঘটলে maximum acceptable data loss window।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Backup and Restore",
+    "bn": "backup রেখে প্রয়োজনে restore",
+    "tip": "cheapest, highest RTO/RPO।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Pilot Light",
+    "bn": "data synced, compute minimal/off",
+    "tip": "disaster ঘটলে production capacity launch করা।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Warm Standby",
+    "bn": "scaled-down active copy",
+    "tip": "কিছু traffic তৎক্ষণাৎ serve করে; full switch দ্রুত।",
+    "theme": "microservices"
+  },
+  {
+    "term": "Multi-Site Active-Active",
+    "bn": "multiple active regions",
+    "tip": "lowest recovery time, highest cross-region cost।",
+    "theme": "microservices"
+  }
+]

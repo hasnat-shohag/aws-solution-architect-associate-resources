@@ -1,33 +1,110 @@
 ---
-title: "ডিস্ট্রিবিউটেড সিস্টেম কম্পোনেন্ট"
-titleEn: "Distributed Systems Components"
-description: "Service discovery, VPC Lattice, load balancing, microservices mixing"
-author: "Cfern"
-created: 2026-05-13
-updated: 2026-07-25
-tags: [cva]
-sourceUrl: ""
-sources: []
+title: Distributed Systems Components
+titleEn: Distributed Systems Components
+description: Open policy patterns, service discovery, API layer, traffic control
+theme: microservices
+order: 10
+pages: [15, 17]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Service Discovery
+    bn: instance/service-এর বর্তমান address খোঁজা
+    tip: ECS Service Connect, Cloud Map, internal ALB/NLB বা third-party mesh।
+  - term: Load Balancing
+    bn: traffic backend-এ বিতরণ
+    tip: ALB for L7 rules, NLB for ultra-low latency and static IP।
+  - term: API Gateway
+    bn: managed API front door
+    tip: API management + authorization + rate limits + caching in one place।
+  - term: Ephemerality
+    bn: service instance একেকটি অস্থায়ী
+    tip: dynamic scaling-এ fixed IP বা hard-coded hostname এড়ান।
+  - term: VPC
+    bn: নিজস্ব private AWS network
+    tip: subnet, route table, endpoint, security zone দিয়ে ভাগ করুন।
+  - term: PrivateLink
+    bn: private AWS/VPC service interface
+    tip: traffic public internet এ ফেলানো এড়ায়।
+  - term: Network ACL
+    bn: subnet-level stateless firewall
+    tip: deny/allow rules; broad emergency screening-এ কাজে আসে।
+  - term: Microservices Messaging
+    bn: service-to-service communication framework
+    tip: app mesh, request routing, security policy, observability together।
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ১৫–১৭।
 ---
-import TypingNotice from '../../../../components/content/TypingNotice.astro';
-import { siteUrl } from '../../../../lib/urls';
+
 import ExamTrap from '../../../../components/content/ExamTrap.astro';
 import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-<TypingNotice lessonId="m1-distributed-systems-components"></TypingNotice>
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ১৫–১৭ (Distributed systems components)।
 
-## সং কর্ম
+## কেন service discovery দরকার?
 
->>> Please refer to the source material in the next lesson.
+Microservices dynamic HTTP/TCP endpoints দিয়ে চলে এবং auto scaling/hot swap-এর পরে নতুন instance সেটআপ হতে পারে। কিন্তু consumer services কোন instance এ পাঠাবে তা জানার দরকার হয়। **Service discovery** সে জন্য DNS-based registry/service registry আনে।
 
-- **Service discovery** মানে সার্ভিসের নেটওয়ার্ক ঠিকানা নিজে খুঁজে পাওয়া।
-ECS Service Discovery এবং EKS Service Discovery মাঝে মাঝে মিলিয়ে যায়।
-- Amazon Cloud Map মানে সার্ভিসদের একটি registry, যেখানে সার্ভিসগত নাম ও স্বাস্থ্য যাচাই করা যায়।
-- App Mesh আলাদা control plane দি�ে service mesh সাপোর্ট দেয়; Envoy proxy- της জন ব্যবহার করে।
-- **AWS VPC Lattice** বসানো কঠিন নয়: service.network, service-to-service auth, trafficmanagement ও cross-account সাপোর্ট।
-- ALB/NLB এবং ELB মানে সরাসরি routing ও ভারসাম্য; service discovery তার স্বায়ত্তশাসিত নাম খোঁজা।
+```mermaid
+flowchart LR
+  A[Consumer Service] --> D[Service Directory]
+  D --> H1[Healthy Instance A]
+  D --> H2[Healthy Instance B]
+  A -. unhealthy .-> X[Failed Instance]
+```
 
-> [!TIP]
-> **Exam tip:** শখে "service discovery" আর "service mesh" এক নয়। Discovery ঠিকানা জানা; Mesh policy, security ও observability পরিচালনা করে।
+- fixed IP না রেখে service name দিয়ে দেখুন।
+- health check থাকলে unhealthy instance সরান।
+- dynamic scaling এবং container task replacement নিয়ে মাথা রাখুন।
+
+## API layer ও messaging
+
+Microservices messaging সাধারণত নিম্নলিখিত কাজ করে:
+
+- request routing বা reverse proxy।
+- client response-time লটেন্সি কমানো।
+- service-to-service mesh এ policy apply করা।
+- authentication/authorization।
+- metrics, logging, tracing, retry, circuit breaking ও cache।
+
+**Amazon API Gateway** এই দায়িদ্বয়গুলো synthesis করে দেয়: traffic management, authorization, rate limiting, monitoring। প্রচুর change হওয়াতে আরও সাধারণ মাধ্যম Application Load Balancer, Envoy/ALB বা custom reverse proxy।
+
+## Load balancers
+
+```mermaid
+flowchart LR
+  U[User] --> LB{Route decision}
+  LB -->|path/host header/HTTP|ALB[Application Load Balancer]
+  LB -->|TCP ultra-low latency/static IP|NLB[Network Load Balancer]
+  ALB --> S1[Service]
+  NLB --> S2[Service]
+```
+
+- **Application Load Balancer**: HTTP/HTTPS, path/host rules, websocket, gRPC, listener rules।
+- **Network Load Balancer**: high throughput, static IP, TCP/UDP, low latency।
+- **Gateway Load Balancer**: third-party network virtual appliance traffic flow।
+
+## Network ও private service
+
+- **VPC** হলো logical private network; subnet-এ data/placement ভাগ হয়।
+- **VPC Endpoint** supported AWS services-এ private connection।
+- **AWS PrivateLink** VPCs and AWS services-এর মধ্যে interface।
+- **Network ACL** subnet level; stateless allow/deny rules।
+- **Security Group** instance-level; stateful allow rules।
+
+AWS PrivateLink VPC endpoint services ও shared services security বাড়ায়। Traffic public internet পার হয় না।
+
+## Service mesh বা front door?
+
+Service mesh একটি dedicated infrastructure লেয়ার, যেখানে sidecar/gateway proxy-এর মাধ্যমে service-to-service connection, traffic shaping, mTLS, retries ও observability পরিচালিত হয়। API Gateway সাধারণত external APIs গুলির front door। একটি architecture-এ দুটি একসাথে থাকতে পারে।
+
+<ExamTrap title="Service discovery বনাম load balancing" question="Fixed IP-এর পরিবর্তে কী ব্যবহার করবেন?" answer="Service discovery + health checks। Sizing ও host replacement হওয়াতে instance IP গুলো প্রায়ই বদলে যায়।" />
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-10" />
