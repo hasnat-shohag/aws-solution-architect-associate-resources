@@ -1,0 +1,50 @@
+---
+title: মাইক্রোসার্বিসেস অন AWS — থিম ওভারভিউ
+titleEn: Microservices on AWS
+description: AWS ওয়াইটপেপার "Implementing Microservices on AWS" (৪৫ পাতা) থেকে ২০টি বাংলা লেসন — থিম ওভারভিউ, লেসন তালিকা ও অগ্রসরত।
+theme: microservices
+order: 1
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+---
+
+import LessonList from '../../../../components/content/LessonList.astro';
+import ThemeProgress from '../../../../components/progress/ThemeProgress.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import { siteUrl } from '../../../../lib/urls';
+
+<div class="lesson-meta">
+	<span class="lesson-badge">থিম: মাইক্রোসার্বিসেস</span>
+	<span class="lesson-task">২০টি লেসন · ৪৫ পাতা</span>
+	<span class="lesson-source">AWS Whitepaper — Implementing Microservices on AWS</span>
+</div>
+
+মাইক্রোসার্বিসেস হলো একটা **ডিজাইন পদ্ধতি** — বড় monolithic অ্যাপটাকে ছোট ছোট, স্বাধীন সার্ভিসে ভাঙা, যেন প্রত্যেক সার্ভিস নিজেই scale, deploy, update হতে পারে। এই থিম AWS-এর অফিসিয়াল ওয়াইটপেপারের ৪৫ পাতা ধাপে ধাপে ২০টি লেসনে বাংলা করে দেয় — প্রতি লেসনে কীওযাড টেবিল, SAA পরীক্ষার টিপ আর ডায়াগ্রাম।
+
+SAA পরীক্ষায় মাইক্রোসার্বিসেস সরাসরি "ডোমেইন" না হলেও **Design, Resilience, Cost Optimization, Security** — প্রায় প্রতিটি ডোমেইনে এর ধারণা আসে (Lambda vs EKS vs Fargate, per-service database, event-driven, caching, observability ইত্যাদি)।
+
+## এই থিমে যা আসে
+
+- মাইক্রোসার্বিসেস আরকিটেকচারের কম্পোনেন্ট: UI, API, compute (Lambda/ECS/EKS/Fargate), datastore
+- সার্ভারলেস ডিপ্লয়মেন্ট: SAM, CloudFormation, Lambda Layers, SnapStart
+- Resilience: DR (RTO/RPO), HA (multi-AZ)
+- Distributed systems: service discovery, distributed data (Saga, event sourcing, CQRS)
+- Config & secrets, cost optimization (Spot, Graviton)
+- Communication: REST, GraphQL, gRPC, async messaging (SQS/SNS/EventBridge/MQ/MSK/Kinesis)
+- Orchestration: Step Functions, state management
+- Observability: CloudWatch, logs, X-Ray tracing, log analysis
+- Auditing: CloudTrail, Config rules, change management
+
+<div class="progress-list">
+	<ThemeProgress theme="microservices" />
+</div>
+
+## ২০টি লেসন
+
+<LessonList theme="microservices" />
+
+## সূত্র
+
+- [AWS Whitepaper — Implementing Microservices on AWS](https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf) — Amazon Web Services (© Amazon)
+
+<Attribution sourceUrl="https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf" updated="2026-09-15" />

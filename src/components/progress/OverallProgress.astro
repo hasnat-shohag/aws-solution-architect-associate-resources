@@ -1,0 +1,44 @@
+---
+import { THEMES, TOTAL_LESSONS } from '../../lib/themes';
+import ThemeProgress from './ThemeProgress.astro';
+---
+
+<div class="progress-summary">
+	<strong data-overall-percent>0%</strong>
+	<span class="progress-count" data-overall-count data-total={TOTAL_LESSONS}>0/{TOTAL_LESSONS} লেসন সম্পন্ন</span>
+</div>
+
+<div class="progress-list">
+	{THEMES.map((theme) => <ThemeProgress theme={theme.id} />)}
+</div>
+
+<div class="progress-actions">
+	<button type="button" data-progress-reset>অগ্রসরতা রিসেট করুন</button>
+</div>
+
+<p class="progress-hint">
+	অগ্রসরতা আপনার ব্রাউজারের localStorage-এ (<code>saa:aws:v1</code>) থাকে — কোনো অ্যাকাউন্ট বা সার্ভার নেই, তাই এক
+	ডিভাইস থেকে অন্য ডিভাইসে অগ্রসরতা যায় না। সাইটের সাইডবারে সম্পন্ন লেসনের পাশে সম্পন্ন চিহ্ন দেখাবে।
+</p>
+
+<script>
+	import { LESSON_EVENT, completedCount, loadState, overallPercent, resetProgress } from '../../lib/progress';
+
+	function paintOverall(): void {
+		const state = loadState();
+		const percentEl = document.querySelector<HTMLElement>('[data-overall-percent]');
+		const countEl = document.querySelector<HTMLElement>('[data-overall-count]');
+		if (percentEl) percentEl.textContent = `${overallPercent(state)}%`;
+		if (countEl) countEl.textContent = `${completedCount(state)}/${countEl.dataset.total} লেসন সম্পন্ন`;
+	}
+
+	document.addEventListener('click', (event) => {
+		const button = (event.target as HTMLElement | null)?.closest('[data-progress-reset]');
+		if (!button) return;
+		resetProgress();
+		paintOverall();
+	});
+
+	paintOverall();
+	window.addEventListener(LESSON_EVENT, paintOverall);
+</script>

@@ -1,0 +1,28 @@
+---
+title: রসায়ন ও শেখার পথ
+description: AWS Solutions Architect Associate (SAA-C03) পুরস্তুতির থিম-ভিত্তিক পড়ার পথ — থিম, লেসন, অগ্রসরত ট্র্যাকিং।
+---
+
+import { THEMES } from '../../../lib/themes';
+import ThemeCards from '../../../components/content/ThemeCards.astro';
+import ThemeProgress from '../../../components/progress/ThemeProgress.astro';
+import { siteUrl } from '../../../lib/urls';
+
+এই সাইট AWS Solutions Architect Associate (SAA-C03) পরীকষার পুরস্তুতির জন্য। পড়া **থিম-ভিত্তিক** — প্ৰতীক থিম একটি আলাদা ফোল্ডার, য়াতে ধাপে ধাপে লেসন, কীওয়াড টেবিল, ডায়াগ্রাম আর পরীকষার টিপ।
+
+## যেভাবে পড়বেন
+
+1. **একটিকি লেসন একবারে** — প্ৰতীক লেসন শেয় একটাই বিষয়। পাইডের পর নিচে "সম্পন্ন হইছে বুলে চিহ্নিত করুন" চাপুন।
+2. **কীওয়াড টেবিল আগে** — প্রতি লেসনের কীওয়াড টেবিলটা একবার দ্রুত পাইড; পরীকষায় বেশিভাগ প্ৰশ্ন কীওয়াডের চাউর।
+3. **পরে গ্লসারিতে ফিরে যান** — শব্দ ভুলে গেললে <a href={siteUrl('glossary/')}>কীওয়াড গ্লসারি</a> খুলে খুজুন।
+4. **ডায়াগ্রাম আঁকুন** — Mermaid ডায়াগ্রামগুলো খামখেয়ালি বানানোর চেষ্টা করুন; পাইছা টিকিট পাইড।
+
+## থিমভিত্তিক অগ্রসরত
+
+<div class="progress-list">
+  {THEMES.map((theme) => <ThemeProgress theme={theme.id} />)}
+</div>
+
+## থিম-সমূহ
+
+<ThemeCards />

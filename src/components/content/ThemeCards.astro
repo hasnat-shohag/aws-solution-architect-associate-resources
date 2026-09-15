@@ -1,0 +1,128 @@
+---
+import { THEMES, PLANNED_THEMES } from '../../lib/themes';
+import { themeLessons } from '../../lib/lessons';
+import { siteUrl } from '../../lib/urls';
+
+interface Props {
+	showLessons?: boolean;
+}
+
+const { showLessons = true } = Astro.props;
+
+const docFiles = new Set(Object.keys(import.meta.glob('/src/content/docs/learn/**/*.mdx')));
+const hasThemeIndex = (slug: string) => docFiles.has(`/src/content/docs/learn/${slug}/index.mdx`);
+const hasLesson = (slug: string, lesson: string) => docFiles.has(`/src/content/docs/learn/${slug}/${lesson}.mdx`);
+---
+
+<div class:list={['theme-index', !showLessons && 'theme-index--compact']}>
+	{
+		THEMES.map((theme) => (
+			<section
+				class:list={['theme-row', !showLessons && 'theme-row--compact']}
+				aria-labelledby={`theme-${theme.id}-title`}
+				style={`--domain-accent: ${theme.accent};`}
+			>
+				<div class="theme-row-head">
+					<h3 id={`theme-${theme.id}-title`}>
+						{hasThemeIndex(theme.slug) ? (
+							<a href={siteUrl(`learn/${theme.slug}/`)}>
+								{theme.labelBn} · {theme.labelEn}
+							</a>
+						) : (
+							<>
+								{theme.labelBn} · {theme.labelEn}
+							</>
+						)}
+					</h3>
+					{showLessons ? (
+						<p>
+							সূত্রে: <strong>{theme.sourceBn}</strong> · {theme.lessons}টি লেসন · {theme.pages} পাতা
+						</p>
+					) : (
+						<>
+							<p class="domain-label-en">{theme.sourceEn}</p>
+							<div class="theme-progress-inline" data-theme-progress={theme.id} data-theme-lessons={theme.lessons}>
+								<div
+									class="progress-track"
+									role="progressbar"
+									aria-label={`${theme.labelBn} অগ্রসরতা`}
+									aria-valuemin="0"
+									aria-valuemax={theme.lessons}
+									aria-valuenow="0"
+									data-theme-track
+								>
+									<div class="progress-fill" data-theme-fill></div>
+								</div>
+								<span class="progress-count" data-theme-count>0/{theme.lessons}</span>
+							</div>
+						</>
+					)}
+				</div>
+				{showLessons && (
+					<ol class="domain-lesson-list">
+						{themeLessons(theme.id).map((lesson) => (
+							<li>
+								{hasLesson(theme.slug, lesson.slug) ? (
+									<a href={siteUrl(`learn/${theme.slug}/${lesson.slug}/`)}>
+										{lesson.id.split('-')[1]} — {lesson.titleBn}
+									</a>
+								) : (
+									<span class="domain-lesson-pending">
+										{lesson.id.split('-')[1]} — {lesson.titleBn}{' '}
+										<span class="lesson-pending-tag">অনুবাদ বাকি</span>
+									</span>
+								)}
+								<span class="domain-lesson-en">{lesson.titleEn}</span>
+							</li>
+						))}
+					</ol>
+				)}
+			</section>
+		))
+	}
+</div>
+
+{
+	!showLessons && (
+		<div class="theme-index-planned">
+			{PLANNED_THEMES.map((planned) => (
+				<section class="theme-row theme-row--planned" aria-disabled="true">
+					<div class="theme-row-head">
+						<h3>
+							{planned.labelBn} · {planned.labelEn}
+						</h3>
+						<p class="domain-meta">
+							<span class="lesson-pending-tag">আসছে</span>
+							<span>{planned.noteBn}</span>
+						</p>
+					</div>
+				</section>
+			))}
+		</div>
+	)
+}
+
+<script>
+	import { THEMES } from '../../lib/themes';
+	import { LESSON_EVENT, themeCompleted, loadState } from '../../lib/progress';
+
+	function paintThemeCards(): void {
+		const state = loadState();
+		document.querySelectorAll<HTMLElement>('[data-theme-progress]').forEach((row) => {
+			const themeId = row.dataset.themeProgress;
+			const meta = THEMES.find((item) => item.id === themeId);
+			if (!meta) return;
+			const completed = themeCompleted(state, meta.id);
+			const percent = Math.round((completed / meta.lessons) * 100);
+			const fill = row.querySelector<HTMLElement>('[data-theme-fill]');
+			const count = row.querySelector<HTMLElement>('[data-theme-count]');
+			const track = row.querySelector<HTMLElement>('[data-theme-track]');
+			if (fill) fill.style.transform = `scaleX(${(percent / 100).toFixed(4)})`;
+			if (count) count.textContent = `${completed}/${meta.lessons}`;
+			if (track) track.setAttribute('aria-valuenow', String(completed));
+		});
+	}
+
+	paintThemeCards();
+	window.addEventListener(LESSON_EVENT, paintThemeCards);
+</script>

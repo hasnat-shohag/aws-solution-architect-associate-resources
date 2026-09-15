@@ -1,0 +1,71 @@
+---
+import { THEMES, type ThemeId } from '../../lib/themes';
+
+interface Props {
+	theme: ThemeId;
+	showLabel?: boolean;
+}
+
+const { theme, showLabel = true } = Astro.props;
+const meta = THEMES.find((item) => item.id === theme)!;
+---
+
+<div class="progress-row" data-theme-progress={theme} data-theme-lessons={meta.lessons}>
+	{
+		showLabel && (
+			<div class="progress-head">
+				<span>{meta.labelBn}</span>
+				<span class="progress-count" data-theme-count>0/{meta.lessons}</span>
+			</div>
+		)
+	}
+	<div
+		class="progress-track"
+		role="progressbar"
+		aria-label={`${meta.labelBn} অগ্রসরতা`}
+		aria-valuemin="0"
+		aria-valuemax={meta.lessons}
+		aria-valuenow="0"
+		data-theme-track
+	>
+		<div class="progress-fill" data-theme-fill></div>
+	</div>
+</div>
+
+<script>
+	import { THEMES } from '../../lib/themes';
+	import { LESSON_EVENT, themeCompleted, isComplete, loadState } from '../../lib/progress';
+
+	function paintThemes(): void {
+		const state = loadState();
+		document.querySelectorAll<HTMLElement>('[data-theme-progress]').forEach((row) => {
+			const themeId = row.dataset.themeProgress;
+			const meta = THEMES.find((item) => item.id === themeId);
+			if (!meta) return;
+			const completed = themeCompleted(state, meta.id);
+			const percent = Math.round((completed / meta.lessons) * 100);
+			const fill = row.querySelector<HTMLElement>('[data-theme-fill]');
+			const count = row.querySelector<HTMLElement>('[data-theme-count]');
+			const track = row.querySelector<HTMLElement>('[data-theme-track]');
+			if (fill) fill.style.transform = `scaleX(${(percent / 100).toFixed(4)})`;
+			if (count) count.textContent = `${completed}/${meta.lessons}`;
+			if (track) track.setAttribute('aria-valuenow', String(completed));
+		});
+	}
+
+	function paintLessonChecks(): void {
+		const state = loadState();
+		document.querySelectorAll<HTMLElement>('[data-lesson-check]').forEach((item) => {
+			const id = item.dataset.lessonCheck;
+			if (!id) return;
+			item.dataset.done = String(isComplete(state, id));
+		});
+	}
+
+	paintThemes();
+	paintLessonChecks();
+	window.addEventListener(LESSON_EVENT, () => {
+		paintThemes();
+		paintLessonChecks();
+	});
+</script>

@@ -1,0 +1,61 @@
+---
+import { THEMES, type ThemeId } from '../../lib/themes';
+import { themeLessons } from '../../lib/lessons';
+import { siteUrl } from '../../lib/urls';
+
+interface Props {
+	theme: ThemeId;
+}
+
+const { theme } = Astro.props;
+const lessons = themeLessons(theme);
+const themeSlug = THEMES.find((item) => item.id === theme)?.slug ?? '';
+
+const lessonFiles = new Set(Object.keys(import.meta.glob('/src/content/docs/learn/*/*.mdx')));
+const isAvailable = (slug: string) => lessonFiles.has(`/src/content/docs/learn/${themeSlug}/${slug}.mdx`);
+---
+
+<ol class="lesson-checklist">
+	{
+		lessons.map((lesson) => (
+			<li data-lesson-check={lesson.id}>
+				<span class="lesson-state" aria-hidden="true"></span>
+				<div class="lesson-content">
+					{isAvailable(lesson.slug) ? (
+						<a href={siteUrl(`learn/${themeSlug}/${lesson.slug}/`)}>
+							{lesson.id.split('-')[1]} — {lesson.titleBn}
+						</a>
+					) : (
+						<>
+							<span class="lesson-pending-title">
+								{lesson.id.split('-')[1]} — {lesson.titleBn}
+							</span>
+							<span class="lesson-pending-tag">অনুবাদ বাকি</span>
+						</>
+					)}
+					<span class="sr-only" data-lesson-state-label>অসম্পন্ন</span>
+					<span class="lesson-check-en">{lesson.titleEn}</span>
+				</div>
+			</li>
+		))
+	}
+</ol>
+
+<script>
+	import { LESSON_EVENT, isComplete, loadState } from '../../lib/progress';
+
+	function paintChecklist(): void {
+		const state = loadState();
+		document.querySelectorAll<HTMLElement>('[data-lesson-check]').forEach((item) => {
+			const id = item.dataset.lessonCheck;
+			if (!id) return;
+			const done = isComplete(state, id);
+			item.dataset.done = String(done);
+			const stateLabel = item.querySelector<HTMLElement>('[data-lesson-state-label]');
+			if (stateLabel) stateLabel.textContent = done ? 'সম্পন্ন' : 'অসম্পন্ন';
+		});
+	}
+
+	paintChecklist();
+	window.addEventListener(LESSON_EVENT, paintChecklist);
+</script>
