@@ -1,0 +1,99 @@
+---
+title: Disaster Recovery ও High Availability
+titleEn: Disaster Recovery & High Availability
+description: RTO/RPO, Multi-AZ, Multi-Region, Pilot Light, Warm Standby ও Active-Active
+theme: microservices
+order: 9
+pages: [13, 14]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Disaster Recovery
+    bn: দুর্যোগ পুনরুদ্ধার
+    tip: region-level failure-এ alternate AWS Region-এ recover করা।
+  - term: High Availability
+    bn: উচ্চ প্রাপ্যতা
+    tip: component failure সহ্য করে reliability target maintain করা।
+  - term: RTO
+    bn: recovery time objective
+    tip: disruption থেকে service restore-এর accepted maximum time।
+  - term: RPO
+    bn: recovery point objective
+    tip: disaster ঘটলে maximum acceptable data loss window।
+  - term: Backup and Restore
+    bn: backup রেখে প্রয়োজনে restore
+    tip: cheapest, highest RTO/RPO।
+  - term: Pilot Light
+    bn: data synced, compute minimal/off
+    tip: disaster ঘটলে production capacity launch করা।
+  - term: Warm Standby
+    bn: scaled-down active copy
+    tip: কিছু traffic তৎক্ষণাৎ serve করে; full switch দ্রুত।
+  - term: Multi-Site Active-Active
+    bn: multiple active regions
+    tip: lowest recovery time, highest cross-region cost।
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ১৩–১৪।
+---
+
+import ExamTrap from '../../../../components/content/ExamTrap.astro';
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ১৩–১৪ (Resilient and efficient systems, Disaster recovery ও High availability)।
+
+## Resilient system মানে কী?
+
+**High Availability** মানে system নির্দিষ্ট availability target বজায় রাখে এবং component failure সামলায়। **Disaster Recovery** হলো region-level/major disruption থেকে business service ফিরিয়ে আনার পরিকল্পনা। Microservices সাহায্য করে কারণ stateless services ও ছোট deployment unit সহজে replace করা যায়।
+
+## RTO বনাম RPO
+
+- **RTO (Recovery Time Objective)**: maximum accepted time until service is available again।
+- **RPO (Recovery Point Objective)**: maximum accepted amount of data loss, usually time-based।
+
+```mermaid
+flowchart LR
+  F[Disaster] --> P1[Backup and Restore]
+  F --> P2[Pilot Light]
+  F --> P3[Warm Standby]
+  F --> P4[Multi-Site Active-Active]
+  P1 --> A[Minimum cost / larger RTO-RPO]
+  P2 --> B[Synced data / lower RTO]
+  P3 --> C[Small active capacity / lower RTO]
+  P4 --> D[All time active / minimum RTO-RPO / higher cost]
+```
+
+```mermaid
+flowchart LR
+  M[Monolith] --> S[Service split]
+  S --> ST[Stateless compute]
+  ST --> H[Hot-swap deployments]
+  H --> HA[Multi-AZ high availability]
+  HA --> DR[Multi-region DR preparation]
+```
+
+## Statelessness ও Twelve-Factor App
+
+Stateless principle create hot-swappable ও autoscaling systems সহজ করে। Microservice process নিজস্ব session/state/properties ভাগ না করে persistent data source-এও সংরক্ষন করে।  **Twelve-Factor App** process-ভিত্তিক architecture, backing services-এ config/state বাইরে রাখার সুযোগ দেয়।
+আর: load balancer/reverse proxy, DNS/Route 53, content delivery, request throttling, API Gateway, Amazon Cognito, AWS App Mesh, service discovery engines ইত্যাদি।
+
+## Multi-AZ বনাম Multi-Region
+
+`Multi-AZ` deployment এক region-এর ভেতরের ভুলে প্রায় availability বাড়ায়। যেমন instance/AZ issue ধরা পড়লে অন্য AZ-এ stateless task reconnect করে।
+
+**Multi-Region DR** একটি region চালু না থাকলে অন্য region-এ recover করে। DR প্রায়শই región চালু থাকলে normal operations ফিরিয়ে আনার plan/strategy-র সাথে মিলে যায়। প্রধান architecture patterns:
+
+- **Backup and Restore**: backup/restorable copy তৈরি রাখা।
+- **Pilot Light**: data replication and minimal core in alternate region।
+- **Warm Standby**: scaled-down active environment ready in alternate region।
+- **Multi-Site Active-Active**: multiple regions serving production traffic simultaneously।
+
+<ExamTrap title="Multi-AZ বনাম DR" question="Multi-AZ design কি Disaster Recovery architecture?" answer="না। Multi-AZ সাধারণত regional fault isolation/simultaneous AZ failure সামলায়। " />
+
+Exam প্রশ্ন মিলাতে context দেখুন: regional event/disaster scenario — Multi-Region; regional fault isolation/simultaneous AZ failure — Multi-AZ; specific RTO/RPO targets — exact amount heavy resilience architectures।
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-9" />

@@ -1,0 +1,69 @@
+---
+title: অপারেশন সহজ করা ও ডেটাস্টোর
+titleEn: Simplifying Operations
+description: cache, relational ও NoSQL database বাছাই এবং DynamoDB-র মূল সুবিধা।
+theme: microservices
+order: 5
+pages: [7, 7]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Cache
+    bn: ঘন ঘন বার ব্যবহার হওয়া ডেটার কাছের স্তর
+    tip: প্রথমে read কমায়, সাধারণত latency সুবিধা দেয়।
+  - term: DynamoDB
+    bn: managed NoSQL database
+    tip: লক্ষ লক্ষ request ও low-latency প্রয়োজন হলে আরও উপযুক্ত।
+  - term: RDS
+    bn: managed relational database
+    tip: ACID style data, SQL এবং complex join-এর জন্য বেছে নিন।
+  - term: ElastiCache
+    bn: managed in-memory cache
+    tip: read ভারী workload-এ database পেছনের ভার কমায়।
+  - term: Structured Data
+    bn: প্রিডিকটেবল schema তে রাখা ডেটা
+    tip: relational database এ রাখা সুবিধাজনক হয়।
+  - term: Partition Key
+    bn: DynamoDB তে data ভাগ করার key
+  - term: Sort Key
+    bn: এক partition-এর ভেতরে item সাজানোর key
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+note: স্টুডি নোট উৎস, প্রিন্ট পেজ ৭।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৬–৭ (Private networking, Data store ও Simplifying operations)।
+
+Microservice-এ ব্যবসায়িক ক্ষমতা ভাগ করার সাথে data ownership-ও ভাগ করার প্রয়োজন হয়। Service-specific data store হলে deployment, scaling ও failure isolation ভালো থাকে। সিদ্ধান্ত করার সময় data shape, query pattern, consistency ও scale দেখুন।
+
+## Data store নির্বাচন
+
+```mermaid
+flowchart LR
+  W{Access pattern} -->|SQL/joins| R[Amazon RDS]
+  W -->|high-throughput key queries| D[Amazon DynamoDB]
+  W -->|session/cache| C[Amazon ElastiCache]
+  R -. repeated reads .-> C
+```
+
+- **Session data**: in-memory cache সাধারণ best fit।
+- **Redis**: rich data structures, advanced cache patterns ও replication।
+- **Memcached**: simple distributed memory cache।
+- **Amazon RDS**: managed relational database; SQL and relational model প্রয়োজনে।
+- **Amazon DynamoDB**: managed NoSQL; লক্ষ লক্ষ request, almost unlimited throughput ও schema flexibility-তে শক্তিশালী।
+
+## DynamoDB মূল বৈশিষ্ট্য
+
+- **Partition key**: item বিতরণ ও scalability নির্ধারণ করে।
+- **Sort key**: এক partition-এর ভেতর item সাজায়; composite primary key তৈরি করে।
+- **low-latency**: predictable single-digit millisecond response সম্ভব।
+
+> **Exam trap:** “high traffic” শুধু DynamoDB বোঝায় না। Access pattern, consistency, join, query flexibility ও cost একসাথে মিলিয়ে decision নিন।
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-5" />

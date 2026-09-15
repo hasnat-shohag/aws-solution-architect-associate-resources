@@ -1,14 +1,21 @@
 ---
 import terms from '../../content/glossary-terms.json';
 
-const sorted = [...terms].sort((a, b) => a.term.localeCompare(b.term));
+interface GlossaryEntry {
+	term: string;
+	bn: string;
+	tip: string;
+	theme: string;
+}
+
+	const sorted = (terms as GlossaryEntry[]).sort((a, b) => a.term.localeCompare(b.term));
 ---
 
 <div class="glossary-toolbar">
 	<div class="glossary-filters" data-glossary-filters>
 		<button type="button" data-glossary-theme="all" aria-pressed="true">সব</button>
 		{
-			[...new Set(terms.map((entry) => entry.theme))].map((theme) => (
+			[...new Set((terms as GlossaryEntry[]).map((entry) => entry.theme))].map((theme) => (
 				<button type="button" data-glossary-theme={theme} aria-pressed="false">
 					{theme}
 				</button>

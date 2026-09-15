@@ -1,0 +1,73 @@
+---
+title: "Orchestration ও State ম্যানেজমেন্ট"
+titleEn: "Orchestration & State Management"
+description: "Step Functions, MWAA, state management"
+theme: microservices
+order: 15
+pages: [23, 25]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Orchestrations
+    bn: কেন্দ্রীয় workflow controller
+    tip: Step Functions / Airflow; visibility, retry, branching, timeout।
+  - term: Choreography
+    bn: services react to each other via events
+    tip: decoupled but harder to understand end-to-end।
+  - term: Step Functions
+    bn: workflow orchestration service
+    tip: Standard workflows for long-running; Express for high-volume।
+  - term: State Machine
+    bn: workflow state and transition definition
+    tip: Task, Choice, Parallel, Map, Wait states।
+  - term: Workflow Studio
+    bn: visual workflow editor
+    tip: drag-and-drop Step Functions workflow design।
+  - term: Task Token
+    bn: external callback handle
+    tip: wait for external approval/process before resuming workflow।
+  - term: MWAA
+    bn: Amazon Managed Workflows for Apache Airflow
+    tip: Python Airflow DAG experience relevant।
+  - term: External State
+    bn: স্টেট runtime এর বাইরে রাখা
+    tip: DynamoDB, S3, ElastiCache or database, not inside containers।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+এক্ষেত্রে workflow সাধারণত এক service-এর লজিক নয়; বহু service একসাথে সিদ্ধান্ত নেয়, ফলে পুরনো flow নির্ভুলভাবে অনুসরণ করা জরুরি।
+
+## Orchestration vs choreography
+
+- Orchestration: central workflow layer decides path; higher visibility।
+- Choreography: each service listens to events; lower coupling but harder to see overall flow।
+- সহজ workflow-এ orchestration ঠিক; বহু স্বাধীন team এবং event-driven design এ choreography useful।
+
+## Step Functions capabilities
+
+- **Standard Workflows** audit history দেয়, 1 year execution রাখতে পারে।
+- **Express Workflows** high volume short-lived execution এর জন্য।
+- **Map state** এক item list এ parallel/serial processing।
+- **Choice state** business rules দরকার হলে।
+- **Task token** human approval বা long external process।
+- **Service integrations** Lambda, DynamoDB, EventBridge, SNS/SQS।
+
+```mermaid
+flowchart TD
+  Start[Start] --> Validate[Validate]
+  Validate --> Charge{(payment)}
+  Charge -- success --> Notify[Notify]
+  Charge -- failure --> Retry[Retry]
+  Retry --> Rollback[Rollback]
+```
+
+> [!NOTE]
+Step Functions এর Standard Express execution history billing মডেল ভিন্ন। প্রশ্নে short-lived, high-volume event বললে Express workflow ভাবুন।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-15" />

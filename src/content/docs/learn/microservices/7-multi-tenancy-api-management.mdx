@@ -1,0 +1,73 @@
+---
+title: "মাল্টি-টেন্যান্সি ও API ম্যানেজমেন্ট"
+titleEn: "Multi-Tenancy & API Management"
+description: "Tenant isolation, Throttling,Caching,ALB,NLB,API Gateway"
+theme: microservices
+order: 7
+pages: [9, 10]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Multi-tenancy
+    bn: এক অ্যাপ্লিকেশনে একাধিক customer group
+    tip: data, log ও resource isolation নিয়ে সতর্ক থাকতে হয়।
+  - term: Tenant
+    bn: আলাদা customer group
+    tip: আলাদা tenant এর প্রয়োজন হলে separate stack বা database ভিন্ন স্তরে দরকার।
+  - term: Pool model
+    bn: সব tenant একই shared resources ব্যবহার করে
+    tip: cost কম, isolation কম।
+  - term: Silo model
+    bn: প্রতি tenant আলাদা infrastructure
+    tip: isolation বেশি, cost বেশি।
+  - term: API management
+    bn: API versioning, authorization and traffic control
+    tip: API Gateway এক জায়গায় অনেক কাজ করে।
+  - term: ALB
+    bn: Application Load Balancer
+    tip: HTTP routing ও path/host based rules এ ভালো।
+  - term: NLB
+    bn: Network Load Balancer
+    tip: উচ্চ throughput and static IP/TCP level operations.
+  - term: Throttling
+    bn: request rate limit
+    tip: burst-এ backend overload ঠেকায়।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+এই লেসনে জানবেন কীভাবে অনেক tenant কে একসাথে serve করা যায় এবং API কে route, protect ও monitor করা যায়।
+
+## Isolation models
+
+- **Silo:** প্রতি tenant আলাদা resource stack। ব্যয়বহুল কিন্তু নিরাপদ।
+- **Pool:** একসাথে বহু tenant একই resource stack ব্যবহার করে। cost কম কিন্তু isolation কম।
+- **Bridge:** কিছু data শেয়ার হয়, কিন্তু critical operations আলাদা।
+- Tenant isolation প্রায়ই matching app layer, data layer, IAM এবং network isolation এর সময় ভাবতে হয়।
+
+## API management
+
+- API Gateway `/products/v1` এবং `/v2` রাউটিং could handle version routing and versioning.
+- API Gateway REST API can be used independently while HTTP API is lighter or cheaper lower.
+- ALB path based routing এবং NLB high throughput level এ কাজ করে।
+- API Gateway API Gateway API Gateway API Gateway versioning request validation rate limiting caching monitoring traffic management।
+- API Gateway request validation authorization and response mapping এর জন্য ভালো।
+
+```mermaid
+flowchart LR
+  C[Client] --> APIGW[API Gateway]
+  APIGW --> LB[ALB]
+  LB --> Container[Fargate Task]
+  APIGW --> FN[Lambda]
+  APIGW --> DDB[(DynamoDB)]
+```
+
+> [!NOTE]
+API Gateway বেশি সুবিধা দেয় কিন্তু শুধু ALB দিয়ে routing করা যায়। প্রশ্ন বললে একাধিক functionality দরকার হয় তখন API Gateway বেছে নিন।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-7" />

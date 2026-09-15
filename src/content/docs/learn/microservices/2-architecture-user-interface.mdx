@@ -1,0 +1,66 @@
+---
+title: আর্কিটেকচার ও UI
+titleEn: Architecture & User Interface
+description: মাইক্রোসার্ভিস আর্কিটেকচারের লেয়ার, UI hosting ও backend সংযোগের নির্বাচন।
+theme: microservices
+order: 2
+pages: [4, 4]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Layered Architecture
+    bn: স্তরে ভাগ করা আর্কিটেকচার
+    tip: UI, API, compute, data ও operations আলাদা দৃষ্টিতে দেখুন।
+  - term: UI Layer
+    bn: ব্যবহারকারীর সামনের স্তর
+    tip: ব্রাউজার বা মোবাইল অ্যাপ আলাদা রাখুন।
+  - term: Static Site
+    bn: ধ্রুবক ফাইল হিসেবে দেওয়া সাইট
+    tip: S3 দিয়ে রাখতে পারেন।
+  - term: CloudFront
+    bn: AWS এর CDN
+    tip: নিকটতম edge location থেকে রিসপন্স আনে।
+  - term: S3
+    bn: AWS অবজেক্ট স্টোরেজ
+    tip: স্ট্যাটিক ফাইল hosting-এর জন্য প্রচলিত স্টোর।
+  - term: API Layer
+    bn: ব্যাকএন্ড কল পরিচালনার স্তর
+    tip: API Gateway, ALB বা AppSync-এর সাথে তুলনা করুন।
+  - term: SPA
+    bn: Single Page Application
+    tip: প্রথমে সম্পূর্ণ ফাইল নামে, পরে ক্লায়েন্ট রাউটিং করে।
+  - term: CORS
+    bn: ভিন্ন origin থেকে API ব্যবহারের নিয়ম
+    tip: আলাদা UI ডোমেইন থেকে ব্যাকএন্ড কল করালে প্রয়োজন হয়।
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+note: স্টাডি-নোটের উৎস, প্রিন্ট পেজ ৪।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৪ (architecture ও User interface)।
+
+Reference architecture-কে আলাদা layers-এ ভেবে মনে রাখুন: user interface, API/microservices layer, service-owned data ও operations। Static web content ব্যবহারকারীর কাছে পৌঁছাতে Amazon S3 এবং Amazon CloudFront ব্যবহৃত হয়। REST বা GraphQL APIs সাধারণত application logic-এর প্রবেশপথ হয়।
+
+```mermaid
+flowchart LR
+  U[Browser / Mobile] --> API[REST / GraphQL APIs]
+  API --> M1[Service A]
+  API --> M2[Service B]
+  M1 --> D1[(Data A)]
+  M2 --> D2[(Data B)]
+  O[CI/CD + operations] -.-> M1 & M2
+```
+
+## API layer
+
+API হলো microservices-এর **front door**। এর কাজ শুধু protocol forward করা নয়: traffic management, request filtering, routing, caching, authentication ও authorization এখানেই প্রয়োগ হয়।
+
+> **Exam shortcut:** global static delivery মানে S3 + CloudFront; managed API front door + auth/throttling মানে API Gateway; path/host-based HTTP routing মানে ALB।
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-2" />

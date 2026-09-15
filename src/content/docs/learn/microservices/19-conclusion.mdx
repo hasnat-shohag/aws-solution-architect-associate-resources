@@ -1,0 +1,64 @@
+---
+title: "উপসংহার ও সিদ্ধান্ত ফ্রেম"
+titleEn: "Conclusion"
+description: "A compact decision framework for microservices on AWS"
+theme: microservices
+order: 19
+pages: [36, 36]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Business Capability
+    bn: আলাদা ব্যবসায়িক দায়িত্ব
+    tip: কোন service নিজে ডেটা ও deploy করার ক্ষমতা।
+  - term: Coupling
+    bn: dependency strength
+    tip: tight coupling increases failure effects।
+  - term: Composable Services
+    bn: তৈরি সার্ভিস পুনর্ব্যবহার যোগ্য
+    tip: event/API primitives reusable।
+  - term: Observability
+    bn: request paths, metrics, logs একসাথে দেখা
+    tip: distributed system essentials।
+  - term: Infrastructure as Code
+    bn: resource setup automated via code
+    tip: CloudFormation/CDK/Terraform।
+  - term: Data Consistency
+    bn: সঠিক স্টেট সাময়িক বা নিরবিচ্ছিন্ন
+    tip: Strong vs eventual consistency design।
+  - term: Governance
+    bn: standards and controls
+    tip: IAM, config rules, policy-as-code, tagging।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Microservices শুধু technology নয়; এটি organization, data ownership, deployment এবং observability পরিবর্তন সৃষ্টি করে। এই বোঝাপড়া AWS service নির্বাচন ও প্রশ্ন বোঝাকে সহজ করে।
+
+## Decision questions
+
+- কি workload আলাদাভাবে deploy/scale হবে? Microservice / event-driven design।
+- কি service-to-service policy, connection and auth সহজ হতে হবে? VPC Lattice/App Mesh/service mesh।
+- কি access control, resource governance ও business workflow রাখা দরকার? IAM, Resource policy, CloudTrail।
+- কি usage based scaling প্রয়োজন? Lambda/Fargate বা managed services।
+- কি eventual consistency এবং rollback strategy প্রয়োজন? Saga and event sourcing patterns।
+
+```mermaid
+flowchart TD
+  Need[Requirements] --> Debate{Independently deploy/scale?}
+  Debate -- হ্যাঁ --> Micro[Microservice]
+  Debate -- না --> Modular[Modular Monolith]
+  Micro --> Data[Ownership/data model ভাগ করুন]
+  Data --> Comms[Sync/Async নির্বাচন]
+  Comms --> Ops[Observability + governance]
+```
+
+> [!NOTE]
+"Microservice প্রয়োজন" কথা প্রথম উত্তর না হওয়া যায়। প্রশ্নে domain boundary, deployment/release cycle ভাবতে হবে।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-19" />

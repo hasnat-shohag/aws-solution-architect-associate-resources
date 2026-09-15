@@ -1,98 +1,128 @@
-# CCAR-F বাংলা স্টাডি গাইড
+# AWS SAA-C03 — বাংলা স্টাডি গাইড
 
-[![Deploy site to GitHub Pages](https://github.com/hasnat-shohag/CCAR-F/actions/workflows/deploy.yml/badge.svg)](https://github.com/hasnat-shohag/CCAR-F/actions/workflows/deploy.yml)
+[![Deploy site to GitHub Pages](https://github.com/hasnat-shohag/aws-solution-architect-associate-resources/actions/workflows/deploy.yml/badge.svg)](https://github.com/hasnat-shohag/aws-solution-architect-associate-resources/actions/workflows/deploy.yml)
 [![Code license: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](./LICENSE)
 [![Content license: CC BY-NC-SA 4.0](https://img.shields.io/badge/content-CC%20BY--NC--SA%204.0-lightgrey.svg)](./LICENSE-CONTENT)
 
-**Claude Certified Architect (Foundations)** — CCAR-F পরীক্ষার জন্য বাংলা স্টাডি সাইট। ৫টি ডোমেইন, ৩০টি লেসন, ডোমেইনভিত্তিক রিভিশন শিট, পরীক্ষা গাইড, কীওয়ার্ড গ্লোসারি, Mermaid ডায়াগ্রাম আর ব্রাউজারে-সংরক্ষিত অগ্রগতি ট্র্যাকার।
+AWS Solutions Architect Associate প্রস্তুতির Astro/Starlight বাংলা সাইট। বর্তমানে **Microservices on AWS** থিম সক্রিয় এবং ওই থিমের ২০-লেসন কাঠামো সংজ্ঞায়িত; AWS Whitepaper — _Implementing Microservices on AWS_ থেকে বাংলা স্টাডি-নোট, কীওয়ার্ড টেবিল, Mermaid ডায়াগ্রাম ও ব্রাউজারে সংরক্ষিত অগ্রগতি ট্র্যাকার ধাপে ধাপে যোগ করা হচ্ছে।
 
-**লাইভ সাইট:** https://hasnat-shohag.github.io/CCAR-F/
+**লাইভ সাইট:** <https://hasnat-shohag.github.io/aws-solution-architect-associate-resources/>
 
-## বৈশিষ্ট্য
+## ফিচার
 
-- **৫টি ডোমেইন, ৩০টি লেসন** — প্রতিটিতে বাংলা ব্যাখ্যা, মুল কীওয়ার্ড টেবিল, ডায়াগ্রাম, পরীক্ষার ফাঁদ, প্র্যাকটিস সিনারিও ও বিল্ড এক্সারসাইজ।
-- **প্রযুক্তিগত শব্দ ইংরেজিতেই** — `stop_reason`, `MCP`, `CLAUDE.md`, `PreToolUse`; কোড-আইডেন্টিফায়ার কখনও transliterate করা হয় না, তাই GitHub-এ খুঁজে পাওয়া সহজ।
-- **অগ্রগতি ট্র্যাকিং** — সাইডবারে ✓ চিহ্ন আর `/progress/` ড্যাশবোর্ডে ডোমেইনভিত্তিক প্রগ্রেস বার; অবস্থা শুধু `localStorage`-এ (`ccarf:v1`), কোনো বেকএন্ড নেই।
-- **রিভিশন ও রেফারেন্স** — `/quick-reference/`-এ প্রতি ডোমেইনের এক-পাতার প্রিন্ট-বান্ধব শিট, `/exam-guide/`-এ পরীক্ষার ফরম্যাট, ৬টি সিনারিও, ওয়েট ও পাসের নিয়ম।
-- **বাংলা টাইপোগ্রাফি ও থিম** — Noto Sans Bengali, Inter ও JetBrains Mono; ডোমেইন অনুযায়ী অ্যাকসেন্ট রং (নীল, টিল, অ্যাম্বার, ভায়োলেট, রোজ), ডার্ক/লাইট থিম, WCAG AA কনট্রাস্ট।
+- **থিম-ভিত্তিক সাইডবার** — শুধু অনুদিত পাতাই সাইডবারে দেখায়; নতুন লেসন যোগ হলে তা সাইডবারে স্বয়ংক্রিয়ভাবে সম্প্রসারিত হয়।
+- **অগ্রগতি ট্র্যাকিং** — পাতা শেষ করার অবস্থা `localStorage`-এ (`saa:aws:v1`) থাকে; কোনো অ্যাকাউন্ট বা বেকএন্ড নেই।
+- **গ্লোসারির একক সুত্র** — পরিভাষা ব্যবহারের আগে `src/content/glossary-terms.json`-এ যোগ করতে হয়।
+- **Mermaid ডায়াগ্রাম** — ক্লায়েন্টে রেন্ডার হয়, তাই বিল্ড-টাইম ব্রাউজার দরকার হয় না।
+- **অভিগম্যতা ও ভেতরের লিংক** — WCAG AA কনট্রাস্ট ও ভাঙা লিংক ধরার জন্য পরীক্ষার স্ক্রিপ্ট অন্তর্ভুক্ত।
+
+## প্রয়োজনীয়তা
+
+- Node.js 22 বা তার পরের ভার্সন
+- pnpm 11 বা তার পরের ভার্সন
 
 ## দ্রুত শুরু
 
-Node 22+ ও pnpm 11+ দরকার (`.nvmrc` দেখুন)।
-
 ```bash
 pnpm install
-pnpm dev        # http://localhost:4321/CCAR-F/
+pnpm astro dev --background
+```
+
+ডেভ সার্ভার এই URL-এ চলে:
+
+<http://localhost:4321/aws-solution-architect-associate-resources/>
+
+সার্ভার বন্ধ করতে:
+
+```bash
+pnpm astro dev stop
+```
+
+## প্রজেক্ট স্ট্রাকচার
+
+```text
+src/
+  content.config.ts            # Astro কনটেন্ট স্কিমা ও লেসন ভ্যালিডেশন
+  content/docs/                # Astro/Starlight পাতা
+    learn/microservices/       # সক্রিয় মাইকরোসার্ভিস থিম ও লেসন
+  content/glossary-terms.json  # পরিভাষার একক সুত্র
+  content/i18n/                # Starlight UI-র বাংলা স্ট্রিং
+  components/                  # content, progress ও starlight কম্পোনেন্ট
+  lib/                         # themes, lessons, progress ও URLs হেল্পার
+  styles/                      # থিম টোকেন, গ্রিড ও প্রিন্ট স্টাইল
+tools/
+  check-links.mjs              # বিল্ড-পরবর্তী ভেতরের লিংক যাচাই
+  check-contrast.mjs           # কনট্রাস্ট যাচাই (হেডলেস Chrome)
+  fetch-source.mjs             # ডেভ-অনলি ইংরেজি পাঠের রেফারেন্স
+.github/workflows/deploy.yml   # GitHub Actions ডিপ্লয়
+```
+
+## ডেভ সার্ভার কন্ট্রোল
+
+```bash
+pnpm astro dev status
+pnpm astro dev logs
+pnpm astro dev stop
 ```
 
 ## স্ক্রিপ্ট
 
 | কমান্ড | কাজ |
 | --- | --- |
-| `pnpm dev` | ডেভেলপমেন্ট সার্ভার (`/CCAR-F/` বেসে) |
-| `pnpm build` | প্রোডাকশন বিল্ড, আউটপুট `dist/` |
-| `pnpm preview` | বিল্ড করা সাইট লোকালি সার্ভ করে |
+| `pnpm build` | প্রোডাকশন বিল্ড করা, আউটপুট `dist/` |
+| `pnpm preview` | বিল্ড করা সাইট লোকালি দেখা |
 | `pnpm check` | `astro check` — টাইপ ও কনটেন্ট স্কিমা যাচাই |
-| `pnpm check:links` | ভেতরের লিংক যাচাই; `dist/` বিল্ডের পর চালান |
-| `pnpm check:contrast` | computed রঙের কনট্রাস্ট যাচাই; `dist/` ও হেডলেস Chrome দরকার |
-| `pnpm fetch-source` | মুল ইংরেজি পাঠ ডাউনলোড করে অনুবাদের রেফারেন্স বানায় (শুধু ডেভেলপার, আউটপুট `tools/.source/`, gitignored) |
+| `pnpm check:links` | বিল্ড-পরবর্তী ভেতরের লিংক যাচাই |
+| `pnpm check:contrast` | বিল্ড-পরবর্তী হেডলেস Chrome দিয়ে কনট্রাস্ট যাচাই |
+| `pnpm fetch-source` | ইংরেজি পাঠের ডেভ-অনলি রেফারেন্স ডাউনলোড করা |
 
-`fetch-source` নির্দিষ্ট লেসনেও চলে — `pnpm fetch-source 1-1-agentic-loops`, আর পুরনো ফাইল আবার নামাতে `--force`।
+### স্ক্রিপ্ট সম্পর্কে নোট
 
-`check:links` অনুদিত না হওয়া লেসনকে "pending" ধরে (এগুলো ফেল নয়); সত্যিকারের ভাঙা লিংক থাকলে কমান্ড ফেল করে। `--verbose` দিলে পেন্ডিং তালিকাও দেখায়।
+`check:links` অনুদিত না হওয়া লেসনকে "pending" ধরে (এটা ফেল নয়); প্রকৃত ভাঙা লিংক পেলে কমান্ড ফেল করে। `--verbose` দিলে pending list-ও দেখা যায়।
 
-`check:contrast` বিল্ড করা `dist/` হেডলেস Chrome-এ খুলে টার্ম-কলাম, টেবিলের কোড, লিংক, নেভ টাইটেল, skip link ও সাইডবারের বর্তমান এন্ট্রির computed রং মাপে — Starlight-এর cascade হাতে মডেল না করে পাঠক যা দেখবে ঠিক সেটাই। Chrome না থাকলে `--allow-missing-browser` দিলে চেকটি স্কিপ হয়, আর `CHROME_PATH` দিয়ে ব্রাউজার পাথ দেওয়া যায়। `KNOWN_GAPS`-এ নথিভুক্ত ঋণ ছাড়া সীমার নিচে নামলে কমান্ড ফেল করে।
+`check:contrast` বিল্ড করা `dist/`-এ হেডলেস Chrome চালায়, তাই আগে `pnpm build` চালাতে হয়। Chrome না পাওয়া গেলে `--allow-missing-browser` চেকটি skip করে, আর `CHROME_PATH` দিয়ে ব্রাউজার পাথ দেওয়া যায়। `KNOWN_GAPS`-এ নথিভুক্ত ঋণ ছাড়া সীমার নিচে নামলে কমান্ড ফেল করে।
 
-## প্রজেক্ট স্ট্রাকচার
-
-```
-src/
-  content.config.ts          # কনটেন্ট স্কিমা — লেসন ফ্রন্টম্যাটার ভ্যালিডেশন
-  content/docs/              # সাইটের সব পাতা (MDX)
-    learn/<domain>/          # ডোমেইন ওভারভিউ + লেসন
-    quick-reference/         # ডোমেইনভিত্তিক রিভিশন শিট
-    glossary.mdx             # গ্লোসারি এক্সপ্লোরার
-    progress.mdx             # অগ্রগতি ড্যাশবোর্ড
-    exam-guide.mdx           # পরীক্ষার ব্লুপ্রিন্ট ও সিনারিও
-    about.mdx                # উৎস ও লাইসেন্স
-  content/glossary-terms.json # পরিভাষার একক সুত্র
-  content/i18n/bn-BD.json     # Starlight UI স্ট্রিং
-  components/                 # content/, progress/, starlight/ কম্পোনেন্ট
-  lib/                        # domains, lessons, progress, urls হেল্পার
-  styles/custom.css           # থিম টোকেন, গ্রিড ও ডায়াগ্রাম স্টাইল
-tools/
-  check-links.mjs             # বিল্ড-পরবর্তী ভেতরের লিংক যাচাই
-  check-contrast.mjs          # বিল্ড-পরবর্তী কনট্রাস্ট গার্ড (হেডলেস Chrome)
-  fetch-source.mjs            # মুল ইংরেজি পাঠের স্ন্যাপশট (ডেভ-অনলি)
+`fetch-source` আউটপুট gitignored `tools/.source/`-এ রাখে। এটি নির্দিষ্ট লেসনেও চলে — যেমন: `pnpm fetch-source 1-introduction`; পুরনো ফাইল আবার নামাতে `--force` দিন।
 
 ## লেসন লেখা ও অনুবাদের নিয়ম
 
-1. ফাইল: `src/content/docs/learn/<domain-slug>/<task-slug>.mdx` — স্লাগ মুল ইংরেজি সাইটের মতোই।
-2. ফ্রন্টম্যাটার পুরণ করুন: `title` (বাংলা), `titleEn`, `domain` (১–৫), `task`, `order`, `sourceUrl`, `updated`, `keywords[]`, `sources[]`। স্কিমা `src/content.config.ts`-এ।
-3. শিরোনামের ক্রম ধরে রাখুন: এই লেসনে যা জানতে হবে → মুল অংশ → ডায়াগ্রাম (Mermaid) → পরীক্ষার ফাঁদ → প্র্যাকটিস সিনারিও → বিল্ড এক্সারসাইজ → সুত্র।
-4. প্রতি লেসনের শেষে অবশ্যই `<Attribution sourceUrl={frontmatter.sourceUrl} />` আর `<MarkComplete lessonId="<domain>-<task>" />`।
-5. **শব্দ ইংরেজিতেই রাখুন** — `stop_reason`, `tool_use`, `MCP`, `CLAUDE.md`, `PreToolUse`, `fork_session`, কমান্ড ও কোড transliterate করবেন না।
-6. নতুন পরিভাষার এন্ট্রি আগে `src/content/glossary-terms.json`-এ দিন, তারপর লেসনে সেটাই ব্যবহার করুন। একই শব্দ দুইভাবে অনুদিত হলে গ্লোসারির রুপটাই চুড়ান্ত।
+1. থিম metadata আগে বসান (`src/lib/themes.ts`), তারপর lesson list ও title/page data বসান (`src/lib/lessons.ts`); শুধু তারপর সংশ্লিষ্ট MDX ফাইল সাইডবারে যুক্ত হবে।
+2. লেসন ফাইল `src/content/docs/learn/<theme-slug>/<lesson-slug>.mdx` পথে রাখুন; slug মূল ইংরেজি সোর্সের গঠন মেনে চলে।
+3. লেসন ফ্রন্টম্যাটার স্কিমা অনুযায়ী পূরণ করুন: `title`, `titleEn`, `domain`, `task`, `order`, `sourceUrl`, `updated`, `keywords[]`, `sources[]`। স্কিমা: `src/content.config.ts`।
+4. প্রতি লেসনের শেষে `<Attribution sourceUrl={frontmatter.sourceUrl} />` আর `<MarkComplete lessonId="<domain>-<task>" />` রাখুন।
+5. **প্রযুক্তিগত শব্দ ইংরেজিতেই রাখুন** — যেমন: `MCP`, `CLAUDE.md`, `stop_reason`, `PreToolUse`; কোড ও identifiers transliterate করবেন না।
+6. নতুন পরিভাষা লেসনে ব্যবহারের আগে `src/content/glossary-terms.json`-এ যোগ করুন। একই শব্দ দুইভাবে অনুদিত থাকলে গ্লোসারির রূপটি চূড়ান্ত।
 7. মেশিন-অনুবাদ হুবহু বসাবেন না — প্রাকৃতিক বাংলা > আক্ষরিক অনুবাদ।
-8. যে ডোমেইনের লেসন এখনও অনুদিত হয়নি, তার index পাতা "অনুবাদ বাকি" ট্যাগসহ রাখুন, যাতে সাইডবার লিংক 404 না দেয়।
+8. যে থিমের লেসন এখনো অনুদিত নয়, তার index পাতা "অনুবাদ বাকি" ট্যাগসহ রাখুন, যাতে সাইডবার লিংক 404 না দেয়।
+
+## সাইটে নতুন থিম যোগ করা
+
+1. `src/lib/themes.ts`-এ নতুন থিমের metadata ও source তথ্য যোগ করুন।
+2. `src/lib/lessons.ts`-এ অর্ডারড lesson list, slugs, পেজ রেঞ্জ ও শিরোনাম রাখুন।
+3. থিমের overview পাতা `src/content/docs/learn/<theme-slug>/index.mdx`-এ তৈরি করুন, যাতে সাইডবার লিংক সবসময় valid থাকে।
+4. প্রতিটি লেসন `src/content/docs/learn/<theme-slug>/<lesson-slug>.mdx`-এ তৈরি করুন।
+
+> নোট: যে থিমের লেসন এখনো অনুদিত নয়, সেখানে overview পাতা “অনুবাদ বাকি” ট্যাগসহ থাকা জরুরি, যাতে সাইডবার ও অভ্যন্তরীণ লিংক 404 না দেয়।
 
 ### ভেতরের লিংক
 
-সাইট `/CCAR-F` বেসে চলে, আর Astro Markdown/MDX-এর লেখা লিংকে `base` যোগ করে না। তাই `/learn/` প্রোডাকশনে 404 দেয়।
+সাইট `/aws-solution-architect-associate-resources` বেসে চলে, কিন্তু Astro Markdown ও MDX-এ root-relative লিংকে `base` যোগ হয় না। তাই `/learn/` প্রোডাকশনে 404 দেয়।
 
-- `.astro` কম্পোনেন্টে: `siteUrl('learn/')` (`src/lib/urls.ts`)।
-- `.mdx` কনটেন্টে: `<a href={siteUrl('learn/')}>…</a>`।
-- Starlight ফ্রন্টম্যাটারের hero-action লিংকে `siteUrl()` কল করা যায় না — বেস স্পষ্ট লিখুন (`/CCAR-F/learn/`)।
+| ফাইল | সঠিক নিয়ম |
+| --- | --- |
+| `.astro` কম্পোনেন্ট | `siteUrl('learn/')` — হেল্পার: `src/lib/urls.ts` |
+| `.mdx` কনটেন্ট | `<a href={siteUrl('learn/')}>…</a>` |
+| Starlight ফ্রন্টম্যাটার | বেস পাথ স্পষ্ট লিখুন — `/aws-solution-architect-associate-resources/learn/` |
 
-`pnpm check:links` বেস ছাড়া যেকোনো root-relative লিংকে ফেল করে, তাই ভুল নীরবে পাস করে না।
+`pnpm check:links` বেস ছাড়া যেকোনো root-relative লিংকে ফেল করে, তাই ভুল লিংক নীরবে পাস করে না।
 
 ### ডিজাইন ও কনট্রাস্ট
 
-- নিউট্রাল সারফেসে অ্যাকসেন্ট টেক্সট WCAG AA (৪.৫:১) পাস করতে হবে — কাঁচা `--sl-color-accent`-এর বদলে `--sl-color-accent-high` ব্যবহার করুন। লাইট থিমে `--sl-color-text-accent` ইতিমধ্যে `--sl-color-accent-high`-এ remap করা, তাই লিংক, নেভ টাইটেল, skip link ও TOC মার্কার সবই ঠিক থাকে; টেক্সটে কাঁচা accent ফিরিয়ে আনবেন না।
-- ডায়াগ্রাম Mermaid fenced block; ক্লায়েন্টে রেন্ডার হয়, বিল্ড-টাইম ব্রাউজার লাগে না। Mermaid নিজের প্রস্থ inline `max-width`-এ পিন করে, আর `custom.css` সেই সীমা তুলে দেয় যাতে flowchart পড়ার কলাম ভরে।
+- নিউট্রাল সারফেসে accent টেক্সটে WCAG AA (৪.৫:১) পাস করতে হবে — raw `--sl-color-accent`-এর বদলে `--sl-color-accent-high` ব্যবহার করুন।
+- Mermaid নিজের প্রস্থ inline `max-width`-এ পিন করে, আর `custom.css` সেই সীমা তুলে দেয় যাতে flowchart পড়ার কলাম ভরে। এই রুল বদলালে inline style-এর dependency-ও পরীক্ষা করুন।
 - Starlight-এর ডিফল্ট গ্রিডে TOC কলাম চওড়া স্ক্রিনে ৯২০px অবধি প্রসারিত হতে পারে। `custom.css` TOC কলাম `--sl-sidebar-width`-এ সীমিত রাখে আর `--sl-content-width` ৪৮rem-এ তোলে (≥৭২rem)। ওই কলাম বদলালে হেডারের গ্রিড চালানো `--__toc-width`-ও মিলিয়ে নিন।
 
-## PR করার আগে
+## কমিট বা PR করার আগে
 
 ```bash
 pnpm check
@@ -101,30 +131,31 @@ pnpm check:links
 pnpm check:contrast
 ```
 
-- [ ] উপরের চারটি কমান্ড পাস করে
-- [ ] ভেতরের লিংক অটুট (prev/next, সাইডবার, গ্লোসারি রেফারেন্স)
-- [ ] রঙ/থিম বদলালে টেক্সটের কনট্রাস্ট ৪.৫:১-এর উপরে (নিছক গ্রাফিক চিহ্নের জন্য ৩:১)
-- [ ] নতুন শব্দ `glossary-terms.json`-এ যোগ করা
-- [ ] কমিট মেসেজ পরিষ্কার (`feat: 1.2 অনুবাদ যোগ`, `fix: 1.1 কীওয়ার্ড টেবিল সংশোধন`)
+- উপরের চারটি কমান্ড পাস করা জরুরি।
+- রঙ/থিম বদলালে টেক্সটের কনট্রাস্ট ৪.৫:১-এর উপরে রাখুন (নিছক গ্রাফিক চিহ্নের জন্য ৩:১)।
+- ভেতরের লিংক অটুট রাখুন (prev/next, সাইডবার, গ্লোসারি রেফারেন্স)।
+- নতুন শব্দ `src/content/glossary-terms.json`-এ যোগ করা আছে তা নিশ্চিত করুন।
+- পরিবর্তন ছোট রাখুন এবং কমিট মেসেজ পরিষ্কার রাখুন, যেমন: `feat: microservices overview অনুবাদ` বা `fix: lesson frontmatter সংশোধন`।
+
+বিস্তারিত নিয়ম [CONTRIBUTING.md](./CONTRIBUTING.md)-এ।
 
 ## ডিপ্লয়
 
-`main`-এ পুশ করলেই GitHub Actions সাইট বিল্ড করে GitHub Pages-এ দেয়; Actions থেকে `workflow_dispatch`-ও চালানো যায়। CI ধাপ: install → `pnpm check` → `pnpm build` → `pnpm check:links` → `pnpm check:contrast` → artifact আপলোড → ডিপ্লয়।
+`main`-এ পুশ করলেই GitHub Actions সাইট বিল্ড করে GitHub Pages-এ দেয়; Actions থেকে `workflow_dispatch`-ও চালানো যায়। CI ধাপ: install → `pnpm check` → `pnpm build` → `pnpm check:links` → `pnpm check:contrast` → artifact আপলোড → deploy।
 
-- URL: https://hasnat-shohag.github.io/CCAR-F/ — base path `/CCAR-F`; `astro.config.mjs`-এর `base` বদলালে `.github/workflows/deploy.yml`-ও মিলিয়ে নিন।
-- একবারের সেটআপ (GitHub UI থেকে): Settings → General → Default branch = **main**, আর Settings → Pages → Source = **GitHub Actions**। Actions-এর `GITHUB_TOKEN` দিয়ে Pages চালু করা যায় না, তাই দ্বিতীয় ধাপটি হাতে করতে হয় — না করলে ডিপ্লয় `Configure Pages` ধাপে থামে।
+base path `/aws-solution-architect-associate-resources` বদলালে `astro.config.mjs` ও সংশ্লিষ্ট পাতার লিংকগুলোর consistency নিশ্চিত করুন। একবারের সেটআপ: Settings → General → Default branch = **main**, আর Settings → Pages → Source = **GitHub Actions**। Actions-এর `GITHUB_TOKEN` দিয়ে Pages চালু করা যায় না, তাই দ্বিতীয় ধাপটি হাতে করতে হয় — না করলে ডিপ্লয় `Configure Pages` ধাপে থামে।
 
 ## অবদান
 
-PR স্বাগত — বিশেষ করে অনুবাদ সংশোধন। বিস্তারিত নিয়ম [CONTRIBUTING.md](./CONTRIBUTING.md)-এ। সংক্ষেপে: পরিবর্তন ছোট রাখুন (প্রতি PR-এ একটি লেসন বা একটি কম্পোনেন্ট), প্রযুক্তিগত শব্দ ইংরেজিতে রাখুন, নতুন শব্দ আগে গ্লোসারিতে যোগ করুন, আর উপরের চারটি কমান্ড পাস করান।
+PR স্বাগত — বিশেষ করে অনুবাদ সংশোধন। পরিবর্তন ছোট রাখুন (প্রতি PR-এ একটি থিম/ডোমেইন বা component), প্রযুক্তিগত শব্দ ইংরেজিতে রাখুন, নতুন শব্দ আগে গ্লোসারিতে যোগ করুন, আর কমিটের আগে চারটি validation কমান্ড পাস করান।
 
-বাগ বা ভুল অনুবাদ পেলে [issue](https://github.com/hasnat-shohag/CCAR-F/issues) খুলুন — পাতা/লেসনের নাম, ভুল বাক্যটি হুবহু, কেন ভুল ও সঠিক কী হওয়া উচিত, এবং মুল ইংরেজি পাতার লিংক (থাকলে) দিন।
+বাগ বা ভুল অনুবাদ পেলে [issue](https://github.com/hasnat-shohag/aws-solution-architect-associate-resources/issues) খুলুন — পাতা/লেসনের নাম, ভুল বাক্যটি হুবহু, কেন ভুল ও সঠিক কী হওয়া উচিত, এবং মূল ইংরেজি পাতার লিংক (থাকলে) দিন।
 
 কনটেন্ট-মালিক এই অনুবাদ অপসারণ চাইলে issue খুলুন — যুক্তি ছাড়াই যোগ্য পাতাগুলো সরিয়ে নেওয়া হবে।
 
 ## লাইসেন্স ও কৃতিত্ব
 
-- কোড: MIT (`LICENSE`)।
-- বাংলা কনটেন্ট: CC BY-NC-SA 4.0 (`LICENSE-CONTENT`)। অবদানের মাধ্যমে আপনি এই শর্তে সম্মত হচ্ছেন।
-- মুল ইংরেজি স্টাডি গাইড: [claudecertificationguide.com](https://claudecertificationguide.com/learn)।
-- পরীক্ষার ব্লুপ্রিন্ট ও প্রযুক্তিগত তথ্য: Anthropic।
+- **কোড:** MIT (`LICENSE`)।
+- **বাংলা কনটেন্ট:** CC BY-NC-SA 4.0 (`LICENSE-CONTENT`); PR-এ অবদান রাখলে এই শর্তে সম্মত ধরা হয়।
+- **মূল ইংরেজি সোর্স:** [AWS Whitepaper — Implementing Microservices on AWS](https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf)।
+- পরীক্ষার ব্লুপ্রিন্ট ও প্রযুক্তিগত বিবরণ: Amazon Web Services।

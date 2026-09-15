@@ -1,0 +1,63 @@
+---
+title: "Managing Communication"
+titleEn: "Managing Communication"
+description: "Chattiness, protocol and caching"
+theme: microservices
+order: 17
+pages: [33, 33]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: AssumeRole
+    bn: cross-account identity assuming role
+    tip: temporary credentials, trust policy needed।
+  - term: Resource Policy
+    bn: resource-attached permission policy
+    tip: S3 bucket policy, KMS key policy, SQS queue policy।
+  - term: IAM Policy
+    bn: identity-attached permission policy
+    tip: role/user/group attached।
+  - term: Permission Boundary
+    bn: maximum permission limit
+    tip: role বা user একে কেবল boundary ভিতরে scope করতে।
+  - term: KMS
+    bn: key management service
+    tip: key policy controls access; encrypted SQS/SNS/Kinesis।
+  - term: Least Privilege
+    bn: কম অনুমতি প্রদান করা
+    tip: scope single service/resource not wildcard admin।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Excessive communication cross-domain is the common root cause of latency/security problems. Service-to-service calls should be minimized and moved to message queues when possible।
+
+## Strategies
+
+- Aggregate multiple service responses into one backend-for-frontend endpoint।
+- Cache static/common data at CloudFront or service level।
+- Asynchronous workflows via SQS/SNS/EventBridge instead of tight HTTP calls।
+- gRPC/protobuf reduce payload overhead for high-volume internal RPC।
+- Retries and exponential backoff to avoid amplification cascading。
+- Malformed data should fail fast; validate request schema at API layer।
+
+```mermaid
+flowchart LR
+  UI[Frontend] --> BFF[BFF/api aggregation]
+  BFF --> A[Service A]
+  BFF --> B[Service B]
+  BFF --> C[Service C]
+  subgraph Cache
+    CF[CloudFront] --> BFF
+  end
+```
+
+> [!NOTE]
+Large microservices team গুলো প্রায়ই blindly tightly couple HTTP calls করে। এটি temporal coupling বাড়ায়; async messaging হলে producer/contributor independent। এক API endpoint পেও অগ্রগতি প্রয়োজন।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-17" />

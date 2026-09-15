@@ -1,0 +1,71 @@
+---
+title: "Serverless মাইক্রোসার্ভিস আর্কিটেকচার"
+titleEn: "Serverless Microservices Architecture"
+description: "Lambda and Fargate patterns, MongoDB and DB copies"
+theme: microservices
+order: 8
+pages: [11, 12]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: API Gateway
+    bn: API তৈরি ও পরিচালনার পরিষেবা
+    tip: request validation, authorization, caching, throttling ও logging।
+  - term: Lambda
+    bn: ইভেন্ট-ভিত্তিক serverless compute
+    tip: ছোট event-driven worker, traffic spike ও pay-per-request দৃশ্যে ভালো।
+  - term: DynamoDB
+    bn: managed NoSQL database
+    tip: low-latency key lookup ও high throughput; partition key সুষম বাছুন।
+  - term: Fargate
+    bn: serverless container compute
+    tip: Docker image, dependency runtime বা long-running process প্রয়োজন হলে ব্যবহার করুন।
+  - term: ALB
+    bn: Application Load Balancer
+    tip: path/host based routing; Fargate/ECS target group এর সাথে বহুল ব্যবহৃত।
+  - term: EventBridge
+    bn: event bus
+    tip: scheduled jobs ও event fanout; Lambda বা Step Functions trigger করে।
+  - term: SQS
+    bn: managed queue
+    tip: worker decoupling ও retry যোগ করে; standard queue duplicate delivery হতে পারে।
+  - term: Idempotency
+    bn: duplicate কলে একই ফলাফল
+    tip: queue retry বা message duplicate হলে state ঠিক রাখে।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+এই লেসনের উদ্দেশ্য দুটি বাস্তব প্যাটার্ন চেনা: সম্পূর্ণ Lambda-based API এবং Fargate-based container API। দুটিই operational overhead কমায়, কিন্তু নকশা ভিন্ন।
+
+## Pattern ১: API Gateway + Lambda
+
+এখানে frontend API traffic API Gateway পরিচালনা করে, request → Lambda function → DynamoDB। Lambda প্রতি রিকোয়েস্ট অনুযায়ী scale হয়; DynamoDB item persist করে। ফলে server fleet, patching ও idle capacity ম্যানেজ করা লাগে না।
+
+## Pattern ২: API Gateway/ALB + Fargate
+
+এখানে container image চালাতে হলে Fargate use করুন। API Gateway → ALB → Fargate task প্যাটার্ন বা সরাসরি ALB/NLB → Fargate কাজ করতে পারে। এতে Docker image, environment dependencies, health checks ও library/runtime control সমর্থন পাওয়া যায়।
+
+## Asynchronous worker
+
+S3 event → SQS বা EventBridge → Lambda/Fargate অনেক সময় ব্যবহার হয়। SQS buffering দেয়; Lambda auto-scale করে। Duplicate message অসম্ভব না হলে handler idempotent করতে হবে।
+
+```mermaid
+flowchart TD
+  U[Client] --> API[API Gateway]
+  API --> FN[Lambda]
+  FN --> DDB[(DynamoDB)]
+  API --> ALB[ALB]
+  ALB --> FG[Fargate Task]
+  FG --> RDS[(RDS)]
+```
+
+> [!NOTE]
+"Serverless" মানে Lambda নয়। Fargate-ও serverless; এটি শুধু container workload চালায়। প্রশ্নে Docker image, long-running process বা library/runtime control থাকলে Fargate ভাবুন।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-8" />

@@ -1,0 +1,67 @@
+---
+title: "Cost Optimization ও Sustainability"
+titleEn: "Cost Optimization & Sustainability"
+description: "Only scale services that need it"
+theme: microservices
+order: 13
+pages: [20, 20]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Selective Scaling
+    bn: প্রয়োজনীয় সার্ভিস শুধু স্কেল করা
+    tip: monolith-এ সব এক স্কেলে চলে; microservice-এ দক্ষ হতে পারে।
+  - term: Graviton
+    bn: AWS Arm-based processor
+    tip: performance per dollar/per watt প্রায়ই ভালো; migration planning দরকার।
+  - term: Cost Explorer
+    bn: spending analysis service
+    tip: usage-based cost visualization and forecasting।
+  - term: Feedback
+    bn: average utilization ও demand ডেটা
+    tri: capacity plan random guess নয়।
+  - term: Compute Savings Plans
+    bn: commit-based discount
+    tip: stable baseline workload এ ভালো।
+  - term: Spot Instance
+    bn: unused EC2 capacity সস্তায়
+    tip: interruptible, stateless or fault-tolerant work এ ব্যবহার করুন।
+  - term: Lifecycle
+    bn: ডেটা aging strategy
+    tip: transition to colder storage classes দরকার হলে S3 Lifecycle Rules।
+  - term: Sustainability
+    bn: resource usage এবং emissions awareness
+    tip: rightsizing, scheduling, utilization এবং lifecycle policies।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Microservices এবং serverless খরচ নিয়ন্ত্রণে সাহায্য করে, কারণ সার্ভিস গুলো আলাদা হয় এবং শুধু usage cost প্রয়োজন হয়। তবে বহু ছোট সার্ভিস বানানো নিজে থেকে cost win নয়।
+
+## Cost levers
+
+- বেশি load ধারণ করা সার্ভিসকে স্কেল করুন, বাকিদের low baseline এ রাখুন।
+- Lambda/Fargate/App Runner এ exact resources স্কেল করা হয়; idle cost কম।
+- Batch, CI বা fault-tolerant workload-এ Spot Instances ব্যবহার করা যায়।
+- Graviton processor অনেক workload এ performance-per-dollar better হয়, কিন্তু library compatibility check দরকার।
+- Regulating ephemeral files, logs এবং lifecycle policy বছরের পর বছর খরচ কমায়।
+- AWS Cost Explorer দিয়ে environment, service ও tag filter এ demand pattern বোঝা যায়।
+
+```mermaid
+flowchart TD
+  Usage[Usage Data] --> Rightsizing[Rightsizing]
+  Usage --> Scheduling[Nonprod Hours]
+  Usage --> Lifecycle[Storage Lifecycle]
+  Usage --> Baseline[Confidence Plan]
+  Baseline --> Graviton[Graviton/Spot]
+```
+
+> [!NOTE]
+প্রশ্ন যদি "টাকা কমাও" বলে, তবু SLA/availability/concurrency ভুলে গেলে ভুল। Cost কমানোর একটি সিদ্ধান্ত নিন, কিন্তু business requirement মাথায় রাখুন।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-13" />

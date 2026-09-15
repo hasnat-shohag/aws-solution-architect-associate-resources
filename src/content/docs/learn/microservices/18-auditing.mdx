@@ -1,0 +1,68 @@
+---
+title: "Auditing"
+titleEn: "Auditing"
+description: "CloudTrail, AWS Config, EventBridge and change management"
+theme: microservices
+order: 18
+pages: [34, 35]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: CloudTrail
+    bn: AWS API call audit log
+    tip: management and data events capture; all org regions useful।
+  - term: CloudTrail Lake
+    bn: managed audit data lake
+    tip: SQL query audit events, long-term retention।
+  - term: AWS Config
+    bn: configuration state/change recorder
+    tip: resource inventory and history, timeline of relationship।
+  - term: Config Rule
+    bn: compliance rule checks
+    tip: custom/Lambda based or managed rules।
+  - term: Conformance Pack
+    bn: resource config rule bundle
+    tip: multi-account governance baseline।
+  - term: Amazon EventBridge
+    bn: event bus
+    tip: route CloudTrail event, config change, schedule operation automation।
+  - term: GuardDuty
+    bn: threat detection service
+    tip: unusual API/network activity, credentials misuse।
+  - term: Security Hub
+    bn: security posture aggregation
+    tip: controls, standards and cross-account findings।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Microservices এ বহু টিম, account এবং automated changes থাকে। Compliance, troubleshooting এবং responsibility চিহ্নিত করতে auditable trail রাখা জরুরি।
+
+## What records what
+
+- **CloudTrail** API/event record; caller identity, resource, request/response metadata, source IP, timestamp।
+- **CloudTrail Lake** audit data lake; SQL query দিয়ে investigate centrally।
+- **AWS Config** current state, config history, resource relationships, compliance drift।
+- **Config rules** specific setting check; custom rules/Lambda evaluate।
+- **EventBridge** CloudTrail event match → SNS/Lambda/Step Functions automation।
+- **GuardDuty/Detective/Security Hub** security context এ ব্যবহার হয়।
+
+```mermaid
+flowchart LR
+  Events[API events] --> Trail[CloudTrail]
+  Trail --> Lake[CloudTrail Lake]
+  Config[AWS Config] --> Rules[Config Rules]
+  Config --> State[State History]
+  Trail --> EB[EventBridge]
+  EB --> Auto[Lambda / Step Functions]
+```
+
+> [!NOTE]
+CloudTrail বলে "who did what"; Config বলে "what changed and how it looks now"। প্রশ্নে difference দেখাতে জানতে হবে।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-18" />

@@ -1,0 +1,72 @@
+---
+title: CI/CD And Private Networking And Datastore
+titleEn: CI/CD, Private Networking & Data Store
+description: CI/CD, AWS PrivateLink ও data storage নিয়ে দ্রুত রিভিশন।
+theme: microservices
+order: 4
+pages: [6, 6]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: CI/CD
+    bn: একত্র করে নিয়মিত ডিপ্লয়ের প্রক্রিয়া
+    tip: ছোট পরিবর্তন নিয়মিত পরীক্ষা ও ডিপ্লয় করা যায়।
+  - term: CodePipeline
+    bn: AWS release pipeline পরিচালনার পরিষেবা
+    tip: CodeCommit/CodeBuild/CodeDeploy এর সাথে ধাপে ধাপে প্রণালী গঠন করে।
+  - term: CodeBuild
+    bn: সোর্স থেকে artifact তৈরির পরিষেবা
+    tip: test, package ও image build-এর কাজ চালায়।
+  - term: CodeDeploy
+    bn: অ্যাপ ডিপ্লয় স্বয়ংক্রিয় করার পরিষেবা
+    tip: EC2, Lambda ও ECS ডিপ্লয়ে সাপোর্ট দেয়।
+  - term: PrivateLink
+    bn: VPC থেকে private connectionের পদ্ধতি
+    tip: নির্দিষ্ট AWS সার্ভিস ও VPC endpoint সার্ভিসে প্রাইভেট সংযোগ দেয়।
+  - term: VPC
+    bn: নিজের প্রাইভেট নেটওয়ার্ক
+    tip: subnet, route table ও endpoint দিয়ে ট্রাফিক ছাঁটতে হয়।
+  - term: ElastiCache
+    bn: managed in-memory cache
+    tip: Redis বা Memcached for session data.
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+note: স্টাডি-নোটের উৎস, প্রিন্ট পেজ ৬।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৬ (Microservices implementations, CI/CD, Private networking ও Data store)।
+
+## CI/CD
+
+Microservices-এ নিয়মিত ছোট release চালাতে CI/CD একটি crucial DevOps part। Whitepaper এখানে services-এর সংক্ষিপ্ত উল্লেখ করে এবং বিস্তারিত আলোচনা আলাদা whitepaper-এ রেখে দেয়।
+
+- **CodePipeline**: release workflow orchestrate করে।
+- **CodeBuild**: source থেকে build, test ও package artifact তৈরি করে।
+- **CodeDeploy**: EC2, Lambda ও ECS deployment manage করে।
+
+## Private networking
+
+```mermaid
+flowchart LR
+  A[App in VPC] --> P[PrivateLink endpoint]
+  P --> S[AWS service / VPC endpoint service]
+  A -. no public internet .-> X[Public endpoint]
+```
+
+**AWS PrivateLink** VPC ও supported AWS services-এর মধ্যে private connection দেয়। এটি microservices traffic-এর isolate ও security বাড়ায় এবং traffic-কে public internet পার হতে দেয় না। PCI বা HIPAA মতো compliance scenario-তে দরকারী।
+
+## Data store
+
+Microservice data persist করতে data store দরকার। Session data এর জন্য প্রচলিত পথ হলো in-memory cache।
+
+- **Redis**: rich data structures ও advanced caching patterns।
+- **Memcached**: সহজ distributed memory cache।
+- **Amazon ElastiCache**: Redis ও Memcached উভয়ের managed service।
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-4" />

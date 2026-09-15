@@ -15,17 +15,17 @@ You are free to:
   - Adapt: remix, transform and build upon the material.
 
 Under these terms:
-  - Attribution: credit claudecertificationguide.com (the original English
-    study guide), Anthropic (exam blueprint and technical documentation) and
+  - Attribution: credit AWS (the original English
+    study guide), Amazon Web Services (exam blueprint and technical documentation) and
     this repository, and link to this license.
   - NonCommercial: you may not use the material for commercial purposes.
   - ShareAlike: derivatives must be released under the same license.
 
 Upstream sources:
-  - English study guide: https://claudecertificationguide.com/learn
-  - Claude Certified Architect (Foundations) exam blueprint and technical
-    documentation: Anthropic (https://www.anthropic.com)
+  - English study guide: https://https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+  - AWS SAA-C03 exam blueprint and technical
+    documentation: Amazon Web Services (https://www.anthropic.com)
 
 Removal requests: if you own the upstream content and want any translated page
-removed, open an issue at https://github.com/hasnat-shohag/CCAR-F/issues and it
+removed, open an issue at https://github.com/hasnat-shohag/aws-solution-architect-associate-resources/issues and it
 will be taken down.

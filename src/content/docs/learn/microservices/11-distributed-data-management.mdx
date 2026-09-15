@@ -1,0 +1,68 @@
+---
+title: "ডিস্ট্রিবিউটেড ডেটা ম্যানেজমেন্ট"
+titleEn: "Distributed Data Management"
+description: "Saga, event sourcing, CQRS, idempotency and duplicate delivery"
+theme: microservices
+order: 11
+pages: [18, 18]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Distributed Data
+    bn: ভাগ করে রাখা ডেটা
+    tip: প্রতি service নিজের database দিলে ownership clear হয়, কিন্তু consistency চিন্তা করতে হয়।
+  - term: Saga
+    bn: বহু ধাপের workflow একত্রিত করার প্যাটার্ন
+    tip: failure হলে compensation action দিয়ে আগের state ফিরিয়ে আনা।
+  - term: Event Sourcing
+    bn: স্টেট পরিবর্তন ইভেন্ট হিসেবে রাখা
+    tip: audit ও replay সুবিধা দেয়; current state event থেকে derive হয়।
+  - term: CQRS
+    bn: Command Query Responsibility Segregation
+    tip: write side and optimized read model ভিন্ন হতে পারে।
+  - term: Eventual Consistency
+    bn: কিছু সময় পর সব replica consistent হয়
+    tip: user action পরে read আলাদা নোড পেতে পারে; UX প্রভাব ভাবুন।
+  - term: Idempotency
+    bn: বারবার করলেও একই ফলাফল সৃষ্টি করা
+    tip: event/message duplicate delivery এ safe থাকার পদ্ধতি।
+  - term: Compensating Transaction
+    bn: ব্যর্থ ধাপ ঠিক করার বিপরীত transaction
+    tip: refund, cancel, unlock, release reservation ইত্যাদি।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Monolith এক database share করতে পারে, কিন্তু microservice সাধারণত নিজস্ব data ownership রাখে। এখানে challenge হলো service গুলোতে একসাথে সঠিক state রাখা, বিশেষ করে payment, inventory বা order মতো workflow-এ।
+
+## Patterns দেখুন
+
+- **Event-driven messaging** service decoupling করে। EventBridge/SNS তে ঘটনা occur করে, অন্য service react করে।
+- **Saga** বহু service ধাপে ধাপে orchestrate করে। Failure হলে compensating action চালায়।
+- **Event sourcing** current state না রেখে সব state change event রাখে। Replay করে state তৈরি করা যায়।
+- **CQRS** আলাদা write model আর fast read model রাখে। This is often useful with high read throughput.
+- **Idempotency** রিট্রাই বা duplicate event নিরাপদ করে, যেমন same payment ID দুই বার process না করা।
+
+> [!NOTE]
+> প্রশ্নে "atomic transaction across microservices" এর বদলে "compensating action", "eventual consistency", "rollback sequence" শেখা সহজ।
+
+```mermaid
+flowchart LR
+  Order[Order Service] -->|OrderConfirmed| Inventory[Inventory Service]
+  Order -->|OrderConfirmed| Payment[Payment Service]
+  Inventory -->|Stock Released| Order
+  Payment -->|Payment Failed| Order
+  Order -->|Cancel Order| Saga[Saga Coordinators]
+  Saga -->|Compensate| Inventory
+  Saga -->|Refund| Payment
+```
+
+> [!NOTE]
+> মাইক্রোসার্ভিস এ two-phase commit সহজে করা যায় না। বহু service across workflow সাধারণত Saga দিয়ে সামলায়; এতে eventual consistency এবং compensation mechanism থাকে।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-11" />

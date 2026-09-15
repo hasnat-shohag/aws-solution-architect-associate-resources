@@ -1,0 +1,71 @@
+---
+title: "Lambda অ্যাপ্লিকেশন ডিপ্লয়"
+titleEn: "Deploying Lambda-Based Applications"
+description: "Zip, container image, SAM/CDK, Layers, SnapStart, Powertools"
+theme: microservices
+order: 6
+pages: [8, 8]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: SAM
+    bn: AWS serverless application template and CLI
+    tip: দ্রুত Lambda API DynamoDB বা auth সহ starter code তৈরি করতে পারে।
+  - term: SAM CLI
+    bn: SAM local test and deploy command line
+    tip: sam local invoke and sam deploy common commands.
+  - term: CDK
+    bn: Infrastructure as code using programming languages
+    tip: জটিল infrastructure এ reusable construct এবং typed programming language.
+  - term: CloudFormation
+    bn: AWS resource deployment template engine
+    tip: SAM template compile হয় CloudFormation template.
+  - term: Lambda Layers
+    bn: shared dependency package
+    tip: একই dependency বহু function এ ব্যবহার করার জন্য।
+  - term: SnapStart
+    bn: JVM cold start acceleration
+    tip: Java 11 or newer runtime and other performance options.
+  - term: Java Opt
+    bn: Lambda Java optimization library
+    tip: SnapStart সংগ্রহ এবং JVM tuning এর সাথে ব্যবহার হয়।
+  - term: Powertools
+    bn: Lambda utility library
+    tip: logging tracing metrics and idempotency.
+sources:
+  - label: AWS Whitepaper
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৮।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+এই লেসনে আমরা Lambda code deploy করার পদ্ধতি জানব। Zip সাধারণ dependency এর জন্য ভাল, container image বড় dependency বা Docker-native workflow এর জন্য ভাল।
+
+## Deployment tools
+
+- **AWS SAM** serverless app তৈরি ও deploy করার দ্রুত পদ্ধতি।
+- **AWS CDK** programming language দিয়ে infrastructure define করে; জটিল project এ reusable construct ভালো হয়।
+- **Lambda Layers** common dependencies আলাদা করে কমপ্লেক্সিটি কমায়।
+- **SnapStart** Java function cold start কমায়।
+- **Powertools** observability, idempotency, structured logging ও safe fault handling দেয়।
+
+```mermaid
+flowchart LR
+  A[Code] --> B{Package format}
+  B -->|Zip| C[zip archive]
+  B -->|Container| D[container image]
+  C --> E[Lambda]
+  D --> E
+  E --> F[CloudWatch Logs]
+```
+
+> [!NOTE]
+SAM এবং CDK একই জিনিস নয়। SAM Lambda-focused serverless development workflow; CDK programming language-ভিত্তিক general infrastructure.
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-6" />

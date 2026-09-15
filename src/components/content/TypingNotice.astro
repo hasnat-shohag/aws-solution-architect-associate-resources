@@ -1,0 +1,12 @@
+---
+interface Props {
+	lessonId: string;
+}
+
+const { lessonId } = Astro.props;
+import { siteUrl } from '../../lib/urls';
+---
+
+<aside class="typing-notice" data-lesson-id={lessonId}>
+	এই লেসনটি এখনো টাইপ করা হচ্ছে। পড়া শেষে <a href={siteUrl('progress/')}>অগ্রগতি ড্যাশবোর্ড</a>-এ চিহ্ন দেখুন।
+</aside>

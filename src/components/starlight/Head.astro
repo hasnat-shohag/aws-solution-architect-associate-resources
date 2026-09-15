@@ -20,7 +20,7 @@ const theme = typeof frontmatter?.theme === 'string' ? frontmatter.theme : undef
 	document.addEventListener('astro:after-frontmatter', () => {
 		applyPreviewBadge();
 	});
-	function applyPreviewBadge(): void {
+  function applyPreviewBadge() {
 		if (document.querySelector('.saa-preview-badge')) return;
 		const sidebar = document.querySelector('.sl-sidebar');
 		if (!sidebar) return;

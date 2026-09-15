@@ -1,0 +1,109 @@
+---
+title: Document Extras ও AWS Glossary
+titleEn: Document Extras & Glossary
+description: Contributors, document history, notices এবং glossary-focused recap।
+theme: microservices
+order: 20
+pages: [37, 41]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Document Extras
+    bn: ডকুমেন্টের মূল বিষয় ছাড়া বাড়তি অংশ
+    tip: contributors, document history, notices ও glossary এখানে আসে।
+  - term: Contributors
+    bn: ডকুমেন্ট লেখক ও অবদানকারীগণ
+    tip: AWS Solutions Architecture দল ও অন্যান্য অবদানকারী।
+  - term: Document History
+    bn: সংস্করণ ও সময়ের তালিকা
+    tip: নতুন service বা pattern যুক্ত হলে whitepaper আপডেট হয়।
+  - term: Notices
+    bn: অনুবাদ ও ব্যবহার সংক্রান্ত বিজ্ঞপ্তি
+    tip: Amazon অনুবাদের সঠিকতা / warranty নিয়ে disclaimer দেয়।
+  - term: Glossary
+    bn: AWS শব্দকোষ
+    tip: service ও প্রযুক্তির নাম পুনরায় দ্রুত দেখে নেওয়ার এলাকা।
+  - term: API Gateway
+    bn: managed API entry point
+    tip: traffic management, auth, throttling ও monitoring করতে পারে।
+  - term: Application Load Balancer
+    bn: HTTP/S traffic load balancer
+    tip: API Gateway না চাইলে plain load balancing ভালো বিকল্প।
+  - term: Amazon ECS
+    bn: managed container orchestration
+    tip: AWS integration ও simplicity-র জন্য প্রচলিত।
+  - term: Amazon EKS
+    bn: managed Kubernetes service
+    tip: Kubernetes tooling ও ecosystem দরকার হলে ব্যবহার।
+  - term: AWS Fargate
+    bn: serverless compute engine
+    tip: ECS বা EKS workload-এ compute infrastructure manage না করেও চলে।
+  - term: AWS Lambda
+    bn: event-driven managed compute
+    tip: short-lived stateless workload ও event routing এ শক্তিশালী।
+  - term: Amazon VPC
+    bn: private AWS network
+    tip: subnet, route table, security ও private networking এর বেস।
+  - term: AWS PrivateLink
+    bn: private service connection technology
+    tip: VPC-কে public internet এ না ফেটে AWS services ও অন্য VPC-তে connect করতে দেয়।
+  - term: Amazon RDS
+    bn: managed relational database service
+    tip: স্ট্রাকচারযুক্ত data ও business object-এর জন্য প্রযোজ্য।
+  - term: DynamoDB
+    bn: managed NoSQL database
+    tip: key-based access, performance, scalability, availability-first workload।
+  - term: AWS App Mesh
+    bn: application networking monitor/control plane
+    tip: services আলাদা রাখতে, traffic নিয়ন্ত্রণ ও observability-তে ব্যবহার।
+  - term: Amazon S3
+    bn: object storage
+    tip: durable storage, static assets, logs ও event data।
+  - term: Amazon ElastiCache
+    bn: managed in-memory caching
+    tip: server/duplicate hit কমানোর জন্য Memcached বা Redis।
+  - term: AWS IoT
+    bn: managed IoT infrastructure
+    tip: sensor, devices ও telemetry-র জন্য সংশ্লিষ্ট সাপোর্ট।
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৩৭–৪১।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import ExamTrap from '../../../../components/content/ExamTrap.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+**পড়া শেষে `progress/` পাতায় সম্পন্ন চিহ্ন দিতে ভুলবেন না।**
+
+## Review conclusion
+
+Microservices scaling, development speed ও organizational growth সহজ করে, কিন্তু একে সব ক্ষেত্রের সমাধান ভাবা যাবে না। সিদ্ধান্তের আগে দেখুন: architectural complexity, operational demand, observability, security ও change management। Containers, serverless বা দুটির ভাগসাম্য ব্যবহার করে AWS managed services complexity কমাতে সাহায্য করে।
+
+## Document back matter
+
+- **Contributors:** ডকুমেন্টে AWS Solutions Architecture দল ও অন্য contributives এর নাম রয়েছে। এখানে প্রশ্ন হতে পারে না; এটি source documentation হিসেবে মনে রাখা ভাল।
+- **Document history:** সার্বিক তালিকায় সংস্করণ/তারিখ দেখা যায়, যেমন ইতিমধ্যে ২০১৯, ২০২৩, ও ২০২৬-এর আপডেট। তাই পুরোনো উৎস পড়লে বর্তমান service name গুলো আলাদা করতে হবে।
+- **Notices:** Amazon-এর trademark policy ও মূল English translation disclaimer মনে রাখুন। অনুবাদ গ্রাহকের ভাষায় সঠিক না হতে পারে—স্টাডি পরিকল্পনার কারণে মূল API, service ও architecture-এর নাম মূল source-এর সাথে যাচাই করুন।
+- **AWS Glossary:** whitepaper শেষে “AWS Glossary” section এ এই নামগুলোর মানে আবার পাওয়া যায়: API, Application Load Balancer, Auto Scaling, Amazon CloudWatch, Amazon ECS, Amazon EKS, AWS Fargate, AWS Lambda, Amazon VPC, AWS PrivateLink, Amazon RDS, DynamoDB, AWS App Mesh, Amazon S3, Amazon ElastiCache, AWS IoT, Amazon ElastiCache।
+
+## Glossary revision map
+
+| Keyword | Revision idea | AWS resource |
+| --- | --- | --- |
+| API Gateway | REST API কে entry point ও throttling/auth | `AWS::ApiGatewayV2` |
+| ECS/EKS/Fargate | Container orchestration ও serverless execution | `Amazon ECS`, `Amazon EKS` |
+| DynamoDB | Horizontal scale ও flexible access | `DynamoDB` |
+| Lambda | Stateless event functions | `AWS Lambda` |
+| S3 | Object/file storage | `Amazon S3` |
+
+<ExamTrap>
+Back matter যাচাই বা সরাসরি exam question হয় না। তবে glossary দেখে ব্যবহার বুঝুন। যেমন API Gateway একটি managed API endpoint দেয়; ALB শুধু load balancing করে, auth বা request/response transformation সুবিধা দেয় না।
+</ExamTrap>
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-20" />

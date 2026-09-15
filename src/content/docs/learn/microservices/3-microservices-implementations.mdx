@@ -1,0 +1,75 @@
+---
+title: মাইক্রোসার্ভিস ইমপ্লিমেন্টেশন
+titleEn: Microservices Implementations
+description: Lambda, ECS, EKS, Fargate, App Runner ও ECR কখন বেছে নেওয়া হয়।
+theme: microservices
+order: 3
+pages: [5, 5]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Lambda
+    bn: ইভেন্ট-চাহিত, সার্ভার ছাড়া compute
+    tip: ছোট event-driven কাজ ও usage pattern না জানা বা বিরতিতে চলা সার্ভিসের জন্য প্রয়োজনীয়।
+  - term: ECS
+    bn: AWS-এর managed container orchestration
+    tip: AWS integration ও সহজতর অপারেশন চাইলে প্রায়ই কার্যকর।
+  - term: EKS
+    bn: AWS managed Kubernetes
+    tip: Kubernetes ecosystem, plug-in ও hybrid দৃশ্য দরকার হলে বেছে নিন।
+  - term: Fargate
+    bn: serverless container compute
+    tip: EC2 ম্যানেজ না করে container চালানোর জন্য।
+  - term: App Runner
+    bn: সহজ web service চালানোর পরিষেবা
+    tip: কম অপারেশনাল ব্যবস্থায় সোর্স বা image থেকে deploy করতে পারে।
+  - term: ECR
+    bn: AWS container image registry
+    tip: নিরাপদে image সংরক্ষণ ও ডিপ্লয়ের জন্য।
+  - term: Lift and Shift
+    bn: কোড না ভেঙে অ্যাপ সরিয়ে আনা
+    tip: মাঝে মাঝে প্রথম ধাপ, দীর্ঘমেয়াদি আধুনিকীকরণ নয়।
+  - term: Serverless Container
+    bn: নির্দিষ্ট সার্ভার ম্যানেজ না করা container চলানো
+    tip: Fargate সার্ভারের ক্ষমতা নিজে নির্ধারণ ও প্যাচ করার কাজ কমায়।
+sources:
+  - label: AWS Whitepaper — Implementing Microservices on AWS
+    href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+    note: স্টাডি-নোটের উৎস, প্রিন্ট পেজ ৫।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৫ (Microservices ও Microservices implementations)।
+
+## API কেন “front door”?
+
+API application logic-এর entry point। প্রচলিত REST/GraphQL API গুলো client calls manage করে: traffic management, request filtering, routing, caching, authentication ও authorization।
+
+## Compute choice = infrastructure control choice
+
+```mermaid
+flowchart LR
+  C[Requirement] -->|least management| L[AWS Lambda]
+  C -->|container orchestration| CX[Amazon ECS / Amazon EKS]
+  CX -->|no node management| F[AWS Fargate]
+  C -->|fully managed web/API| A[AWS App Runner]
+  C -->|direct servers| E[Amazon EC2]
+  CX --> R[Amazon ECR]
+```
+
+- **AWS Lambda**: code upload করলে scaling ও execution উচ্চ availability দিয়ে manage হয়; multiple languages এবং AWS event triggers supported।
+- **Containers**: portability, productivity ও efficiency-র কারণে জনপ্রিয়।
+- **App2Container (A2C)**: Java/.NET web application analyze/inventory করে container format-এ migration/modernization tool।
+- **Amazon EKS**: managed Kubernetes; Kubernetes community plug-ins/tooling এবং EKS Anywhere দরকার হলে উপযুক্ত।
+- **Amazon ECS**: fully managed container orchestration; AWS integration ও operational simplicity-তে ভালো।
+- **AWS App Runner**: infrastructure/container expertise ছাড়া container web/API application deploy ও run।
+- **AWS Fargate**: ECS ও EKS-এর সাথে কাজ করা serverless compute engine।
+- **Amazon ECR**: fully managed, high-performance container registry।
+
+> **Exam shortcut:** management কমানোর ধারা হলো EC2 → ECS/EKS on EC2 → ECS/EKS on Fargate → Lambda/App Runner। Kubernetes ecosystem মানে EKS; AWS-native simplicity মানে ECS।
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-3" />

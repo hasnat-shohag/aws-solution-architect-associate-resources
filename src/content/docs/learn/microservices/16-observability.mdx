@@ -1,0 +1,82 @@
+---
+title: "Observability"
+titleEn: "Observability"
+description: "CloudWatch, logs, traces, metrics, alarms, log analysis"
+theme: microservices
+order: 16
+pages: [26, 32]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: Observability
+    bn: সিস্টেমের ভেতরে চলছে কী তা বোঝার ক্ষমতা
+    tip: metrics, logs, traces একসাথে দরকারের কথা।
+  - term: Log
+    bn: স্টেটমেন্ট বা event record
+    tip: JSON logs searchable, correlation IDs, request ID থাকা উচিত।
+  - term: Metric
+    bn: numeric health/runtime value
+    tip: latency, error rate, throughput, CPU, memory।
+  - term: Trace
+    bn: এক request এর পুরো service path
+    tip: root cause latency, dependency error, sampling strategies।
+  - term: Correlation ID
+    bn: এক request-কে চিনিয়ে রাখার unique ID
+    tip: বহু সার্ভিস জুড়ে tracing সহজ করে।
+  - term: Alarm
+    bn: metric threshold/event condition notify
+    tip: operational event এ সাবধান করতে হয়।
+  - term: SLO
+    bn: service level objective
+    tip: user-facing reliability threshold; error budget।
+  - term: Synthetics Canary
+    bn: scheduled synthetic test
+    tip: critical path regular probe।
+  - term: X-Ray
+    bn: tracing service
+    tip: service map, latency histogram, fallback trace errors।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Microservices এ request এক(expr) API থেকে বহু সার্ভিস, queue এবং data store এ যেতে পারে। তাই per-service debugging কেবল সমস্যা নয়; একজন দ্রুত end-to-end path দেখা জরুরি।
+
+## Three pillars to remember
+
+- **Metrics:** throughput, latency, error rate, queue depth, CPU/memory।
+- **Logs:** request logs, business logs, exception traceback; high cardinality data।
+- **Traces:** AWS X-Ray/OpenTelemetry with `b3` or `traceparent` context propagation।
+- **Events/depends:** EventBridge/SNS/SQS events should be tracked through consumer failures।
+- **Service dashboard:** user journey level from UI/API request to database latency.
+
+## AWS tools
+
+- CloudWatch logs, metrics, alarms, dashboards, Logs Insights।
+- OpenSearch খারাপ logstütze/creating dashboards।
+- CloudWatch Synthetics canaries critical usable flows regular verify করে।
+- AWS X-Ray service map, traces and segment/subsegment instrumentation।
+- SNS or EventBridge alert routing; On-call integration Slack/PagerDuty.
+- CloudTrail management-plane audit এর সাথে সাথে observability নয়।
+
+```mermaid
+flowchart LR
+  User[Request] --> API[API Gateway]
+  API --> S1[Service 1]
+  S1 --> Queue[(SQS)]
+  Queue --> S2[Service 2]
+  S1 --> Logs[CloudWatch Logs]
+  S2 --> Logs
+  Queue --> Metrics[CloudWatch Metrics]
+  API --> Trace[AWS X-Ray]
+  Logs --> Insights[Logs Insights]
+```
+
+> [!NOTE]
+CloudWatch Logs খারাপ issue গুলো ব্যাখ্যা করতে সাহায্য করে, কিন্তু "where did latency increase across services?" এর ভিত্তিতে distributed tracing প্রায়ই সরাসরি X-Ray।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-16" />

@@ -1,0 +1,76 @@
+---
+title: "কমিউনিকেশন মেকানিজম"
+titleEn: "Communication Mechanisms"
+description: "REST, GraphQL, gRPC, SQS, SNS, EventBridge, MQ, MSK, Kinesis"
+theme: microservices
+order: 14
+pages: [21, 22]
+sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
+updated: 2026-09-15
+keywords:
+  - term: REST
+    bn: HTTP resource API style
+    tip: broad tooling, cacheable and human-friendly; SAA favorite.
+  - term: GraphQL
+    bn: client-driven flexible query API
+    tip: AppSync GraphQL subscription and schema federation relevant।
+  - term: gRPC
+    bn: high-performance RPC protocol
+    tip: binary protobuf, low latency, ALB/Envoy commonly used।
+  - term: WebSocket
+    bn: persistent two-way connection
+    tip: chat, live update, real-time dashboard।
+  - term: SQS
+    bn: managed queue
+    tip: decouple producer from consumer; standard vs FIFO behavior।
+  - term: SNS
+    bn: pub/sub topic service
+    tip: fanout to Lambda, SQS, HTTP endpoints।
+  - term: EventBridge
+    bn: event routing bus
+    tip: scheduled events, rule-based routing, cross-account/event bus।
+  - term: Kinesis Data Streams
+    bn: ordered real-time data stream
+    tip: high throughput streaming analytics; shard based capacity।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+Microservices communication দুই দিকে ভাগ করুন: সরাসরি API call (synchronous) এবং টিকটিক পাঠানো বা ইভেন্টের ভিত্তিতে (asynchronous)। ভুল লক্ষ্য হলো সব কিছু এক প্যাটার্ন দিয়ে সমাধান করা।
+
+## Sync প্যাটার্ন
+
+- **REST/API Gateway** public and third-party API, mobile/web backend, cacheability।
+- **GraphQL** single endpoint থেকে client নিজের data shape নির্বাচ করে; অনেক frontend field combination দরকার হলে কাজ করে।
+- **gRPC** service-to-service বহু call, binary serialization এবং contract-first API. Lambda এ সা৾াv姗়, Apps এ মানানসই।
+- **WebSocket** bidding, chat, notifications, live scores।
+- Service discovery/http client timeout এবং retries সেট করতে হয়।
+
+## Async প্যাটার্ন
+
+- **SQS** queue: one consumer group; smooth spiky load। Standard queue high throughput but duplicate delivery possible; FIFO ordering/low duplication।
+- **SNS** topic fanout: এক event → Lambda, SQS, email, HTTP consumers।
+- **EventBridge** event buses: schema registry, rule routing, event archive/replay, third-party SaaS integration।
+- **Kinesis Data Streams** ordered high throughput, analytics and consumer lag monitoring।
+- **MSK/MQ** Kafka/RabbitMQ/ActiveMQ compatibility, workload-specific use cases।
+
+```mermaid
+flowchart TD
+  API[Producer API] --> Pub[SNS/EventBridge]
+  Pub --> A[Consumer A]
+  Pub --> B[Consumer B]
+  API --> Queue[(SQS)]
+  Queue --> Worker[Worker Service]
+  API --> Stream[(Kinesis Data Streams)]
+  Stream --> Analytics[Analytics Service]
+```
+
+> [!NOTE]
+SNS fanout event alternative to SQS? Fanout needs एक publisher, multiple consumers। Queue consumer single group। EventBridge এ rule based routing needed। প্রশ্নে "fanout" আর "queue" সা০য়া শব্দ।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="microservices-14" />

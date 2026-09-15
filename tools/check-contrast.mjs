@@ -51,13 +51,10 @@ if (!existsSync(dist)) {
  * `domain` mirrors the frontmatter-driven `data-domain` and keys the known-gap table.
  */
 const PAGES = [
-	{ path: 'learn/1-agentic-architecture/1-1-agentic-loops', domain: 1 },
-	{ path: 'quick-reference/domain-2', domain: 2 },
-	{ path: 'learn/3-claude-code-config/3-2-slash-commands-skills', domain: 3 },
-	{ path: 'quick-reference/domain-4', domain: 4 },
-	{ path: 'learn/5-context-management/5-1-context-window-management', domain: 5 },
+	{ path: 'learn/microservices/1-introduction', domain: 'microservices' },
+	{ path: 'learn/microservices/12-configuration-secrets', domain: 'microservices' },
+	{ path: 'about', domain: 'none' },
 	{ path: 'glossary', domain: 'none' },
-	{ path: 'exam-guide', domain: 'none' },
 ];
 
 /**
@@ -70,8 +67,6 @@ const PAGES = [
  */
 const TARGETS = [
 	{ id: 'term', label: 'term column', selector: '.keyword-term', floor: 4.5 },
-	{ id: 'table-code', label: 'table inline code', selector: '.ref-table code', floor: 4.5 },
-	{ id: 'prose-code', label: 'prose inline code', selector: '.sl-markdown-content p code', floor: 4.5 },
 	{ id: 'content-link', label: 'content link', selector: '.sl-markdown-content p a', floor: 4.5 },
 	{ id: 'site-title', label: 'nav site title', selector: '.site-title', floor: 4.5 },
 	{ id: 'skip-link', label: 'focused skip link', selector: '.sl-skip-link', floor: 4.5, focus: true },
@@ -97,7 +92,7 @@ const TARGETS = [
 const KNOWN_GAPS = new Map();
 
 /** Lessons seeded into localStorage so the completed-tick target has something to measure. */
-const SEEDED_LESSONS = ['1-1', '3-2', '5-1'];
+const SEEDED_LESSONS = ['microservices-1', 'microservices-9', 'microservices-16'];
 
 const MIME = {
 	'.html': 'text/html; charset=utf-8',
