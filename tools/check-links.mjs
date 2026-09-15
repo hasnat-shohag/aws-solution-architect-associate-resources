@@ -21,12 +21,13 @@ const base = baseIndex === -1 ? '/aws-solution-architect-associate-resources' : 
 
 /** Planned slugs from src/lib/lessons.ts — not yet built, so not failures. */
 const lessonsSource = await readFile(join(root, 'src/lib/lessons.ts'), 'utf8');
-const domainsSource = await readFile(join(root, 'src/lib/domains.ts'), 'utf8');
 const plannedSlugs = new Set(
 	[...lessonsSource.matchAll(/slug: '([^']+)'/g)].map((match) => match[1]),
 );
 const plannedDomains = new Set(
-	[...domainsSource.matchAll(/slug: '([^']+)'/g)].map((match) => match[1]),
+	[
+		[...lessonsSource.matchAll(/theme: '([^']+)'/g)].map((match) => match[1]),
+	].flat(),
 );
 
 async function* walk(directory) {
@@ -58,9 +59,9 @@ function isPlanned(pathname) {
 		/^\/+/,
 		'',
 	);
-	const domainOnly = rest.match(/^learn\/(\d-[a-z-]+)\/?$/);
+	const domainOnly = rest.match(/^learn\/([a-z0-9-]+)\/?$/);
 	if (domainOnly) return plannedDomains.has(domainOnly[1]);
-	const match = rest.match(/^learn\/(\d-[a-z-]+)\/([a-z0-9-]+)\/?$/);
+	const match = rest.match(/^learn\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
 	if (!match) return false;
 	const [, domainSlug, lessonSlug] = match;
 	return plannedSlugs.has(lessonSlug) && plannedDomains.has(domainSlug);
