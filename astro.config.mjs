@@ -25,7 +25,7 @@ export default defineConfig({
 		starlight({
 			title: 'AWS SAA বাংলা স্টাডি গাইড',
 			description:
-				'AWS Solutions Architect Associate (SAA-C03) প্রস্তুতির জন্য বাংলা স্টাডি গাইড — মাইকরোসার্বিসেস ওভারবায়ার, কীওয়াড টেবিল, ডায়াগ্রাম ও অগ্রগতি ট্র্যাকিং।',
+				'AWS Solutions Architect Associate (SAA-C03) প্রস্তুতির জন্য বাংলা স্টাডি গাইড — মাইক্রোসার্ভিসেস ওভারভিউ, কীওয়ার্ড টেবিল, ডায়াগ্রাম ও অগ্রগতি ট্র্যাকিং।',
 			locales: {
 				root: { label: 'বাংলা', lang: 'bn-BD' },
 			},
@@ -44,11 +44,11 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: repoUrl }],
 			sidebar: [
 				{
-					label: 'শুরুর করুন',
+					label: 'শুরু করুন',
 					items: [
-						{ label: 'রসায় ও শেখার পথ', link: '/learn/' },
-						{ label: 'অগ্রসরত ড্যাশবোর্ড', link: '/progress/' },
-						{ label: 'কীওয়াড গ্লসারি', link: '/glossary/' },
+						{ label: 'শেখার পথ', link: '/learn/' },
+						{ label: 'অগ্রগতি ড্যাশবোর্ড', link: '/progress/' },
+						{ label: 'কীওয়ার্ড গ্লসারি', link: '/glossary/' },
 						{ label: 'উৎস ও লাইসেন্স', link: '/about/' },
 					],
 				},
@@ -72,7 +72,7 @@ export default defineConfig({
 					attrs: {
 						name: 'description',
 						content:
-							'AWS Solutions Architect Associate (SAA-C03) প্রস্তুতির জন্য বাংলা স্টাডি গাইড: মাইকরোসার্বিসেস লেসন, কীওয়াড ও অগ্রসরত ট্র্যাকিং।',
+							'AWS Solutions Architect Associate (SAA-C03) প্রস্তুতির জন্য বাংলা স্টাডি গাইড: মাইক্রোসার্ভিসেস লেসন, কীওয়ার্ড ও অগ্রগতি ট্র্যাকিং।',
 					},
 				},
 				{

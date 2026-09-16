@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "AWS SAA-C03 বাংলা স্টাডি গাইড — মাইকরোসার্ভিস লেসন, কীওয়ার্ড, ডায়াগ্রাম ও অগ্রগতি ট্র্যাকিং।",
+  "description": "AWS SAA-C03 বাংলা স্টাডি গাইড — মাইক্রোসার্ভিস লেসন, কীওয়ার্ড, ডায়াগ্রাম ও অগ্রগতি ট্র্যাকিং।",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

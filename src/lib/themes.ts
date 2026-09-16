@@ -17,7 +17,7 @@ export const THEMES: ThemeMeta[] = [
   {
     id: 'microservices',
     slug: 'microservices',
-    labelBn: 'মাইকরোসার্বিসেস অন AWS',
+    labelBn: 'মাইক্রোসার্ভিসেস অন AWS',
     labelEn: 'Microservices on AWS',
     sourceBn: 'AWS Whitepaper — Implementing Microservices on AWS',
     sourceEn: 'AWS Whitepaper — Implementing Microservices on AWS',

@@ -44,7 +44,7 @@ pnpm astro dev stop
 src/
   content.config.ts            # Astro কনটেন্ট স্কিমা ও লেসন ভ্যালিডেশন
   content/docs/                # Astro/Starlight পাতা
-    learn/microservices/       # সক্রিয় মাইকরোসার্ভিস থিম ও লেসন
+    learn/microservices/       # সক্রিয় মাইক্রোসার্ভিস থিম ও লেসন
   content/glossary-terms.json  # পরিভাষার একক সুত্র
   content/i18n/                # Starlight UI-র বাংলা স্ট্রিং
   components/                  # content, progress ও starlight কম্পোনেন্ট

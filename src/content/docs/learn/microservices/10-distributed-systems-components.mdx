@@ -71,7 +71,7 @@ Microservices messaging সাধারণত নিম্নলিখিত ক
 - authentication/authorization।
 - metrics, logging, tracing, retry, circuit breaking ও cache।
 
-**Amazon API Gateway** এই দায়িদ্বয়গুলো synthesis করে দেয়: traffic management, authorization, rate limiting, monitoring। প্রচুর change হওয়াতে আরও সাধারণ মাধ্যম Application Load Balancer, Envoy/ALB বা custom reverse proxy।
+**Amazon API Gateway** এই দায়িত্বগুলো একসাথে করে দেয়: traffic management, authorization, rate limiting, monitoring। change খুব বেশি হলে আরও সাধারণ মাধ্যম হলো Application Load Balancer, Envoy/ALB বা custom reverse proxy।
 
 ## Load balancers
 
@@ -102,7 +102,7 @@ AWS PrivateLink VPC endpoint services ও shared services security বাড়�
 
 Service mesh একটি dedicated infrastructure লেয়ার, যেখানে sidecar/gateway proxy-এর মাধ্যমে service-to-service connection, traffic shaping, mTLS, retries ও observability পরিচালিত হয়। API Gateway সাধারণত external APIs গুলির front door। একটি architecture-এ দুটি একসাথে থাকতে পারে।
 
-<ExamTrap title="Service discovery বনাম load balancing" question="Fixed IP-এর পরিবর্তে কী ব্যবহার করবেন?" answer="Service discovery + health checks। Sizing ও host replacement হওয়াতে instance IP গুলো প্রায়ই বদলে যায়।" />
+<ExamTrap title="Service discovery বনাম load balancing" question="Fixed IP-এর পরিবর্তে কী ব্যবহার করবেন?" answer="Service discovery + health checks। Sizing ও host replacement-এর কারণে instance IP গুলো প্রায়ই বদলে যায়।" />
 
 <KeywordTable keywords={frontmatter.keywords} />
 

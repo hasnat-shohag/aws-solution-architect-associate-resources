@@ -1,20 +1,20 @@
 ---
-title: অগ্রসরত ড্যাসবোর্ড
-description: আমার পড়ার অগ্রসরত — সামগ্ৰিক শতাংশ, থিমভিত্তিক প্ৰগ্রেস বার, লেসন চেকলিস্ট।
+title: অগ্রগতি ড্যাশবোর্ড
+description: আমার পড়ার অগ্রগতি — সামগ্রিক শতাংশ, থিমভিত্তিক প্রগ্রেস বার, লেসন চেকলিস্ট।
 ---
 
 import OverallProgress from '../../components/progress/OverallProgress.astro';
 import ThemeProgress from '../../components/progress/ThemeProgress.astro';
 import { THEMES } from '../../lib/themes';
 
-প্ৰতীক লেসনের পাতার শেয়ে "সম্পন্ন হইছে বুলে চিহ্নিত করুন" চাপলে এখান অগ্রসরত আপডেট হইব। অগ্রসরত শুধু এই ব্রাউজারে (localStorage) থাকে — account নাই, server নাই।
+প্রতিটি লেসনের পাতার শেষে "সম্পন্ন হয়েছে বলে চিহ্নিত করুন" চাপলে এখানকার অগ্রগতি আপডেট হবে। অগ্রগতি শুধু এই ব্রাউজারে (localStorage) থাকে — account নেই, server নেই।
 
-## সামগ্ৰিক অগ্রসরত
+## সামগ্রিক অগ্রগতি
 
 <OverallProgress />
 
 ## থিমভিত্তিক
 
 <div class="progress-list">
-	{THEMES.map((theme) => <ThemeProgress theme={theme.id} />)}
+  {THEMES.map((theme) => <ThemeProgress theme={theme.id} />)}
 </div>

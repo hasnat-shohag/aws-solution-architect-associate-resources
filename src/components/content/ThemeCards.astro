@@ -36,7 +36,7 @@ const hasLesson = (slug: string, lesson: string) => docFiles.has(`/src/content/d
 					</h3>
 					{showLessons ? (
 						<p>
-							সূত্রে: <strong>{theme.sourceBn}</strong> · {theme.lessons}টি লেসন · {theme.pages} পাতা
+							সূত্র: <strong>{theme.sourceBn}</strong> · {theme.lessons}টি লেসন · {theme.pages} পাতা
 						</p>
 					) : (
 						<>
@@ -45,7 +45,7 @@ const hasLesson = (slug: string, lesson: string) => docFiles.has(`/src/content/d
 								<div
 									class="progress-track"
 									role="progressbar"
-									aria-label={`${theme.labelBn} অগ্রসরতা`}
+									aria-label={`${theme.labelBn} অগ্রগতি`}
 									aria-valuemin="0"
 									aria-valuemax={theme.lessons}
 									aria-valuenow="0"
