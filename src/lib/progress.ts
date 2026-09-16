@@ -1,4 +1,5 @@
 import { THEMES, TOTAL_LESSONS, type ThemeId } from './themes';
+import { LESSONS } from './lessons';
 
 export const STORAGE_KEY = 'saa:aws:v1';
 
@@ -72,13 +73,10 @@ export function completedCount(state: ProgressState): number {
 }
 
 export function themeCompleted(state: ProgressState, theme: ThemeId): number {
-  const meta = THEMES.find((item) => item.id === theme);
-  if (!meta) return 0;
-  let count = 0;
-  for (let index = 1; index <= meta.lessons; index += 1) {
-    if (isComplete(state, `${theme}-${index}`)) count += 1;
-  }
-  return count;
+  // Count from the LESSONS registry, not from `${theme}-${index}` string building:
+  // a theme id containing a hyphen (blue-green) would otherwise look for ids like
+  // `blue-green-1` while the lessons emit `bluegreen-1`.
+  return LESSONS.filter((lesson) => lesson.theme === theme && isComplete(state, lesson.id)).length;
 }
 
 export function overallPercent(state: ProgressState): number {
