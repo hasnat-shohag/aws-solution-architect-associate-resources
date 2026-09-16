@@ -1,0 +1,110 @@
+---
+title: উপসংহার ও risk তুলনা
+titleEn: Conclusion and Risk Comparison
+description: পাঁচ টেকনিকের ঝুঁকি-তুলনার সারণি — কোন প্যাটার্নে কী ঝুঁকি কম, কোথায় বেশি।
+theme: blue-green
+order: 9
+pages: [26, 30]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Blue/Green Deployment
+    bn: দুটি একই রকম পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল
+    tip: ঝুঁকি কমায় — human error, process, downtime ও rollback capability।
+  - term: Utility Billing
+    bn: AWS-এর ব্যবহার অনুযায়ী বিল মডেল
+    tip: scale-এ সাশ্রয়ীভাবে blue/green চালানোর সুবিধা।
+  - term: Canary Testing
+    bn: খুব অল্প traffic দিয়ে নতুন পরিবেশ যাচাই
+    tip: DNS routing ও OpsWorks pattern এটা সহজ করে।
+  - term: TTL (DNS)
+    bn: DNS record কতক্ষণ cache থাকবে তার সময়
+    tip: DNS-নির্ভর প্যাটার্নে rollback-এর সবচেয়ে বড় ঝুঁকি (XXX)।
+  - term: Auto Scaling Group
+    bn: নিয়ম অনুযায়ী EC2 capacity বাড়ায়-কমায়
+    tip: infrastructure failure ঝুঁকি প্রায় সব প্যাটার্নে X — Auto Scaling।
+  - term: Immutable Infrastructure
+    bn: ডিপ্লয়ের পরে বদল না করে পুনরায় ডিপ্লয়ের নীতি
+    tip: blue/green-এর মূল লক্ষ্য।
+  - term: Elastic Load Balancing
+    bn: incoming traffic একাধিক EC2 instance-এ ভাগ করা
+    tip: warm load balancer প্যাটার্নের performance ঝুঁকি কমায়।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ২৬–৩০।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import ReferenceTable from '../../../../components/content/ReferenceTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ২৬–৩০ (Conclusion; Appendix: Comparison of Blue Green Deployment Techniques)।
+
+## উপসংহার
+
+Application deployment-এর সাথে ঝুঁকি জড়িত — human error, process ত্রুটি, downtime, rollback-অক্ষমতা। Cloud computing, deployment ও automation framework আর blue/green-এর মতো নতুন কৌশল এই ঝুঁকি কমায়। AWS-এর **utility billing** মডেল আর বিস্তৃত automation tool-এর কারণে scale-এ **দ্রুত ও সাশ্রয়ীভাবে** blue/green চালানো আগের চেয়ে সহজ।
+
+দলিলের তথ্য: প্রথম প্রকাশ ১ জুন ২০১৫; ২১ সেপ্টেম্বর ২০২১-এ technical accuracy-র জন্য হালনাগাদ।
+
+## পাঁচ টেকনিকের ঝুঁকি-তুলনা (পরিশিষ্ট)
+
+ঝুঁকির মাপ: **X** = কাঙ্ক্ষিত কম ঝুঁকি → **XXX** = বেশি ঝুঁকি। প্রতিটি টেকনিকে ছয়টি বিভাগ — application issues, application performance, people/process errors, infrastructure failures, rollback, cost।
+
+<ReferenceTable
+  columns={["টেকনিক", "ঝুঁকি বিভাগ", "মাত্রা", "কারণ"]}
+  rows={[
+    ["Update DNS (Route 53)", "Application issues", "X", "Canary analysis সুবিধা দেয়"],
+    ["", "Application performance", "X", "Gradual switch, traffic split ব্যবস্থাপনা"],
+    ["", "People/process errors", "XX", "Automation framework-নির্ভর, প্রক্রিয়া সাধারণত সহজ"],
+    ["", "Infrastructure failures", "XX", "Automation framework-নির্ভর"],
+    ["", "Rollback", "XXX", "DNS TTL জটিলতা — reaction time, flip/flop"],
+    ["", "Cost", "X", "Auto Scaling দিয়ে অপটিমাইজড"],
+    ["Swap ASG behind ELB", "Application issues", "X", "Canary analysis সুবিধা দেয়"],
+    ["", "Application performance", "XX", "কম granular traffic split; load balancer warm"],
+    ["", "People/process errors", "XX", "Automation framework-নির্ভর"],
+    ["", "Infrastructure failures", "X", "Auto Scaling"],
+    ["", "Rollback", "X", "DNS জটিলতা নেই"],
+    ["", "Cost", "X", "Auto Scaling দিয়ে অপটিমাইজড"],
+    ["Update ASG launch configurations", "Application issues", "XXX", "Heterogeneous fleet-এ ত্রুটি শনাক্তকরণ জটিল"],
+    ["", "Application performance", "XXX", "কম granular split, প্রাথমিক traffic load"],
+    ["", "People/process errors", "XX", "Automation framework-নির্ভর"],
+    ["", "Infrastructure failures", "X", "Auto Scaling"],
+    ["", "Rollback", "X", "DNS জটিলতা নেই"],
+    ["", "Cost", "XX", "প্রাথমিক scale-out-এ overprovision"],
+    ["Swap Beanstalk environment", "Application issues", "XX", "Cutover-এর আগে canary সম্ভব, তবে production traffic-এ নয়"],
+    ["", "Application performance", "XXX", "Full cutover"],
+    ["", "People/process errors", "X", "সহজ, অটোমেটেড প্রক্রিয়া"],
+    ["", "Infrastructure failures", "X", "Auto Scaling, CloudWatch monitoring, health reporting"],
+    ["", "Rollback", "XXX", "DNS TTL জটিলতা"],
+    ["", "Cost", "XX", "প্রাথমিক scale-out-এ overprovision হতে পারে"],
+    ["Clone OpsWorks stack, update DNS", "Application issues", "X", "Canary analysis সুবিধা দেয়"],
+    ["", "Application performance", "X", "Gradual switch, traffic split ব্যবস্থাপনা"],
+    ["", "People/process errors", "X", "উচ্চ মাত্রায় অটোমেটেড"],
+    ["", "Infrastructure failures", "X", "Auto-healing capability"],
+    ["", "Rollback", "XXX", "DNS TTL জটিলতা"],
+    ["", "Cost", "XXX", "দুই stack-এর দ্বিগুণ resource"],
+  ]}
+  caption="পাঁচ টেকনিকের ঝুঁকি-তুলনা — Blue/Green Deployments on AWS পরিশিষ্ট (প্রিন্ট পেজ ২৭–৩০)"
+/>
+
+## সারণি থেকে মনে রাখার মতো
+
+- **DNS-নির্ভর সব প্যাটার্নে** rollback-ঝুঁকি **XXX** — একটাই কারণ: DNS TTL।
+- **Rollback-এ সবচেয়ে নিরাপদ দুটো**: Swap ASG behind ELB আর launch configuration আপডেট — দুটোতেই rollback **X**, কারণ DNS জটিলতা নেই।
+- **সবচেয়ে কম অটোমেশন-নির্ভর**: OpsWorks clone — people/process ঝুঁকি X, auto-healing capability-র সুবাদে।
+- **Cost-এ একমাত্র XXX**: OpsWorks — দুই পূর্ণ stack সমান্তরালে চলে।
+- **Launch config প্যাটার্নের দুর্বলতা অন্য জায়গায়**: heterogeneous fleet-এ ত্রুটি শনাক্তকরণ (application issues **XXX**)।
+
+## Exam traps
+
+- "দ্রুত rollback" চাইলে **DNS-ভিত্তিক প্যাটার্ন বাদ** — উত্তর Swap ASG behind ELB বা launch config আপডেট।
+- "দুই পূর্ণ পরিবেশ সমান্তরালে চলে" জাতীয় বর্ণনা = **OpsWorks clone** — cost-ঝুঁকি XXX।
+- Beanstalk-এ "canary সুবিধা থাকলেও production traffic-এ canary নয়" — performance-ঝুঁকি XXX (**full cutover**)।
+- Heterogeneous fleet-এ ত্রুটি-শনাক্তকরণ কঠিন — এটা **launch configuration** প্যাটার্নের application-issues ঝুঁকি XXX-এর কারণ।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-9" />

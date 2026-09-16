@@ -1036,5 +1036,77 @@
     "bn": "AZ-এর ভারসাম্য রক্ষায় instance সরানো",
     "tip": "scale-in-এ নতুন config-এর instance-ও বাদ পড়তে পারে।",
     "theme": "blue-green"
+  },
+  {
+    "term": "Swap Environment URLs",
+    "bn": "Beanstalk-এর URL অদল-বদল করে green-কে promotion করা",
+    "tip": "ভেতরে আসলে একটা DNS switch — কয়েক মিনিট লাগে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "OpsWorks Stack",
+    "bn": "একই উদ্দেশ্যের AWS resource-এর যৌক্তিক গুচ্ছ",
+    "tip": "EC2, RDS, ELB একসাথে পরিচালনা করে; clone করে green বানানো যায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "OpsWorks Layer",
+    "bn": "নির্দিষ্ট কাজের EC2 instance-এর সেট",
+    "tip": "অ্যাপ সার্ভ করা বা DB হোস্ট করা — layer প্রতি ভূমিকা আলাদা।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Data Synchronization",
+    "bn": "দুই পরিবেশের মাঝে ডেটা হালনাগাদ রাখার প্রক্রিয়া",
+    "tip": "উভয় দিকে propagate করতে হয়; জটিল ও ঝুঁকিপূর্ণ।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Feature Flags",
+    "bn": "কনফিগারেশন দিয়ে ফিচার চালু-বন্ধ করার কৌশল",
+    "tip": "deployment-aware কোড নিয়ন্ত্রণে ব্যবহৃত হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Immutable Infrastructure",
+    "bn": "ডিপ্লয়ের পরে বদল না করে পুনরায় ডিপ্লয়ের নীতি",
+    "tip": "blue/green-এর মূল লক্ষ্য — production ও deployment-এ একই কোড।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Data Locality",
+    "bn": "ডেটার কাছে থাকা অ্যাপের পারফরম্যান্স-সুবিধা",
+    "tip": "ভৌগোলিক দূরত্বে sharing করলে পারফরম্যান্স কমে যায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "COTS Application",
+    "bn": "commercial off-the-shelf — বাজারজাত প্রস্তুত সফটওয়্যার",
+    "tip": "vendor-এর নিজস্ব update প্রক্রিয়া blue/green-বান্ধব নাও হতে পারে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Utility Billing",
+    "bn": "AWS-এর ব্যবহার অনুযায়ী বিল মডেল",
+    "tip": "scale-এ সাশ্রয়ীভাবে blue/green চালানোর সুবিধা।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Additive Schema Change",
+    "bn": "নতুন field/entity যোগ করা ধরনের schema পরিবর্তন",
+    "tip": "ডিপ্লয়ের আগে করা হয়; পুরনো অ্যাপ নতুন field উপেক্ষা করতে পারে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Deletive Schema Change",
+    "bn": "অপ্রয়োজনীয় field/entity বাদ দেওয়া ধরনের schema পরিবর্তন",
+    "tip": "ডিপ্লয়ের পরে করা হয়; এরপর পুরনো অ্যাপ আর চলে না।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Data Store Sharing",
+    "bn": "blue ও green উভয়ে একই ডেটা store ব্যবহার করা",
+    "tip": "unstructured store ভাগ করা সহজ; RDBMS-এ সতর্কতা লাগে।",
+    "theme": "blue-green"
   }
 ]
