@@ -1,0 +1,86 @@
+---
+title: ব্লু/গ্রিন ডিপ্লয়মেন্ট পরিচিতি
+titleEn: Introduction to Blue/Green Deployments
+description: দুই একই পরিবেশের মাঝে traffic shift করে near zero-downtime release ও দ্রুত rollback-এর পদ্ধতি।
+theme: blue-green
+order: 1
+pages: [1, 3]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Blue/Green Deployment
+    bn: দুই একই পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল
+    tip: near zero-downtime release ও দ্রুত rollback দেয়।
+  - term: Blue Environment
+    bn: বর্তমান production traffic চালানো পরিবেশ
+    tip: সমস্যা হলে traffic এখানেই ফেরত আসে।
+  - term: Green Environment
+    bn: নতুন ভার্সন স্টেজ করা পরিবেশ
+    tip: test শেষে blue-এর কাছ থেকে traffic নেয়।
+  - term: Traditional Deployment
+    bn: একই resource-এ পুরনো ভার্সন আবার deploy করা
+    tip: rollback ধীর — শুরু থেকে redeploy, দীর্ঘ সময় unavailable।
+  - term: Canary Testing
+    bn: খুব অল্প traffic দিয়ে নতুন পরিবেশ যাচাই
+    tip: production জুড়ে ছড়ানোর আগে সমস্যা ধরা পড়ে।
+  - term: Blast Radius
+    bn: ব্যর্থতার প্রভাব কত দূরে ছড়ায়
+    tip: blue/green এটা ছোট রাখে — শুধু green-এর traffic প্রভাবিত হয়।
+  - term: Rollback
+    bn: traffic আবার blue পরিবেশে ফেরত পাঠানো
+    tip: মুহূর্তেই সম্ভব — কোনো redeploy লাগে না।
+  - term: CI/CD
+    bn: কোড build, test ও deploy-এর স্বয়ংক্রিয় ধারা
+    tip: নতুন পরিবেশে নির্ভরতা কম বলে pipeline সহজ হয়।
+  - term: Cost Optimization
+    bn: deployment-এর সময় resource খরচ নিয়ন্ত্রণ
+    tip: green scale-out, blue scale-in; শেষে blue বন্ধ করে খরচ বন্ধ।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ১–৩।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ১–৩ (Abstract, introduction, methodology ও benefits)।
+
+## কেন blue/green?
+
+Traditional deployment-এ ব্যর্থ release ঠিক করতে একই resource-এ আগের ভার্সন শুরু থেকে redeploy করতে হয়। এতে সময় লাগে, অ্যাপ long time unavailable থাকে, আর faulty ভার্সনটি মুছে যায় বলে সেটি debug করার সুযোগও থাকে না। Cloud-এর automation ও on-demand resource এই paradigm বদলে দেয় — দুটি একই রকম পরিবেশের মাঝে traffic shift করাই হলো **blue/green deployment**।
+
+## পদ্ধতি
+
+- **Blue environment** — চালু ভার্সন, এখন production traffic সামলাচ্ছে।
+- **Green environment** — নতুন ভার্সন, পাশে স্টেজ করা ও পরীক্ষিত হচ্ছে।
+- green ready হলে traffic blue থেকে green-এ যায়; সমস্যা হলে আবার blue-এ ফেরে।
+
+```mermaid
+flowchart LR
+  U[Users] --> R{Traffic shift}
+  R -->|production| B[Blue — বর্তমান ভার্সন]
+  R -.->|staging ও test| G[Green — নতুন ভার্সন]
+  R ==>|validate শেষে switch| G
+  R -.->|rollback| B
+```
+
+## সুবিধা
+
+- **Isolation** — green নিজস্ব resource-এ চলে, তাই তার সমস্যা blue-কে স্পর্শ করে না।
+- **Canary analysis** — প্রথমে test traffic বা খুব অল্প production traffic দিয়ে যাচাই; বাস্তব user pattern-ও দেখা যায়।
+- **Rollback** — traffic ফেরত পাঠালেই হয়; প্রভাব থাকে শুধু detection থেকে switch পর্যন্ত সময়টুকুতে।
+- **CI/CD** — নতুন পরিবেশ পুরনো state/configuration-এর ওপর নির্ভর করে না, তাই pipeline সরল হয়।
+- **Cost** — deployment-এ green scale-out ও blue scale-in করা যায়; শেষে blue decommission করলে তার খরচও বন্ধ।
+
+## Exam traps
+
+- Rollback মানে আগের ভার্সন **redeploy** নয় — মানে traffic **পুরনো পরিবেশে ফেরত** পাঠানো।
+- Blue ও green দুটিই পুরোপুরি চলমান পরিবেশ; green "শুধু কোড" নয়।
+- Canary testing-এর উদ্দেশ্য বাস্তব traffic প্যাটার্ন দেখা; শুধু synthetic test নয়।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-1" />

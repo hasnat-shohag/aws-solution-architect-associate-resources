@@ -31,6 +31,15 @@ export const LESSONS: LessonMeta[] = [
   { id: 'microservices-18', theme: 'microservices', slug: '18-auditing', titleEn: 'Auditing & Resource Change Management', titleBn: 'Auditing ও Change Management', pages: [34, 35] },
   { id: 'microservices-19', theme: 'microservices', slug: '19-conclusion', titleEn: 'Conclusion', titleBn: 'উপসংহার', pages: [36, 36] },
   { id: 'microservices-20', theme: 'microservices', slug: '20-glossary-recap', titleEn: 'Document Extras & Glossary', titleBn: 'Document Extras ও AWS Glossary', pages: [37, 41] },
+  { id: 'bluegreen-1', theme: 'blue-green', slug: '1-introduction', titleEn: 'Introduction to Blue/Green Deployments', titleBn: 'ব্লু/গ্রিন ডিপ্লয়মেন্ট পরিচিতি', pages: [1, 3] },
+  { id: 'bluegreen-2', theme: 'blue-green', slug: '2-environment-boundary', titleEn: 'Define the Environment Boundary', titleBn: 'এনভায়রনমেন্ট বাউন্ডারি নির্ধারণ', pages: [4, 4] },
+  { id: 'bluegreen-3', theme: 'blue-green', slug: '3-services-overview', titleEn: 'Services for Blue/Green Deployments', titleBn: 'ব্লু/গ্রিন-এর জন্য AWS সার্ভিস', pages: [5, 7] },
+  { id: 'bluegreen-4', theme: 'blue-green', slug: '4-dns-routing', titleEn: 'Technique 1 — Update DNS Routing with Route 53', titleBn: 'টেকনিক ১ — Route 53-তে DNS routing আপডেট', pages: [8, 9] },
+  { id: 'bluegreen-5', theme: 'blue-green', slug: '5-asg-swap-elb', titleEn: 'Technique 2 — Swap the ASG behind the ELB', titleBn: 'টেকনিক ২ — ELB-এর পেছনে ASG swap', pages: [10, 12] },
+  { id: 'bluegreen-6', theme: 'blue-green', slug: '6-asg-launch-config', titleEn: 'Technique 3 — Update ASG Launch Configurations', titleBn: 'টেকনিক ৩ — ASG launch configuration আপডেট', pages: [13, 15] },
+  { id: 'bluegreen-7', theme: 'blue-green', slug: '7-beanstalk-opsworks', titleEn: 'Techniques 4 & 5 — Beanstalk Swap and OpsWorks Clone', titleBn: 'টেকনিক ৪ ও ৫ — Beanstalk swap আর OpsWorks clone', pages: [16, 21] },
+  { id: 'bluegreen-8', theme: 'blue-green', slug: '8-data-sync-schema', titleEn: 'Data Sync, Schema Changes and Anti-Patterns', titleBn: 'ডেটা সিঙ্ক, schema change ও ব্যতিক্রম', pages: [22, 25] },
+  { id: 'bluegreen-9', theme: 'blue-green', slug: '9-conclusion-appendix', titleEn: 'Conclusion and Risk Comparison', titleBn: 'উপসংহার ও risk তুলনা', pages: [26, 30] },
 ];
 
 export function themeLessons(theme: ThemeId): LessonMeta[] {

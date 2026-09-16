@@ -53,6 +53,8 @@ if (!existsSync(dist)) {
 const PAGES = [
 	{ path: 'learn/microservices/1-introduction', domain: 'microservices' },
 	{ path: 'learn/microservices/12-configuration-secrets', domain: 'microservices' },
+	{ path: 'learn/blue-green/1-introduction', domain: 'blue-green' },
+	{ path: 'learn/blue-green/3-services-overview', domain: 'blue-green' },
 	{ path: 'about', domain: 'none' },
 	{ path: 'glossary', domain: 'none' },
 ];

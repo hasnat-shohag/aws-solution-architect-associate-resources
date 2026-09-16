@@ -1,0 +1,43 @@
+---
+title: ব্লু/গ্রিন ডিপ্লয়মেন্ট অন AWS — থিম ওভারভিউ
+titleEn: Blue/Green Deployments on AWS
+description: AWS ওয়াইটপেপার "Blue/Green Deployments on AWS" (৩০ পাতা) থেকে ৯টি বাংলা লেসন — পদ্ধতি, পাঁচটি implementation technique, data স্ট্র্যাটেজি ও risk তুলনা।
+theme: blue-green
+order: 1
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+---
+
+import LessonList from '../../../../components/content/LessonList.astro';
+import ThemeProgress from '../../../../components/progress/ThemeProgress.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+
+<div class="lesson-meta">
+	<span class="lesson-badge">থিম: ব্লু/গ্রিন ডিপ্লয়মেন্ট</span>
+	<span class="lesson-task">৯টি লেসন · ৩০ পাতা</span>
+	<span class="lesson-source">AWS Whitepaper — Blue/Green Deployments on AWS</span>
+</div>
+
+ব্লু/গ্রিন ডিপ্লয়মেন্ট হলো **release পদ্ধতি** — একই রকম দুটি পরিবেশের মাঝে traffic সরিয়ে near zero-downtime রিলিজ ও মুহূর্তের মধ্যে rollback। এই থিম AWS-এর অফিসিয়াল ওয়াইটপেপারের ৩০ পাতা ধাপে ধাপে ৯টি লেসনে বাংলায় সাজায় — পদ্ধতি ও সীমানা নির্ধারণ থেকে শুরু করে পাঁচটি implementation technique, data-tier কৌশল আর risk তুলনা পর্যন্ত।
+
+SAA পরীক্ষায় এই থিম **Design, Resilience ও Cost Optimization** ডোমেইনে কাজে লাগে — deployment automation, rollback কৌশল, ELB/Auto Scaling আচরণ ও Route 53 routing প্রশ্নের সরাসরি ভিত্তি।
+
+## এই থিমে যা আসে
+
+- Blue/green পদ্ধতি: canary testing, rollback ও blast radius
+- Environment boundary: architecture, people, process ও cost ফ্যাক্টর
+- ভূমিকা সার্ভিস: Route 53, ELB, Auto Scaling, Beanstalk, OpsWorks, CloudFormation, CloudWatch, CodeDeploy
+- Technique 1–3: DNS routing, ASG swap behind ELB, ASG launch configuration update
+- Technique 4–5: Beanstalk environment swap, OpsWorks clone stack
+- Data sync ও schema change; কখন blue/green উপযুক্ত নয়
+- Appendix: পাঁচ technique-এর risk তুলনা
+
+<div class="progress-list">
+	<ThemeProgress theme="blue-green" />
+</div>
+
+## ৯টি লেসন
+
+<LessonList theme="blue-green" />
+
+<Attribution sourceUrl="https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf" updated="2026-09-16" />

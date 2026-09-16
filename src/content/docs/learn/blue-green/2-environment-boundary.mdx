@@ -1,0 +1,88 @@
+---
+title: এনভায়রনমেন্ট বাউন্ডারি নির্ধারণ
+titleEn: Define the Environment Boundary
+description: deployment-এর সীমানা ঠিক করে যা বদলাবে তা স্পষ্ট করা — architecture, team, process ও cost ফ্যাক্টর।
+theme: blue-green
+order: 2
+pages: [4, 4]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Environment Boundary
+    bn: deployment-এ যত কিছু বদলায় তার সীমানা
+    tip: কোথায় change হয়েছে আর কী deploy করলে তা live হয় — এটাই সীমানা।
+  - term: Application Architecture
+    bn: সার্ভিসগুলোর coupling ও dependency ধরন
+    tip: শিথিল coupling মানে ছোট environment boundary।
+  - term: Microservices Boundary
+    bn: ছোট ছোট স্বাধীন সীমানা
+    tip: আলাদা সার্ভিস, স্পষ্ট interface — প্রতিটি নিজেই blue/green হতে পারে।
+  - term: Monolith Boundary
+    bn: বড় ও চওড়া সীমানা
+    tip: blue/green সম্ভব, কিন্তু scope বড় ও test বেশি ব্যাপক।
+  - term: Blast Radius
+    bn: ব্যর্থতার প্রভাব কত দূরে ছড়ায়
+    tip: risk and complexity factor — ব্যর্থ deployment-এর impact মাপুন।
+  - term: Organization Factor
+    bn: iteration-এর গতি ও সংখ্যা
+    tip: দ্রুত release-ও দল ছোট boundary সামলাতে পারে।
+  - term: Process Factor
+    bn: testing/QA ও rollback capability
+    tip: rollback যত সহজ, সীমানা তত সাহসী হতে পারে।
+  - term: Cost Factor
+    bn: operating budget ও অতিরিক্ত resource
+    tip: সমান্তরাল পরিবেশের খরচ সীমানার আকার নিয়ন্ত্রণ করে।
+  - term: Automation
+    bn: মানুষের হাতে না গিয়ে script/IaC দিয়ে কাজ চালানো
+    tip: process streamlines করে, human error কমায়, cost নিয়ন্ত্রণে রাখে।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৪।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ৪ (Define the environment boundary)।
+
+Blue/green পরিকল্পনার প্রথম প্রশ্ন: **environment boundary** কোথায়? অর্থাৎ কোথায় জিনিস বদলেছে, আর সেই change live করতে কী কী deploy করতে হবে। একই অ্যাপে সীমানা ছোট হতে পারে (একটি সার্ভিস) বা বড় (পুরো data tier সহ)।
+
+## সীমানা ঠিক করে যেসব ফ্যাক্টর
+
+| ফ্যাক্টর | দেখার বিষয় |
+| --- | --- |
+| Application architecture | dependency, loosely/tightly coupled |
+| Organization | iteration-এর গতি ও সংখ্যা |
+| Risk and complexity | blast radius ও ব্যর্থ deployment-এর impact |
+| People | দলের expertise |
+| Process | testing/QA, rollback capability |
+| Cost | operating budget, অতিরিক্ত resource |
+
+```mermaid
+flowchart TD
+  Q{Coupling কেমন?}
+  Q --|শিথিল, স্পষ্ট interface| S[ছোট boundary — প্রতি সার্ভিস]
+  Q --|টাইট, শেয়ার্ড data| W[চওড়া boundary — পুরো অ্যাপ]
+  S --> A[Automation + ছোট test চক্র]
+  W --> B[Automation + ব্যাপক test]
+```
+
+## উদাহরণ
+
+- **Microservices** — শিথিল coupling ও সুনির্দিষ্ট interface থাকায় সীমানা ছোট হয়।
+- **Legacy monolith** — blue/green এখনো সম্ভব, তবে scope চওড়া ও test বেশি ব্যাপক।
+
+সীমানা যে-ই হোক, **automation** যথাসম্ভব ব্যবহার করুন — process দ্রুত হয়, human error কমে, cost নিয়ন্ত্রণে থাকে।
+
+## Exam traps
+
+- Boundary শুধু technical নয় — people, process ও cost-ও এর অংশ।
+- Monolith-এ blue/green "অসম্ভব" নয়; শুধু সীমানা বড় ও test ভারী।
+- সীমানা ছোট মানেই সবসময় সস্তা নয় — automation ছাড়া ছোট সীমানাও বারবার ভুল করায়।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-2" />

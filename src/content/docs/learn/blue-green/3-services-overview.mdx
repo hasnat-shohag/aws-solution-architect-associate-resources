@@ -1,0 +1,104 @@
+---
+title: ব্লু/গ্রিন-এর জন্য AWS সার্ভিস
+titleEn: Services for Blue/Green Deployments
+description: Route 53, ELB, Auto Scaling, Beanstalk, OpsWorks, CloudFormation, CloudWatch ও CodeDeploy — কোন সার্ভিস কোন কাজ করে।
+theme: blue-green
+order: 3
+pages: [5, 7]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Amazon Route 53
+    bn: AWS-এর managed authoritative DNS সার্ভিস
+    tip: health check ও weighted routing দিয়ে traffic shift করায়।
+  - term: TTL (DNS)
+    bn: DNS record কতক্ষণ cache থাকবে তার সময়
+    tip: মান ছোট হলে record change দ্রুত ছড়ায় — DNS প্যাটার্নের প্রাণ।
+  - term: Elastic Load Balancing
+    bn: incoming traffic একাধিক EC2 instance-এ ভাগ করা
+    tip: health check করে Auto Scaling-এর সাথে স্বাভাবিকভাবে যুক্ত হয়।
+  - term: Auto Scaling Group
+    bn: নিয়ম অনুযায়ী EC2 capacity বাড়ায়-কমায়
+    tip: launch configuration বদলে নতুন পরিবেশ দাঁড় করায়।
+  - term: Standby State
+    bn: ASG instance বাদ না দিয়ে সরিয়ে রাখা
+    tip: দ্রুত rollback-এর সময় কাজে আসে।
+  - term: Elastic Beanstalk
+    bn: কোড দিলেই infrastructure সামলে দেওয়া সার্ভিস
+    tip: environment URL swap করে blue/green সহজ করে।
+  - term: AWS OpsWorks
+    bn: Chef-ভিত্তিক configuration management সার্ভিস
+    tip: পুরো stack clone করে blue/green প্রস্তুত করায়।
+  - term: CloudFormation
+    bn: template (JSON/YAML) দিয়ে resource provision
+    tip: IaC strategy-তে blue/green পরিবেশ ও traffic switch স্বয়ংক্রিয় করে।
+  - term: CloudWatch
+    bn: metrics, log ও alarm-এর monitoring সার্ভিস
+    tip: deployment health-এর প্রথম সংকেত ও alarm-ভিত্তিক rollback।
+  - term: CodeDeploy
+    bn: EC2/Lambda/ECS-এ deployment স্বয়ংক্রিয় করা সার্ভিস
+    tip: blue/green একটি built-in deployment option; ব্যর্থ হলে rollback।
+  - term: ECS Traffic Shift
+    bn: ECS deployment-এ traffic সরানোর তিন ধরন
+    tip: canary (দুই ধাপ), linear (সমান ধাপে), all-at-once।
+  - term: Lambda Hooks
+    bn: deployment lifecycle-এ CodeDeploy-এর Lambda কল
+    tip: validation বা custom কাজ lifecycle event-এ চালায়।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৫–৭।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ৫–৭ (Services for blue/green deployments)।
+
+## সার্ভিসগুলোর ভূমিকা এক নজরে
+
+| সার্ভিস | blue/green-এ কাজ |
+| --- | --- |
+| Route 53 | DNS record বদলে traffic shift; ছোট TTL দরকার |
+| Elastic Load Balancing | EC2-তে traffic ভাগ করা; health check; ASG-এর সাথে যুক্ত |
+| Auto Scaling | launch configuration বদলে নতুন fleet; termination policy ও Standby |
+| Elastic Beanstalk | সহজ প্রবর্তন; environment URL swap |
+| OpsWorks | Chef-ভিত্তিক stack সহজে clone করা |
+| CloudFormation | template-এ পরিবেশ দাঁড় করা ও traffic switch স্বয়ংক্রিয় করা |
+| CloudWatch | metrics/log/alarm — প্রাথমিক health detection |
+| CodeDeploy | built-in blue/green deployment ও rollback; CloudWatch alarm ভিত্তি |
+
+```mermaid
+flowchart LR
+  U[Users] --> C{কীভাবে shift হবে?}
+  C -->|DNS record| R53[Route 53]
+  C -->|target swap| ELB[Elastic Load Balancing]
+  R53 --> APP[Application fleet]
+  ELB --> APP
+  ASG[Auto Scaling Group] -.-> APP
+  CD[CodeDeploy] -.->|automates| APP
+  CW[CloudWatch] -.->|health ও alarm| CD
+  CFN[CloudFormation] -.->|provisions সব| ASG
+```
+
+## মনে রাখার মতো খুঁটিনাটি
+
+- **Route 53**: authoritative DNS, health check/geography/latency-ভিত্তিক routing; **ছোট TTL** মানে record change দ্রুত propagate।
+- **Auto Scaling**: launch configuration-এর ভিন্ন ভার্সন যুক্ত করে blue/green; termination policy কোন instance বাদ যাবে ঠিক করে; **Standby state** instance-কে terminate না করে সরিয়ে রাখে — rollback দ্রুত হয়।
+- **CloudFormation**: IaC কৌশলের অংশ হিসেবে version control ও CI-র মতো software development প্র্যাকটিসে infrastructure চলে।
+- **CodeDeploy**: ব্যর্থ হলে rollback করে; CloudWatch alarm দিয়ে deployment state monitor করা যায়; CloudWatch Events deployment/instance state change event প্রসেস করে।
+- **ECS traffic shift**: **canary** — দুই increment-এ; **linear** — সমান increment-এ; **all-at-once** — সব traffic একবারে।
+- **Lambda hooks**: ECS/Lambda/EC2 deployment-এর lifecycle event-এ CodeDeploy Lambda কল করে — workflow-এর ভেতরে validation বসায়।
+
+## Exam traps
+
+- "ছোট TTL"-এর কারণ DNS caching — মান বড় হলে পুরনো IP দীর্ঘদিন client-এ থেকে যায়।
+- ASG-র **Standby** আর **terminate** এক নয় — Standby instance ফেরত আনা যায়, terminate করা যায় না।
+- CodeDeploy-তে blue/green হলো built-in feature; শুধু EC2 নয় — Lambda ও ECS-তেও চলে।
+- ECS-এ canary (২ ধাপ) আর linear (সমান ধাপ) গুলিয়ে ফেলবেন না।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-3" />

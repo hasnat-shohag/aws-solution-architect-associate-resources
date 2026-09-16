@@ -1,4 +1,4 @@
-export type ThemeId = 'microservices';
+export type ThemeId = 'microservices' | 'blue-green';
 
 export interface ThemeMeta {
   id: ThemeId;
@@ -26,6 +26,22 @@ export const THEMES: ThemeMeta[] = [
     pages: 45,
     lessons: 20,
     accent: '#f97316',
+  },
+  {
+    id: 'blue-green',
+    slug: 'blue-green',
+    labelBn: 'ব্লু/গ্রিন ডিপ্লয়মেন্ট অন AWS',
+    labelEn: 'Blue/Green Deployments on AWS',
+    sourceBn: 'AWS Whitepaper — Blue/Green Deployments on AWS',
+    sourceEn: 'AWS Whitepaper — Blue/Green Deployments on AWS',
+    sourceUrl: 'https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf',
+    pages: 30,
+    lessons: 9,
+    // Cyan-600: blue↔green midpoint, thematically right for "blue/green",
+    // distinct from the amber microservices accent (#f97316) and Starlight's
+    // indigo default. Validated ≥3:1 on white (3.68:1) and dark (4.82:1) —
+    // sky-500 (#0ea5e9) failed the light-theme floor at 2.77:1.
+    accent: '#0891b2',
   },
 ];
 

@@ -874,5 +874,119 @@
     "bn": "multiple active regions",
     "tip": "lowest recovery time, highest cross-region cost।",
     "theme": "microservices"
+  },
+  {
+    "term": "Blue/Green Deployment",
+    "bn": "দুটি একই রকম পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল",
+    "tip": "near zero-downtime release ও দ্রুত rollback দেয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Blue Environment",
+    "bn": "বর্তমান production traffic চালানো পরিবেশ",
+    "tip": "সমস্যা হলে traffic এখানেই ফেরত আসে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Green Environment",
+    "bn": "নতুন ভার্সন স্টেজ করা পরিবেশ",
+    "tip": "test শেষে blue-এর কাছ থেকে traffic নেয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Environment Boundary",
+    "bn": "deployment-এ যত কিছু বদলায় তার সীমানা",
+    "tip": "architecture, team, process ও budget এই সীমানা ঠিক করে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Canary Testing",
+    "bn": "খুব অল্প traffic দিয়ে নতুন পরিবেশ যাচাই",
+    "tip": "production জুড়ে ছড়ানোর আগে সমস্যা ধরা পড়ে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Blast Radius",
+    "bn": "ব্যর্থতার প্রভাব কত দূরে ছড়ায়",
+    "tip": "blue/green এটা ছোট রাখে — শুধু নতুন পরিবেশের traffic প্রভাবিত হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Amazon Route 53",
+    "bn": "AWS-এর managed authoritative DNS সার্ভিস",
+    "tip": "health check ও weighted routing দিয়ে traffic shift করায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "TTL (DNS)",
+    "bn": "DNS record কতক্ষণ cache থাকবে তার সময়",
+    "tip": "মান ছোট হলে record change দ্রুত ছড়ায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Elastic Load Balancing",
+    "bn": "incoming traffic একাধিক EC2 instance-এ ভাগ করা",
+    "tip": "health check করে Auto Scaling-এর সাথে যুক্ত হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Auto Scaling Group",
+    "bn": "নিয়ম অনুযায়ী EC2 capacity বাড়ায়-কমায়",
+    "tip": "launch configuration বদলে blue/green করা যায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Launch Configuration",
+    "bn": "ASG কোন template-এ instance তৈরি করবে তার সংজ্ঞা",
+    "tip": "নতুন ভার্সনের instance বানাতে এটি swap করা হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Elastic Beanstalk",
+    "bn": "কোড দিলেই infrastructure সামলে দেওয়া সার্ভিস",
+    "tip": "environment URL swap করে blue/green সহজ করে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "AWS OpsWorks",
+    "bn": "Chef-ভিত্তিক configuration management সার্ভিস",
+    "tip": "পুরো stack clone করে blue/green প্রস্তুত করায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "CloudWatch",
+    "bn": "metrics, log ও alarm-এর monitoring সার্ভিস",
+    "tip": "deployment health ও alarm-ভিত্তিক rollback-এ কাজে লাগে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Connection Draining",
+    "bn": "সরে যাওয়া instance-এ চলমান request শেষ হতে দেওয়া",
+    "tip": "swap-এর সময় user-এর চলমান কাজ ভাঙে না।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Standby State",
+    "bn": "ASG instance বাদ না দিয়ে সরিয়ে রাখা",
+    "tip": "দ্রুত rollback-এর সময় কাজে আসে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Schema Decoupling",
+    "bn": "schema change-কে code change থেকে আলাদা করা",
+    "tip": "দুই পরিবেশে একই ডেটা চলার ভিত্তি।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Backward-Compatible Schema",
+    "bn": "পুরনো ও নতুন কোড — দুটিই যে schema পড়তে পারে",
+    "tip": "expand/contract ধাপে data migration নিরাপদ হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Deployment Awareness",
+    "bn": "অ্যাপ নিজে deployment event বুঝতে পারা",
+    "tip": "feature flag দিয়ে অনেক ক্ষেত্রে এড়ানো যায়।",
+    "theme": "blue-green"
   }
 ]
