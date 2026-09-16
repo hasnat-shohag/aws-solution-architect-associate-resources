@@ -22,7 +22,7 @@ keywords:
     tip: blue/green সম্ভব, কিন্তু scope বড় ও test বেশি ব্যাপক।
   - term: Blast Radius
     bn: ব্যর্থতার প্রভাব কত দূরে ছড়ায়
-    tip: risk and complexity factor — ব্যর্থ deployment-এর impact মাপুন।
+    tip: ব্যর্থ deployment-এর impact মাপার মাপকাঠি।
   - term: Organization Factor
     bn: iteration-এর গতি ও সংখ্যা
     tip: দ্রুত release-ও দল ছোট boundary সামলাতে পারে।
@@ -34,7 +34,7 @@ keywords:
     tip: সমান্তরাল পরিবেশের খরচ সীমানার আকার নিয়ন্ত্রণ করে।
   - term: Automation
     bn: মানুষের হাতে না গিয়ে script/IaC দিয়ে কাজ চালানো
-    tip: process streamlines করে, human error কমায়, cost নিয়ন্ত্রণে রাখে।
+    tip: process সহজ করে, human error কমায়, cost নিয়ন্ত্রণে রাখে।
 sources:
   - label: AWS Whitepaper — Blue/Green Deployments on AWS
     href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
@@ -63,8 +63,8 @@ Blue/green পরিকল্পনার প্রথম প্রশ্ন: **
 ```mermaid
 flowchart TD
   Q{Coupling কেমন?}
-  Q --|শিথিল, স্পষ্ট interface| S[ছোট boundary — প্রতি সার্ভিস]
-  Q --|টাইট, শেয়ার্ড data| W[চওড়া boundary — পুরো অ্যাপ]
+  Q -->|শিথিল, স্পষ্ট interface| S[ছোট boundary — প্রতি সার্ভিস]
+  Q -->|টাইট, শেয়ার্ড data| W[চওড়া boundary — পুরো অ্যাপ]
   S --> A[Automation + ছোট test চক্র]
   W --> B[Automation + ব্যাপক test]
 ```

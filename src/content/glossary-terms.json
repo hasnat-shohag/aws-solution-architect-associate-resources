@@ -1108,5 +1108,65 @@
     "bn": "blue ও green উভয়ে একই ডেটা store ব্যবহার করা",
     "tip": "unstructured store ভাগ করা সহজ; RDBMS-এ সতর্কতা লাগে।",
     "theme": "blue-green"
+  },
+  {
+    "term": "Traditional Deployment",
+    "bn": "একই resource-এ পুরনো ভার্সন আবার deploy করার পদ্ধতি",
+    "tip": "rollback ধীর — শুরু থেকে redeploy, দীর্ঘ সময় unavailable।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Rollback",
+    "bn": "traffic আবার blue পরিবেশে ফেরত পাঠানো",
+    "tip": "blue/green-এ মুহূর্তেই সম্ভব — কোনো redeploy লাগে না।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Cost Optimization",
+    "bn": "deployment-এর সময় resource খরচ নিয়ন্ত্রণ",
+    "tip": "green scale-out, blue scale-in; শেষে blue বন্ধ করে খরচ বন্ধ।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Application Architecture",
+    "bn": "সার্ভিসগুলোর coupling ও dependency ধরন",
+    "tip": "শিথিল coupling মানে ছোট environment boundary।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Microservices Boundary",
+    "bn": "ছোট, স্বাধীন সার্ভিস-ভিত্তিক environment boundary",
+    "tip": "আলাদা সার্ভিস, স্পষ্ট interface — প্রতিটি নিজেই blue/green হতে পারে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Monolith Boundary",
+    "bn": "পুরো অ্যাপ জুড়ে থাকা চওড়া environment boundary",
+    "tip": "blue/green সম্ভব, কিন্তু scope বড় ও test বেশি ব্যাপক।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Organization Factor",
+    "bn": "দলের iteration-এর গতি ও সংখ্যা",
+    "tip": "দ্রুত release-ও দল ছোট boundary সামলাতে পারে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Process Factor",
+    "bn": "testing/QA ও rollback capability",
+    "tip": "rollback যত সহজ, সীমানা তত সাহসী হতে পারে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Cost Factor",
+    "bn": "operating budget ও অতিরিক্ত resource",
+    "tip": "সমান্তরাল পরিবেশের খরচ সীমানার আকার নিয়ন্ত্রণ করে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Automation",
+    "bn": "মানুষের হাতে না গিয়ে script/IaC দিয়ে কাজ চালানো",
+    "tip": "process দ্রুত করে, human error কমায়, cost নিয়ন্ত্রণে রাখে।",
+    "theme": "blue-green"
   }
 ]

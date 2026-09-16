@@ -1,7 +1,7 @@
 ---
 title: ব্লু/গ্রিন ডিপ্লয়মেন্ট পরিচিতি
 titleEn: Introduction to Blue/Green Deployments
-description: দুই একই পরিবেশের মাঝে traffic shift করে near zero-downtime release ও দ্রুত rollback-এর পদ্ধতি।
+description: দুটি একই রকম পরিবেশের মাঝে traffic shift করে near zero-downtime release ও দ্রুত rollback-এর পদ্ধতি।
 theme: blue-green
 order: 1
 pages: [1, 3]
@@ -9,14 +9,14 @@ sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deploy
 updated: 2026-09-16
 keywords:
   - term: Blue/Green Deployment
-    bn: দুই একই পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল
+    bn: দুটি একই রকম পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল
     tip: near zero-downtime release ও দ্রুত rollback দেয়।
   - term: Blue Environment
     bn: বর্তমান production traffic চালানো পরিবেশ
     tip: সমস্যা হলে traffic এখানেই ফেরত আসে।
   - term: Green Environment
     bn: নতুন ভার্সন স্টেজ করা পরিবেশ
-    tip: test শেষে blue-এর কাছ থেকে traffic নেয়।
+    tip: পরীক্ষা শেষে blue-এর কাছ থেকে traffic নেয়।
   - term: Traditional Deployment
     bn: একই resource-এ পুরনো ভার্সন আবার deploy করা
     tip: rollback ধীর — শুরু থেকে redeploy, দীর্ঘ সময় unavailable।
@@ -25,7 +25,7 @@ keywords:
     tip: production জুড়ে ছড়ানোর আগে সমস্যা ধরা পড়ে।
   - term: Blast Radius
     bn: ব্যর্থতার প্রভাব কত দূরে ছড়ায়
-    tip: blue/green এটা ছোট রাখে — শুধু green-এর traffic প্রভাবিত হয়।
+    tip: blue/green এটা ছোট রাখে — শুধু নতুন পরিবেশের traffic প্রভাবিত হয়।
   - term: Rollback
     bn: traffic আবার blue পরিবেশে ফেরত পাঠানো
     tip: মুহূর্তেই সম্ভব — কোনো redeploy লাগে না।

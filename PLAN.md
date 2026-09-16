@@ -187,39 +187,90 @@ On publish, confirm:
 4. A fresh browser session shows a lesson-specific completion state after reload.
 5. Glossary search/filter returns visible rows for `microservices` and hides unmatched rows.
 
-## Phase 6 — SAA-C03 Exam Guide (deferred)
+## Phase 6 — SAA-C03 Exam Guide (planned, next active work)
 
-> Deferred: the Blue/Green Deployments theme (Phase 7) takes priority as the next active work.
+> Un-deferred: Phase 7 (blue/green) shipped as `v0.3.0`; this is the next theme.
 
-**Goal:** add a theme covering the official exam structure so readers have the exam frame
-before the content themes.
+**Goal:** add the official *AWS Certified Solutions Architect – Associate (SAA-C03) Exam Guide*
+as a theme so readers get the exam frame before/alongside the content themes. Same
+theme-folder → lesson model; ids `examguide-1...examguide-8`, folder
+`src/content/docs/learn/exam-guide/`, theme value `exam-guide`.
 
-**Scope (from the official SAA-C03 exam guide, print ~10 pages):**
+**Source:** official exam guide PDF (v1.1, 23 PDF pages, print pages 1–21 confirmed from
+footers). Extracted text lives in gitignored `tools/.source/exam-guide/` — never commit the
+PDF or the extracted text.
 
-| Lesson | Slug | Coverage |
-| ---: | --- | --- |
-| 1 | `1-exam-overview` | Format, 65 questions, 130 minutes, 700/1000 pass, Pearson VUE |
-| 2 | `2-domain-weighting` | Domain 1–4 percentages and what each domain means |
-| 3 | `3-domain1-secure-architecture` | 30% — secure designs, IAM, encryption basics |
-| 4 | `4-domain2-resilient-architecture` | 26% — multi-AZ, scaling, DR targets |
-| 5 | `5-domain3-high-performing-architecture` | 24% — caching, compute/storage choices |
-| 6 | `6-domain4-cost-optimized-architecture` | 20% — cost levers, storage tiers, serverless |
-| 7 | `7-question-patterns` | Question anatomy, distractors, scenario verb mapping |
-| 8 | `8-study-plan` | 6-week plan combining this site's microservices theme |
+**Facts locked to the guide (do not "improve" from memory):**
+
+- Two response types: multiple choice (1 correct + 3 distractors) and multiple response
+  (2+ correct out of 5+).
+- 50 scored questions + 15 unscored = 65 total; unscored are not identified.
+- Scaled score 100–1,000; **minimum passing score 720** (the old stub's "700" was wrong).
+- Compensatory scoring model — no per-section pass requirement.
+- Unanswered = incorrect; no guessing penalty.
+- Domain weightings: D1 Secure 30%, D2 Resilient 26%, D3 High-Performing 24%,
+  D4 Cost-Optimized 20%.
+- **Not in the guide:** exam duration ("130 minutes") and Pearson VUE scheduling. Do not
+  attribute them to the exam guide; either cite the AWS certification exam page explicitly
+  in lesson 1's prose or omit. Never print "700/1000 pass".
+
+**Source map (print pages; verify per-lesson footers while authoring):**
+
+| Lesson | Slug | Source pages | Coverage |
+| ---: | --- | ---: | --- |
+| 1 | `1-exam-overview` | 1–2 | Intro, target candidate, response types, unscored content, scoring/results (720, compensatory) |
+| 2 | `2-domain-weighting` | 2–3 | Four domains + weightings; how to read section-level score feedback |
+| 3 | `3-domain1-secure-architecture` | 3–6 | Tasks 1.1–1.3: secure access (IAM, Identity Center, SCP), secure workloads (VPC security), data security controls |
+| 4 | `4-domain2-resilient-architecture` | 5–8 | Tasks 2.1–2.2: scalable/loosely coupled (SQS, EventBridge, Auto Scaling), HA/fault-tolerant (multi-AZ, DR targets) |
+| 5 | `5-domain3-high-performing-architecture` | 8–10 | Tasks 3.1–3.5: storage, compute, database, network, data ingestion & transformation |
+| 6 | `6-domain4-cost-optimized-architecture` | 10–12 | Tasks 4.1–4.4: cost-optimized storage, compute, database, network |
+| 7 | `7-question-patterns` | 1–2, 13–14 | Question anatomy, distractor logic, scenario-verb → domain mapping (synthesis; uses the technologies-and-concepts list) |
+| 8 | `8-study-plan` | 13–21 | Appendix as a study compass: in-scope vs out-of-scope service lists; 6-week plan tying the microservices and blue-green themes to each domain |
+
+**Plan decisions:**
+
+- Accent: violet-600 `#7c3aed` — validated ≥3:1 on white (5.70) and dark (3.11); distinct
+  from microservices amber `#f97316` and blue-green cyan `#0891b2`.
+- Domain lessons (3–6) condense each task statement's Knowledge-of/Skills-in bullets into
+  Bangla study notes; every domain lesson cross-links the matching microservices/blue-green
+  lessons (e.g. D2 → DR/HA lesson, D3 → caching lessons).
+- Lesson 7 renders the verb/keyword → domain mapping with `ReferenceTable.astro`.
+- Progress counting is now registry-driven (`themeCompleted` reads `LESSONS`), so new theme
+  ids work regardless of hyphenation — regression from the blue-green launch, already fixed.
+- Add exam-guide pages to `PAGES` in `tools/check-contrast.mjs` when the theme lands.
+- Release tag: **`v0.4.0`** (the old stub's `v0.2.0` was skipped; `v0.3.0` is already taken
+  by the blue-green release, so continue forward).
+- When authoring starts, remove the exam-guide entry from `PLANNED_THEMES` in `themes.ts`.
 
 **Tasks:**
 
-1. Add the theme to `src/lib/themes.ts` (`THEMES`) and to `PLANNED_THEMES` removal order.
-2. Extend `LESSONS` in `src/lib/lessons.ts` with `examguide-1...examguide-8` ids.
-3. Create `src/content/docs/learn/exam-guide/index.mdx` plus 8 lesson MDX files.
-4. Add new glossary entries to `glossary-terms.json` before use; keep service names Latin script.
-5. Reuse the existing lesson shape: keywords table, exam traps, Mermaid only where it clarifies,
-   `Attribution` + `MarkComplete` (`examguide-<n>`) on every page.
-6. Sidebar, theme cards, progress bars and glossary filters must pick the theme up automatically.
-7. Run `pnpm check`, `pnpm build`, `pnpm check:links`, `pnpm check:contrast`; commit and tag `v0.2.0`.
+1. Add the theme to `THEMES` in `src/lib/themes.ts` with accent `#7c3aed`; extend `LESSONS`
+   with `examguide-1...examguide-8` (theme: `exam-guide`, slugs as in the map above).
+2. Create `src/content/docs/learn/exam-guide/index.mdx` plus 8 lesson MDX files in batches:
+   A (1–2), B (3–6), C (7–8).
+3. Lesson frontmatter mirrors the existing schema: `title`, `titleEn`, `theme: exam-guide`,
+   `order`, `pages`, `sourceUrl` (the official exam-guide PDF URL), `updated`, 8–12
+   `keywords`, `sources`. Body states its print-page range; ends with `Attribution` +
+   `MarkComplete lessonId="examguide-<n>"`.
+4. Add new glossary terms to `glossary-terms.json` before first use (theme: `exam-guide`);
+   keep service names and identifiers in Latin script; standard Bangla only.
+5. Mermaid only where it clarifies: domain-weighting chart (lesson 2), question-flow
+   (lesson 7), study-plan timeline (lesson 8).
+6. Sidebar, theme cards, progress bars and glossary filters pick the theme up automatically;
+   verify home/learn/dashboard render all three themes with independent progress bars.
+7. Run `pnpm check`, `pnpm build`, `pnpm check:links`, `pnpm check:contrast`; commit and tag
+   `v0.4.0`.
 
-**Acceptance:** both themes appear on home/learn pages with independent progress bars; sidebar
-lists both; per-lesson completion ids do not collide; all checks green.
+**Acceptance:**
+
+- 8 lessons covering the guide's print pages 1–21, each stating its page range in body +
+  `Attribution`; the fact box above (65 = 50+15, 720 pass, compensatory scoring, 30/26/24/20)
+  is stated correctly in lessons 1–2.
+- All three themes appear on home/learn/dashboard with independent progress; completion ids
+  `examguide-1...8` do not collide and persist across reload.
+- Glossary filter shows an `exam-guide` button; contrast check covers exam-guide pages.
+- No source PDF or extracted text is committed (`tools/.source/` stays gitignored).
+- All checks green; Pages URL serves the new routes under the base path.
 
 ## Phase 7 — Next theme: Blue/Green Deployments on AWS (complete, `v0.3.0`)
 
