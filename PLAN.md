@@ -1,6 +1,6 @@
 # SAA Bangla Study Site — Implementation Plan
 
-**Status:** Phases 0–5 complete and published (v0.1.0 tag, GitHub Pages live, all routes HTTP 200). Standard-Bangla proofread pass finished across shell pages, components and all 20 lessons; build/links/contrast checks green. Phase 6 (exam-guide theme) and Phase 7 (blue/green deployments theme) are planned, not started.
+**Status:** Phases 0–5 complete and published (v0.1.0 tag, GitHub Pages live, all routes HTTP 200). Standard-Bangla proofread pass finished across shell pages, components and all 20 lessons; build/links/contrast checks green. Phase 7 (blue/green deployments theme) complete — 9 lessons live, tagged `v0.3.0`. Phase 6 (exam-guide theme) is planned, not started.
 
 ## Objective
 
@@ -221,7 +221,7 @@ before the content themes.
 **Acceptance:** both themes appear on home/learn pages with independent progress bars; sidebar
 lists both; per-lesson completion ids do not collide; all checks green.
 
-## Phase 7 — Next theme: Blue/Green Deployments on AWS (planned)
+## Phase 7 — Next theme: Blue/Green Deployments on AWS (complete, `v0.3.0`)
 
 **Goal:** add the third theme from the AWS whitepaper *Blue/Green Deployments on AWS*
 (34 PDF pages; print pages 1–30; letter size, so PDF page = print page + cover offset only).
@@ -277,6 +277,12 @@ Notes on the mapping:
 - Glossary filter shows a `blue-green` theme button and search hits new terms.
 - No extracted source text or the PDF itself is committed (`tools/.source/` stays gitignored).
 - All checks green; Pages URL serves the new routes under the base path.
+
+**Outcome (2026-09-16):** shipped as commits `e8a9979` (foundation + lessons 1–3), `b1626d2`
+(lessons 4–6) and `1491caa` (lessons 7–9), tagged `v0.3.0`. Accent validated as cyan-600
+`#0891b2` (≥3:1 on both light and dark; sky-500 failed the light floor at 2.77:1). Glossary
+grew by 32 blue-green terms (185 total). All four checks green; CDP visual check confirmed
+card accent, glossary filtering and the 9-lesson checklist on the dev server.
 
 ## Definition of done
 
