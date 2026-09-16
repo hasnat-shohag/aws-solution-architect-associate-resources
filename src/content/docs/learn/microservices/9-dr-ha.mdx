@@ -15,23 +15,23 @@ keywords:
     bn: উচ্চ প্রাপ্যতা
     tip: component failure সহ্য করে reliability target maintain করা।
   - term: RTO
-    bn: recovery time objective
-    tip: disruption থেকে service restore-এর accepted maximum time।
+    bn: সেবা ফিরে পাওয়ার সর্বোচ্চ গ্রহণযোগ্য সময়
+    tip: disruption থেকে service restore পর্যন্ত accepted maximum time।
   - term: RPO
-    bn: recovery point objective
+    bn: সর্বোচ্চ গ্রহণযোগ্য ডেটা লসের সময়সীমা
     tip: disaster ঘটলে maximum acceptable data loss window।
   - term: Backup and Restore
-    bn: backup রেখে প্রয়োজনে restore
-    tip: cheapest, highest RTO/RPO।
+    bn: backup রেখে প্রয়োজনে restore করা
+    tip: সবচেয়ে সস্তা, কিন্তু RTO/RPO সবচেয়ে বেশি।
   - term: Pilot Light
-    bn: data synced, compute minimal/off
-    tip: disaster ঘটলে production capacity launch করা।
+    bn: data synced রাখা, compute minimal/off
+    tip: disaster ঘটলে production capacity launch করা হয়।
   - term: Warm Standby
-    bn: scaled-down active copy
+    bn: ছোট আকারের চালু কপি সবসময় প্রস্তুত
     tip: কিছু traffic তৎক্ষণাৎ serve করে; full switch দ্রুত।
   - term: Multi-Site Active-Active
-    bn: multiple active regions
-    tip: lowest recovery time, highest cross-region cost।
+    bn: একাধিক region একসাথে production traffic দেয়
+    tip: সবচেয়ে কম recovery time, সবচেয়ে বেশি cross-region cost।
 sources:
   - label: AWS Whitepaper — Implementing Microservices on AWS
     href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
@@ -77,21 +77,21 @@ flowchart LR
 
 ## Statelessness ও Twelve-Factor App
 
-Stateless principle create hot-swappable ও autoscaling systems সহজ করে। Microservice process নিজস্ব session/state/properties ভাগ না করে persistent data source-এও সংরক্ষন করে।  **Twelve-Factor App** process-ভিত্তিক architecture, backing services-এ config/state বাইরে রাখার সুযোগ দেয়।
+Stateless principle hot-swappable ও autoscaling system তৈরি সহজ করে। Microservice process নিজস্ব session/state/properties ভাগ না করে persistent data source-এও সংরক্ষণ করে। **Twelve-Factor App** process-ভিত্তিক architecture, backing services-এ config/state বাইরে রাখার সুযোগ দেয়।
 আর: load balancer/reverse proxy, DNS/Route 53, content delivery, request throttling, API Gateway, Amazon Cognito, AWS App Mesh, service discovery engines ইত্যাদি।
 
 ## Multi-AZ বনাম Multi-Region
 
-`Multi-AZ` deployment এক region-এর ভেতরের ভুলে প্রায় availability বাড়ায়। যেমন instance/AZ issue ধরা পড়লে অন্য AZ-এ stateless task reconnect করে।
+`Multi-AZ` deployment এক region-এর ভেতরের বিভ্রাটে availability বাড়ায়। যেমন instance/AZ issue ধরা পড়লে অন্য AZ-এ stateless task reconnect করে।
 
-**Multi-Region DR** একটি region চালু না থাকলে অন্য region-এ recover করে। DR প্রায়শই región চালু থাকলে normal operations ফিরিয়ে আনার plan/strategy-র সাথে মিলে যায়। প্রধান architecture patterns:
+**Multi-Region DR** একটি region চালু না থাকলে অন্য region-এ recover করে। DR প্রায়শই মূল region চালু থাকলে normal operations ফিরিয়ে আনার plan/strategy-র সাথে মিলে যায়। প্রধান architecture patterns:
 
 - **Backup and Restore**: backup/restorable copy তৈরি রাখা।
 - **Pilot Light**: data replication and minimal core in alternate region।
 - **Warm Standby**: scaled-down active environment ready in alternate region।
 - **Multi-Site Active-Active**: multiple regions serving production traffic simultaneously।
 
-<ExamTrap title="Multi-AZ বনাম DR" question="Multi-AZ design কি Disaster Recovery architecture?" answer="না। Multi-AZ সাধারণত regional fault isolation/simultaneous AZ failure সামলায়। " />
+<ExamTrap title="Multi-AZ বনাম DR" question="Multi-AZ design কি Disaster Recovery architecture?" answer="না। Multi-AZ সাধারণত regional fault isolation/simultaneous AZ failure সামলায়।" />
 
 Exam প্রশ্ন মিলাতে context দেখুন: regional event/disaster scenario — Multi-Region; regional fault isolation/simultaneous AZ failure — Multi-AZ; specific RTO/RPO targets — exact amount heavy resilience architectures।
 

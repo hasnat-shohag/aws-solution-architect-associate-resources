@@ -9,52 +9,54 @@ sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microserv
 updated: 2026-09-15
 keywords:
   - term: REST
-    bn: HTTP resource API style
-    tip: broad tooling, cacheable and human-friendly; SAA favorite.
+    bn: HTTP resource-ভিত্তিক API style
+    tip: broad tooling, cacheable ও human-friendly; SAA-তে খুব প্রচলিত।
   - term: GraphQL
     bn: client-driven flexible query API
-    tip: AppSync GraphQL subscription and schema federation relevant।
+    tip: AppSync-এ GraphQL subscription ও schema federation relevant।
   - term: gRPC
     bn: high-performance RPC protocol
-    tip: binary protobuf, low latency, ALB/Envoy commonly used।
+    tip: binary protobuf, low latency; ALB/Envoy প্রায়ই ব্যবহৃত হয়।
   - term: WebSocket
-    bn: persistent two-way connection
+    bn: দ্বিমুখী স্থায়ী connection
     tip: chat, live update, real-time dashboard।
   - term: SQS
     bn: managed queue
-    tip: decouple producer from consumer; standard vs FIFO behavior।
+    tip: producer-কে consumer থেকে decouple করে; standard বনাম FIFO আচরণ জানুন।
   - term: SNS
     bn: pub/sub topic service
-    tip: fanout to Lambda, SQS, HTTP endpoints।
+    tip: Lambda, SQS, HTTP endpoint-এ fanout করে।
   - term: EventBridge
     bn: event routing bus
     tip: scheduled events, rule-based routing, cross-account/event bus।
   - term: Kinesis Data Streams
     bn: ordered real-time data stream
-    tip: high throughput streaming analytics; shard based capacity।
+    tip: high throughput streaming analytics; shard-ভিত্তিক capacity।
 ---
 
 import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-Microservices communication দুই দিকে ভাগ করুন: সরাসরি API call (synchronous) এবং টিকটিক পাঠানো বা ইভেন্টের ভিত্তিতে (asynchronous)। ভুল লক্ষ্য হলো সব কিছু এক প্যাটার্ন দিয়ে সমাধান করা।
+Microservices communication দুই দিকে ভাগ করুন: সরাসরি API call (synchronous) এবং ইভেন্ট পাঠিয়ে (asynchronous)। ভুল লক্ষ্য হলো সব কিছু এক প্যাটার্ন দিয়ে সমাধান করা।
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ২১–২২ (Communication mechanisms)।
 
 ## Sync প্যাটার্ন
 
 - **REST/API Gateway** public and third-party API, mobile/web backend, cacheability।
 - **GraphQL** single endpoint থেকে client নিজের data shape নির্বাচ করে; অনেক frontend field combination দরকার হলে কাজ করে।
-- **gRPC** service-to-service বহু call, binary serialization এবং contract-first API. Lambda এ সা৾াv姗়, Apps এ মানানসই।
+- **gRPC** service-to-service বহু call, binary serialization এবং contract-first API-তে ভালো। AppSync বা ALB/Envoy-সহ মানানসই।
 - **WebSocket** bidding, chat, notifications, live scores।
 - Service discovery/http client timeout এবং retries সেট করতে হয়।
 
 ## Async প্যাটার্ন
 
-- **SQS** queue: one consumer group; smooth spiky load। Standard queue high throughput but duplicate delivery possible; FIFO ordering/low duplication।
+- **SQS** queue: এক consumer group; spiky load মসৃণ করে। Standard queue-তে high throughput কিন্তু duplicate delivery সম্ভব; FIFO-তে ordering ও কম duplication।
 - **SNS** topic fanout: এক event → Lambda, SQS, email, HTTP consumers।
 - **EventBridge** event buses: schema registry, rule routing, event archive/replay, third-party SaaS integration।
 - **Kinesis Data Streams** ordered high throughput, analytics and consumer lag monitoring।
-- **MSK/MQ** Kafka/RabbitMQ/ActiveMQ compatibility, workload-specific use cases।
+- **MSK/MQ** Kafka/RabbitMQ/ActiveMQ compatibility; workload-নির্দিষ্ট কাজে।
 
 ```mermaid
 flowchart TD
@@ -68,7 +70,7 @@ flowchart TD
 ```
 
 > [!NOTE]
-SNS fanout event alternative to SQS? Fanout needs एक publisher, multiple consumers। Queue consumer single group। EventBridge এ rule based routing needed। প্রশ্নে "fanout" আর "queue" সা০য়া শব্দ।
+SNS fanout কি SQS-এর বিকল্প? Fanout-এ এক publisher, একাধিক consumer। Queue-তে consumer একটাই group। EventBridge-এ rule-based routing দরকার। প্রশ্নে "fanout" আর "queue" শব্দ খেয়াল রাখুন।
 
 <KeywordTable keywords={frontmatter.keywords} />
 

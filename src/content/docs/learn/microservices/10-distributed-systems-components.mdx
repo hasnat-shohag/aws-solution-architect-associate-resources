@@ -13,10 +13,10 @@ keywords:
     tip: ECS Service Connect, Cloud Map, internal ALB/NLB বা third-party mesh।
   - term: Load Balancing
     bn: traffic backend-এ বিতরণ
-    tip: ALB for L7 rules, NLB for ultra-low latency and static IP।
+    tip: L7 rule-এ ALB; ultra-low latency ও static IP-তে NLB।
   - term: API Gateway
     bn: managed API front door
-    tip: API management + authorization + rate limits + caching in one place।
+    tip: API management, authorization, rate limit ও caching এক জায়গায়।
   - term: Ephemerality
     bn: service instance একেকটি অস্থায়ী
     tip: dynamic scaling-এ fixed IP বা hard-coded hostname এড়ান।
@@ -25,13 +25,13 @@ keywords:
     tip: subnet, route table, endpoint, security zone দিয়ে ভাগ করুন।
   - term: PrivateLink
     bn: private AWS/VPC service interface
-    tip: traffic public internet এ ফেলানো এড়ায়।
+    tip: traffic public internet-এ পাঠানো এড়ায়।
   - term: Network ACL
     bn: subnet-level stateless firewall
-    tip: deny/allow rules; broad emergency screening-এ কাজে আসে।
+    tip: deny/allow rules; বড় জরুরি ফিল্টার-এ কাজে আসে।
   - term: Microservices Messaging
     bn: service-to-service communication framework
-    tip: app mesh, request routing, security policy, observability together।
+    tip: request routing, security policy ও observability একসাথে দেয়।
 sources:
   - label: AWS Whitepaper — Implementing Microservices on AWS
     href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
@@ -57,16 +57,16 @@ flowchart LR
   A -. unhealthy .-> X[Failed Instance]
 ```
 
-- fixed IP না রেখে service name দিয়ে দেখুন।
+- fixed IP না রেখে service name দিয়ে connect করুন।
 - health check থাকলে unhealthy instance সরান।
-- dynamic scaling এবং container task replacement নিয়ে মাথা রাখুন।
+- dynamic scaling এবং container task replacement-এর কথা মাথায় রাখুন।
 
 ## API layer ও messaging
 
 Microservices messaging সাধারণত নিম্নলিখিত কাজ করে:
 
 - request routing বা reverse proxy।
-- client response-time লটেন্সি কমানো।
+- client response-time latency কমানো।
 - service-to-service mesh এ policy apply করা।
 - authentication/authorization।
 - metrics, logging, tracing, retry, circuit breaking ও cache।
@@ -100,7 +100,7 @@ AWS PrivateLink VPC endpoint services ও shared services security বাড়�
 
 ## Service mesh বা front door?
 
-Service mesh একটি dedicated infrastructure লেয়ার, যেখানে sidecar/gateway proxy-এর মাধ্যমে service-to-service connection, traffic shaping, mTLS, retries ও observability পরিচালিত হয়। API Gateway সাধারণত external APIs গুলির front door। একটি architecture-এ দুটি একসাথে থাকতে পারে।
+Service mesh একটি dedicated infrastructure লেয়ার, যেখানে sidecar/gateway proxy-এর মাধ্যমে service-to-service connection, traffic shaping, mTLS, retries ও observability পরিচালিত হয়। API Gateway সাধারণত external API-গুলোর front door। একটি architecture-এ দুটি একসাথে থাকতে পারে।
 
 <ExamTrap title="Service discovery বনাম load balancing" question="Fixed IP-এর পরিবর্তে কী ব্যবহার করবেন?" answer="Service discovery + health checks। Sizing ও host replacement-এর কারণে instance IP গুলো প্রায়ই বদলে যায়।" />
 

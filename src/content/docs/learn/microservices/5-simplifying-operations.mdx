@@ -27,17 +27,27 @@ keywords:
     bn: DynamoDB তে data ভাগ করার key
   - term: Sort Key
     bn: এক partition-এর ভেতরে item সাজানোর key
+    tip: partition key-এর সাথে মিলে composite primary key হয়।
+  - term: NoSQL
+    bn: schema-ছাড়া, নমনীয় ডেটা মডেলের database
+    tip: বড় scale ও নমনীয় ডেটা শেপে DynamoDB-র মতো সার্ভিস উপযুক্ত।
+  - term: In-Memory Cache
+    bn: মেমোরিতে জমা রাখা দ্রুত ডেটা স্তর
+    tip: session ও repeated read-এর জন্য প্রচলিত।
+  - term: Session Data
+    bn: এক ব্যবহারকারীর চলমান অবস্থা জমা রাখার ডেটা
+    tip: in-memory cache সাধারণত সবচেয়ে উপযুক্ত জায়গা।
 sources:
   - label: AWS Whitepaper — Implementing Microservices on AWS
     href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
-note: স্টুডি নোট উৎস, প্রিন্ট পেজ ৭।
+note: স্টাডি-নোটের উৎস, প্রিন্ট পেজ ৭।
 ---
 
 import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৬–৭ (Private networking, Data store ও Simplifying operations)।
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৭ (Simplifying operations ও data store নির্বাচন)।
 
 Microservice-এ ব্যবসায়িক ক্ষমতা ভাগ করার সাথে data ownership-ও ভাগ করার প্রয়োজন হয়। Service-specific data store হলে deployment, scaling ও failure isolation ভালো থাকে। সিদ্ধান্ত করার সময় data shape, query pattern, consistency ও scale দেখুন।
 
@@ -61,7 +71,7 @@ flowchart LR
 
 - **Partition key**: item বিতরণ ও scalability নির্ধারণ করে।
 - **Sort key**: এক partition-এর ভেতর item সাজায়; composite primary key তৈরি করে।
-- **low-latency**: predictable single-digit millisecond response সম্ভব।
+- **Low latency**: predictable single-digit millisecond response সম্ভব।
 
 > **Exam trap:** “high traffic” শুধু DynamoDB বোঝায় না। Access pattern, consistency, join, query flexibility ও cost একসাথে মিলিয়ে decision নিন।
 

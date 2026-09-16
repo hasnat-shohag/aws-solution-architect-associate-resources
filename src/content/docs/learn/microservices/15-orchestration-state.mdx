@@ -12,33 +12,35 @@ keywords:
     bn: কেন্দ্রীয় workflow controller
     tip: Step Functions / Airflow; visibility, retry, branching, timeout।
   - term: Choreography
-    bn: services react to each other via events
-    tip: decoupled but harder to understand end-to-end।
+    bn: সার্ভিসগুলো event-এ পরস্পরের প্রতি সাড়া দেয়
+    tip: decoupled, কিন্তু end-to-end flow বোঝা কঠিন।
   - term: Step Functions
     bn: workflow orchestration service
-    tip: Standard workflows for long-running; Express for high-volume।
+    tip: long-running-এর জন্য Standard; high-volume-এর জন্য Express।
   - term: State Machine
-    bn: workflow state and transition definition
-    tip: Task, Choice, Parallel, Map, Wait states।
+    bn: workflow-এর state ও transition সংজ্ঞা
+    tip: Task, Choice, Parallel, Map, Wait state আছে।
   - term: Workflow Studio
     bn: visual workflow editor
-    tip: drag-and-drop Step Functions workflow design।
+    tip: drag-and-drop করে Step Functions workflow ডিজাইন।
   - term: Task Token
     bn: external callback handle
-    tip: wait for external approval/process before resuming workflow।
+    tip: external approval/process শেষ না হওয়া পর্যন্ত workflow অপেক্ষা করে।
   - term: MWAA
     bn: Amazon Managed Workflows for Apache Airflow
     tip: Python Airflow DAG experience relevant।
   - term: External State
-    bn: স্টেট runtime এর বাইরে রাখা
-    tip: DynamoDB, S3, ElastiCache or database, not inside containers।
+    bn: স্টেট runtime-এর বাইরে রাখা
+    tip: DynamoDB, S3, ElastiCache বা database — container-এর ভেতরে নয়।
 ---
 
 import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-এক্ষেত্রে workflow সাধারণত এক service-এর লজিক নয়; বহু service একসাথে সিদ্ধান্ত নেয়, ফলে পুরনো flow নির্ভুলভাবে অনুসরণ করা জরুরি।
+এখানে workflow সাধারণত এক service-এর লজিক নয়; বহু service একসাথে সিদ্ধান্ত নেয়, ফলে সঠিক flow নির্ভুলভাবে অনুসরণ করা জরুরি।
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ২৩–২৫ (Orchestration ও state management)।
 
 ## Orchestration vs choreography
 

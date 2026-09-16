@@ -9,29 +9,29 @@ sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microserv
 updated: 2026-09-15
 keywords:
   - term: SAM
-    bn: AWS serverless application template and CLI
-    tip: দ্রুত Lambda API DynamoDB বা auth সহ starter code তৈরি করতে পারে।
+    bn: AWS serverless application template ও CLI
+    tip: Lambda, API, DynamoDB বা auth সহ starter code দ্রুত তৈরি করতে পারে।
   - term: SAM CLI
-    bn: SAM local test and deploy command line
-    tip: sam local invoke and sam deploy common commands.
+    bn: SAM-এর local test ও deploy command-line টুল
+    tip: sam local invoke ও sam deploy প্রচলিত কমান্ড।
   - term: CDK
-    bn: Infrastructure as code using programming languages
-    tip: জটিল infrastructure এ reusable construct এবং typed programming language.
+    bn: programming language দিয়ে infrastructure as code
+    tip: জটিল infrastructure-এ reusable construct ও type-safe ভাষার সুবিধা।
   - term: CloudFormation
     bn: AWS resource deployment template engine
-    tip: SAM template compile হয় CloudFormation template.
+    tip: SAM template compile হয়ে CloudFormation template-এ পরিণত হয়।
   - term: Lambda Layers
     bn: shared dependency package
-    tip: একই dependency বহু function এ ব্যবহার করার জন্য।
+    tip: একই dependency বহু function-এ ব্যবহার করার জন্য।
   - term: SnapStart
-    bn: JVM cold start acceleration
-    tip: Java 11 or newer runtime and other performance options.
-  - term: Java Opt
-    bn: Lambda Java optimization library
-    tip: SnapStart সংগ্রহ এবং JVM tuning এর সাথে ব্যবহার হয়।
+    bn: JVM cold start কমানোর ফিচার
+    tip: Java 11 বা তার নতুন runtime-এ কাজ করে।
+  - term: Java Optimization
+    bn: Lambda Java runtime দ্রুত করার কৌশল
+    tip: SnapStart snapshot ও JVM tuning একসাথে ব্যবহার করা হয়।
   - term: Powertools
     bn: Lambda utility library
-    tip: logging tracing metrics and idempotency.
+    tip: logging, tracing, metrics ও idempotency দেয়।
 sources:
   - label: AWS Whitepaper
     href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf
@@ -42,7 +42,9 @@ import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-এই লেসনে আমরা Lambda code deploy করার পদ্ধতি জানব। Zip সাধারণ dependency এর জন্য ভাল, container image বড় dependency বা Docker-native workflow এর জন্য ভাল।
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৮ (Deploying Lambda-based applications)।
+
+এই লেসনে Lambda code deploy করার পদ্ধতি জানা যায়। Zip সাধারণ dependency-র জন্য ভালো; container image বড় dependency বা Docker-native workflow-র জন্য ভালো।
 
 ## Deployment tools
 
@@ -63,7 +65,7 @@ flowchart LR
 ```
 
 > [!NOTE]
-SAM এবং CDK একই জিনিস নয়। SAM Lambda-focused serverless development workflow; CDK programming language-ভিত্তিক general infrastructure.
+SAM এবং CDK একই জিনিস নয়। SAM হলো Lambda-focused serverless development workflow; CDK হলো programming language-ভিত্তিক general infrastructure টুল।
 
 <KeywordTable keywords={frontmatter.keywords} />
 

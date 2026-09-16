@@ -1,7 +1,7 @@
 ---
 title: "Cost Optimization ও Sustainability"
 titleEn: "Cost Optimization & Sustainability"
-description: "Only scale services that need it"
+description: "শুধু যে সার্ভিস দরকার সেটাই scale করা — Spot, Graviton ও sustainability"
 theme: microservices
 order: 13
 pages: [20, 20]
@@ -15,30 +15,32 @@ keywords:
     bn: AWS Arm-based processor
     tip: performance per dollar/per watt প্রায়ই ভালো; migration planning দরকার।
   - term: Cost Explorer
-    bn: spending analysis service
-    tip: usage-based cost visualization and forecasting।
+    bn: খরচ বিশ্লেষণের সার্ভিস
+    tip: usage-ভিত্তিক cost visualization ও forecasting দেয়।
   - term: Feedback
     bn: average utilization ও demand ডেটা
-    tri: capacity plan random guess নয়।
+    tip: capacity plan অনুমান করে নয়, এই ডেটা থেকে হয়।
   - term: Compute Savings Plans
-    bn: commit-based discount
-    tip: stable baseline workload এ ভালো।
+    bn: নির্দিষ্ট ব্যবহারের প্রতিশ্রুতিতে ছাড়
+    tip: stable baseline workload-এ ভালো।
   - term: Spot Instance
-    bn: unused EC2 capacity সস্তায়
-    tip: interruptible, stateless or fault-tolerant work এ ব্যবহার করুন।
+    bn: অব্যবহৃত EC2 capacity সস্তায়
+    tip: interruptible, stateless বা fault-tolerant কাজে ব্যবহার করুন।
   - term: Lifecycle
-    bn: ডেটা aging strategy
-    tip: transition to colder storage classes দরকার হলে S3 Lifecycle Rules।
+    bn: ডেটার বয়স অনুযায়ী স্তর বদলানোর কৌশল
+    tip: colder storage class-এ সরাতে S3 Lifecycle Rules।
   - term: Sustainability
-    bn: resource usage এবং emissions awareness
-    tip: rightsizing, scheduling, utilization এবং lifecycle policies।
+    bn: resource ব্যবহার ও emissions সচেতনতা
+    tip: rightsizing, scheduling, utilization ও lifecycle policies।
 ---
 
 import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-Microservices এবং serverless খরচ নিয়ন্ত্রণে সাহায্য করে, কারণ সার্ভিস গুলো আলাদা হয় এবং শুধু usage cost প্রয়োজন হয়। তবে বহু ছোট সার্ভিস বানানো নিজে থেকে cost win নয়।
+Microservices এবং serverless খরচ নিয়ন্ত্রণে সাহায্য করে, কারণ সার্ভিস গুলো আলাদা হয় এবং শুধু ব্যবহৃত অংশের cost দিতে হয়। তবে বহু ছোট সার্ভিস বানানো নিজে থেকে cost win নয়।
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ২০ (Cost optimization ও sustainability)।
 
 ## Cost levers
 

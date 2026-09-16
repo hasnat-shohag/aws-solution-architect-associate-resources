@@ -1,7 +1,7 @@
 ---
 title: "মাল্টি-টেন্যান্সি ও API ম্যানেজমেন্ট"
 titleEn: "Multi-Tenancy & API Management"
-description: "Tenant isolation, Throttling,Caching,ALB,NLB,API Gateway"
+description: "Tenant isolation, throttling, caching, ALB, NLB ও API Gateway তুলনা"
 theme: microservices
 order: 7
 pages: [9, 10]
@@ -13,22 +13,22 @@ keywords:
     tip: data, log ও resource isolation নিয়ে সতর্ক থাকতে হয়।
   - term: Tenant
     bn: আলাদা customer group
-    tip: আলাদা tenant এর প্রয়োজন হলে separate stack বা database ভিন্ন স্তরে দরকার।
+    tip: আলাদা tenant-এর প্রয়োজন হলে separate stack বা database ভিন্ন স্তরে দরকার।
   - term: Pool model
     bn: সব tenant একই shared resources ব্যবহার করে
     tip: cost কম, isolation কম।
   - term: Silo model
-    bn: প্রতি tenant আলাদা infrastructure
+    bn: প্রতি tenant-এর আলাদা infrastructure
     tip: isolation বেশি, cost বেশি।
   - term: API management
-    bn: API versioning, authorization and traffic control
+    bn: API versioning, authorization ও traffic control
     tip: API Gateway এক জায়গায় অনেক কাজ করে।
   - term: ALB
     bn: Application Load Balancer
-    tip: HTTP routing ও path/host based rules এ ভালো।
+    tip: HTTP routing ও path/host-based rule-এ ভালো।
   - term: NLB
     bn: Network Load Balancer
-    tip: উচ্চ throughput and static IP/TCP level operations.
+    tip: উচ্চ throughput ও static IP/TCP-level operation-এ কাজ করে।
   - term: Throttling
     bn: request rate limit
     tip: burst-এ backend overload ঠেকায়।
@@ -38,7 +38,9 @@ import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-এই লেসনে জানবেন কীভাবে অনেক tenant কে একসাথে serve করা যায় এবং API কে route, protect ও monitor করা যায়।
+এই লেসনে জানা যায় কীভাবে অনেক tenant-কে একসাথে serve করা যায় এবং API-কে route, protect ও monitor করা যায়।
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৯–১০ (Multi-tenancy ও API management)।
 
 ## Isolation models
 
@@ -49,11 +51,11 @@ import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
 ## API management
 
-- API Gateway `/products/v1` এবং `/v2` রাউটিং could handle version routing and versioning.
-- API Gateway REST API can be used independently while HTTP API is lighter or cheaper lower.
-- ALB path based routing এবং NLB high throughput level এ কাজ করে।
-- API Gateway API Gateway API Gateway API Gateway versioning request validation rate limiting caching monitoring traffic management।
-- API Gateway request validation authorization and response mapping এর জন্য ভালো।
+- API Gateway প্রায়ই version routing handle করে — যেমন `/products/v1` ও `/v2` আলাদা রাউট।
+- REST API-র সব সুবিধা দরকার হলে API Gateway REST API; হালকা ও সস্তা বিকল্প হলো HTTP API।
+- ALB path-based routing-এ ভালো; NLB উচ্চ throughput ও static IP-তে কাজ করে।
+- API Gateway এক জায়গায় versioning, request validation, rate limiting, caching, monitoring ও traffic management দেয়।
+- request validation, authorization ও response mapping-এর জন্য API Gateway প্রচলিত পছন্দ।
 
 ```mermaid
 flowchart LR

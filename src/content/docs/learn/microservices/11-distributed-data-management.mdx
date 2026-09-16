@@ -19,7 +19,7 @@ keywords:
     tip: audit ও replay সুবিধা দেয়; current state event থেকে derive হয়।
   - term: CQRS
     bn: Command Query Responsibility Segregation
-    tip: write side and optimized read model ভিন্ন হতে পারে।
+    tip: write side ও optimized read model ভিন্ন হতে পারে।
   - term: Eventual Consistency
     bn: কিছু সময় পর সব replica consistent হয়
     tip: user action পরে read আলাদা নোড পেতে পারে; UX প্রভাব ভাবুন।
@@ -35,6 +35,8 @@ import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ১৮ (Distributed data management)।
+
 Monolith এক database share করতে পারে, কিন্তু microservice সাধারণত নিজস্ব data ownership রাখে। এখানে challenge হলো service গুলোতে একসাথে সঠিক state রাখা, বিশেষ করে payment, inventory বা order মতো workflow-এ।
 
 ## Patterns দেখুন
@@ -42,7 +44,7 @@ Monolith এক database share করতে পারে, কিন্তু mic
 - **Event-driven messaging** service decoupling করে। EventBridge/SNS তে ঘটনা occur করে, অন্য service react করে।
 - **Saga** বহু service ধাপে ধাপে orchestrate করে। Failure হলে compensating action চালায়।
 - **Event sourcing** current state না রেখে সব state change event রাখে। Replay করে state তৈরি করা যায়।
-- **CQRS** আলাদা write model আর fast read model রাখে। This is often useful with high read throughput.
+- **CQRS** আলাদা write model আর fast read model রাখে; high read throughput-এ প্রায়ই কার্যকর।
 - **Idempotency** রিট্রাই বা duplicate event নিরাপদ করে, যেমন same payment ID দুই বার process না করা।
 
 > [!NOTE]

@@ -1,6 +1,6 @@
 # SAA Bangla Study Site — Implementation Plan
 
-**Status:** Phases 0–4 complete. All 20 Microservices lessons are authored, the glossary has 146 entries, and static build/links/contrast checks pass. Phase 5 publishing remains.
+**Status:** Phases 0–5 complete and published (v0.1.0 tag, GitHub Pages live, all routes HTTP 200). Standard-Bangla proofread pass finished across shell pages, components and all 20 lessons; build/links/contrast checks green. Phase 6 (next theme) is planned, not started.
 
 ## Objective
 
@@ -186,6 +186,38 @@ On publish, confirm:
 3. Home, learning, theme, lesson, progress, glossary, about and 404 routes return `HTTP 200`.
 4. A fresh browser session shows a lesson-specific completion state after reload.
 5. Glossary search/filter returns visible rows for `microservices` and hides unmatched rows.
+
+## Phase 6 — Next theme: SAA-C03 Exam Guide (planned)
+
+**Goal:** add the second theme so the site proves its multi-theme model while covering the
+official exam structure readers need before any content theme.
+
+**Scope (from the official SAA-C03 exam guide, print ~10 pages):**
+
+| Lesson | Slug | Coverage |
+| ---: | --- | --- |
+| 1 | `1-exam-overview` | Format, 65 questions, 130 minutes, 700/1000 pass, Pearson VUE |
+| 2 | `2-domain-weighting` | Domain 1–4 percentages and what each domain means |
+| 3 | `3-domain1-secure-architecture` | 30% — secure designs, IAM, encryption basics |
+| 4 | `4-domain2-resilient-architecture` | 26% — multi-AZ, scaling, DR targets |
+| 5 | `5-domain3-high-performing-architecture` | 24% — caching, compute/storage choices |
+| 6 | `6-domain4-cost-optimized-architecture` | 20% — cost levers, storage tiers, serverless |
+| 7 | `7-question-patterns` | Question anatomy, distractors, scenario verb mapping |
+| 8 | `8-study-plan` | 6-week plan combining this site's microservices theme |
+
+**Tasks:**
+
+1. Add the theme to `src/lib/themes.ts` (`THEMES`) and to `PLANNED_THEMES` removal order.
+2. Extend `LESSONS` in `src/lib/lessons.ts` with `examguide-1...examguide-8` ids.
+3. Create `src/content/docs/learn/exam-guide/index.mdx` plus 8 lesson MDX files.
+4. Add new glossary entries to `glossary-terms.json` before use; keep service names Latin script.
+5. Reuse the existing lesson shape: keywords table, exam traps, Mermaid only where it clarifies,
+   `Attribution` + `MarkComplete` (`examguide-<n>`) on every page.
+6. Sidebar, theme cards, progress bars and glossary filters must pick the theme up automatically.
+7. Run `pnpm check`, `pnpm build`, `pnpm check:links`, `pnpm check:contrast`; commit and tag `v0.2.0`.
+
+**Acceptance:** both themes appear on home/learn pages with independent progress bars; sidebar
+lists both; per-lesson completion ids do not collide; all checks green.
 
 ## Definition of done
 

@@ -9,23 +9,23 @@ sourceUrl: https://docs.aws.amazon.com/whitepapers/latest/implementing-microserv
 updated: 2026-09-15
 keywords:
   - term: CloudTrail
-    bn: AWS API call audit log
-    tip: management and data events capture; all org regions useful।
+    bn: AWS API call-এর audit log
+    tip: management ও data event capture; সব region চালু রাখা ভালো।
   - term: CloudTrail Lake
     bn: managed audit data lake
-    tip: SQL query audit events, long-term retention।
+    tip: SQL query দিয়ে audit event খোঁজা; দীর্ঘমেয়াদি retention।
   - term: AWS Config
     bn: configuration state/change recorder
-    tip: resource inventory and history, timeline of relationship।
+    tip: resource inventory, history ও relationship timeline।
   - term: Config Rule
-    bn: compliance rule checks
-    tip: custom/Lambda based or managed rules।
+    bn: compliance rule check
+    tip: custom/Lambda-ভিত্তিক বা managed rule।
   - term: Conformance Pack
     bn: resource config rule bundle
     tip: multi-account governance baseline।
   - term: Amazon EventBridge
     bn: event bus
-    tip: route CloudTrail event, config change, schedule operation automation।
+    tip: CloudTrail event, config change ও schedule অনুযায়ী automation রাউট করে।
   - term: GuardDuty
     bn: threat detection service
     tip: unusual API/network activity, credentials misuse।
@@ -38,11 +38,13 @@ import KeywordTable from '../../../../components/content/KeywordTable.astro';
 import Attribution from '../../../../components/content/Attribution.astro';
 import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
-Microservices এ বহু টিম, account এবং automated changes থাকে। Compliance, troubleshooting এবং responsibility চিহ্নিত করতে auditable trail রাখা জরুরি।
+Microservices-এ বহু টিম, account এবং automated changes থাকে। Compliance, troubleshooting এবং responsibility চিহ্নিত করতে auditable trail রাখা জরুরি।
+
+> **Source:** Implementing Microservices on AWS, প্রিন্ট পেজ ৩৪–৩৫ (Auditing ও resource change management)।
 
 ## What records what
 
-- **CloudTrail** API/event record; caller identity, resource, request/response metadata, source IP, timestamp।
+- **CloudTrail** API/event record রাখে; caller identity, resource, request/response metadata, source IP, timestamp।
 - **CloudTrail Lake** audit data lake; SQL query দিয়ে investigate centrally।
 - **AWS Config** current state, config history, resource relationships, compliance drift।
 - **Config rules** specific setting check; custom rules/Lambda evaluate।

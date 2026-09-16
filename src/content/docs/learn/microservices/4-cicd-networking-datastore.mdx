@@ -1,5 +1,5 @@
 ---
-title: CI/CD And Private Networking And Datastore
+title: CI/CD, প্রাইভেট নেটওয়ার্ক ও ডেটাস্টোর
 titleEn: CI/CD, Private Networking & Data Store
 description: CI/CD, AWS PrivateLink ও data storage নিয়ে দ্রুত রিভিশন।
 theme: microservices
@@ -21,14 +21,23 @@ keywords:
     bn: অ্যাপ ডিপ্লয় স্বয়ংক্রিয় করার পরিষেবা
     tip: EC2, Lambda ও ECS ডিপ্লয়ে সাপোর্ট দেয়।
   - term: PrivateLink
-    bn: VPC থেকে private connectionের পদ্ধতি
+    bn: VPC থেকে private connection-এর পদ্ধতি
     tip: নির্দিষ্ট AWS সার্ভিস ও VPC endpoint সার্ভিসে প্রাইভেট সংযোগ দেয়।
   - term: VPC
     bn: নিজের প্রাইভেট নেটওয়ার্ক
     tip: subnet, route table ও endpoint দিয়ে ট্রাফিক ছাঁটতে হয়।
   - term: ElastiCache
     bn: managed in-memory cache
-    tip: Redis বা Memcached for session data.
+    tip: Redis বা Memcached — session data-র জন্য প্রচলিত পছন্দ।
+  - term: VPC Endpoint
+    bn: প্রাইভেট নেটওয়ার্ক পথ দিয়ে AWS সার্ভিসে পৌঁছানোর গেট
+    tip: public internet পেরোনোর প্রয়োজন ছাড়াই সার্ভিসে পৌঁছায়।
+  - term: Artifact
+    bn: build থেকে তৈরি হওয়া ডিপ্লয়যোগ্য ফাইল
+    tip: CodeBuild একে test, package ও image-এ রূপ দেয়।
+  - term: Session Data
+    bn: এক ব্যবহারকারীর চলমান অবস্থা জমা রাখার ডেটা
+    tip: in-memory cache সাধারণত সবচেয়ে উপযুক্ত জায়গা।
 sources:
   - label: AWS Whitepaper — Implementing Microservices on AWS
     href: https://docs.aws.amazon.com/whitepapers/latest/implementing-microservices-on-aws/implementing-microservices-on-aws.pdf

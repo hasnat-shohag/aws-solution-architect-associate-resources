@@ -10,24 +10,24 @@ updated: 2026-09-15
 keywords:
   - term: Business Capability
     bn: আলাদা ব্যবসায়িক দায়িত্ব
-    tip: কোন service নিজে ডেটা ও deploy করার ক্ষমতা।
+    tip: কোন service নিজের ডেটা ও deploy-এর মালিকানা রাখে।
   - term: Coupling
-    bn: dependency strength
-    tip: tight coupling increases failure effects।
+    bn: dependency-র শক্তি
+    tip: tight coupling-এ এক জায়গার ব্যর্থতা বেশি ছড়ায়।
   - term: Composable Services
-    bn: তৈরি সার্ভিস পুনর্ব্যবহার যোগ্য
-    tip: event/API primitives reusable।
+    bn: পুনর্ব্যবহারযোগ্য সার্ভিস
+    tip: event/API primitive বারবার ব্যবহার করা যায়।
   - term: Observability
-    bn: request paths, metrics, logs একসাথে দেখা
-    tip: distributed system essentials।
+    bn: request path, metrics, log একসাথে দেখা
+    tip: distributed system-এর অপরিহার্য অংশ।
   - term: Infrastructure as Code
-    bn: resource setup automated via code
+    bn: code দিয়ে resource setup স্বয়ংক্রিয় করা
     tip: CloudFormation/CDK/Terraform।
   - term: Data Consistency
-    bn: সঠিক স্টেট সাময়িক বা নিরবিচ্ছিন্ন
-    tip: Strong vs eventual consistency design।
+    bn: ডেটার সঠিক অবস্থা — সাথে সাথে বা ধীরে
+    tip: strong বনাম eventual consistency ডিজাইন বুঝুন।
   - term: Governance
-    bn: standards and controls
+    bn: স্ট্যান্ডার্ড ও নিয়ন্ত্রণ
     tip: IAM, config rules, policy-as-code, tagging।
 ---
 
@@ -39,7 +39,7 @@ Microservices শুধু technology নয়; এটি organization, data ow
 
 ## Decision questions
 
-- কি workload আলাদাভাবে deploy/scale হবে? Microservice / event-driven design।
+- কি workload আলাদাভাবে deploy/scale হবে? Microservice / event-driven design ভাবুন।
 - কি service-to-service policy, connection and auth সহজ হতে হবে? VPC Lattice/App Mesh/service mesh।
 - কি access control, resource governance ও business workflow রাখা দরকার? IAM, Resource policy, CloudTrail।
 - কি usage based scaling প্রয়োজন? Lambda/Fargate বা managed services।
@@ -56,7 +56,7 @@ flowchart TD
 ```
 
 > [!NOTE]
-"Microservice প্রয়োজন" কথা প্রথম উত্তর না হওয়া যায়। প্রশ্নে domain boundary, deployment/release cycle ভাবতে হবে।
+"Microservice দরকার" — এটা প্রথম উত্তর হওয়া উচিত নয়। প্রশ্নে domain boundary ও deployment/release cycle ভাবতে হবে।
 
 <KeywordTable keywords={frontmatter.keywords} />
 
