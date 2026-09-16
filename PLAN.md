@@ -1,6 +1,6 @@
 # SAA Bangla Study Site — Implementation Plan
 
-**Status:** Phases 0–5 complete and published (v0.1.0 tag, GitHub Pages live, all routes HTTP 200). Standard-Bangla proofread pass finished across shell pages, components and all 20 lessons; build/links/contrast checks green. Phase 6 (next theme) is planned, not started.
+**Status:** Phases 0–5 complete and published (v0.1.0 tag, GitHub Pages live, all routes HTTP 200). Standard-Bangla proofread pass finished across shell pages, components and all 20 lessons; build/links/contrast checks green. Phase 6 (exam-guide theme) and Phase 7 (blue/green deployments theme) are planned, not started.
 
 ## Objective
 
@@ -187,10 +187,12 @@ On publish, confirm:
 4. A fresh browser session shows a lesson-specific completion state after reload.
 5. Glossary search/filter returns visible rows for `microservices` and hides unmatched rows.
 
-## Phase 6 — Next theme: SAA-C03 Exam Guide (planned)
+## Phase 6 — SAA-C03 Exam Guide (deferred)
 
-**Goal:** add the second theme so the site proves its multi-theme model while covering the
-official exam structure readers need before any content theme.
+> Deferred: the Blue/Green Deployments theme (Phase 7) takes priority as the next active work.
+
+**Goal:** add a theme covering the official exam structure so readers have the exam frame
+before the content themes.
 
 **Scope (from the official SAA-C03 exam guide, print ~10 pages):**
 
@@ -218,6 +220,63 @@ official exam structure readers need before any content theme.
 
 **Acceptance:** both themes appear on home/learn pages with independent progress bars; sidebar
 lists both; per-lesson completion ids do not collide; all checks green.
+
+## Phase 7 — Next theme: Blue/Green Deployments on AWS (planned)
+
+**Goal:** add the third theme from the AWS whitepaper *Blue/Green Deployments on AWS*
+(34 PDF pages; print pages 1–30; letter size, so PDF page = print page + cover offset only).
+Same theme-folder → lesson model, same lesson shape, same progress engine; ids
+`bluegreen-1...bluegreen-9`, folder `src/content/docs/learn/blue-green/`.
+
+**Source map (print pages, one active lesson per page, front/back matter in the recap):**
+
+| Lesson | Slug | Source pages | Coverage |
+| ---: | --- | ---: | --- |
+| 1 | `1-introduction` | 1–3 | Abstract; traditional deploy pain; methodology; benefits; canary; blast radius |
+| 2 | `2-environment-boundary` | 4 | Define the environment boundary; candidate boundaries |
+| 3 | `3-services-overview` | 5–7 | Route 53, ELB, Auto Scaling, Beanstalk, OpsWorks, CloudFormation, CloudWatch, CodeDeploy |
+| 4 | `4-dns-routing` | 8–9 | Technique 1: Update DNS routing with Route 53; weighted routing; TTL pitfalls |
+| 5 | `5-asg-swap-elb` | 10–12 | Technique 2: Swap ASG behind ELB; warm up; connection draining |
+| 6 | `6-asg-launch-config` | 13–15 | Technique 3: Update ASG launch configuration; rolling vs replace |
+| 7 | `7-beanstalk-opsworks` | 16–21 | Technique 4: Beanstalk environment swap (16–18); Technique 5: OpsWorks clone stack + DNS (19–21) |
+| 8 | `8-data-sync-schema` | 22–25 | Data sync & schema change best practices; decoupling schema from code; when blue/green NOT recommended |
+| 9 | `9-conclusion-appendix` | 26–30 | Conclusion; contributors; document revisions; appendix risk-comparison table (28–30) |
+
+Notes on the mapping:
+
+- Print page numbering confirmed from the PDF footers (1 = Abstract … 30 = end of appendix);
+  the source page stated in each lesson body and `Attribution` uses this numbering.
+- Techniques 4 and 5 share lesson 7 because each is short; the appendix comparison table
+  (print 28–30) is a reference table — use `ReferenceTable.astro` in lesson 9.
+- The "when blue/green deployments are not recommended" scenarios (print 23–25) belong to
+  lesson 8 and are prime `ExamTrap` material.
+
+**Tasks:**
+
+1. Add the `bluegreen` theme to `THEMES` in `src/lib/themes.ts` (accent: pick a distinct shade,
+   run `pnpm check:contrast` against it) and extend `LESSONS` in `src/lib/lessons.ts`.
+2. Create `src/content/docs/learn/blue-green/index.mdx` plus the 9 lesson MDX files in batches:
+   A (1–3), B (4–6), C (7–9).
+3. Lesson frontmatter mirrors the microservices schema: `title`, `titleEn`, `theme: blue-green`,
+   `order`, `pages`, `sourceUrl`, `updated`, 8–12 `keywords`, `sources`.
+4. Every lesson ends with `<Attribution ... />` and `<MarkComplete lessonId="bluegreen-<n>" />`.
+5. Add new terms to `glossary-terms.json` **before** first use (theme: `blue-green`);
+   keep service names and identifiers in Latin script; standard Bangla only.
+6. Mermaid diagrams: traffic-shift flow (lesson 1), environment boundary (lesson 2),
+   at least one per technique (lessons 4–7), data-sync flow (lesson 8).
+7. Sidebar, theme cards, progress bars and glossary filters pick the theme up automatically;
+   verify home/learn/dashboard render both themes with independent progress bars.
+8. Run `pnpm check`, `pnpm build`, `pnpm check:links`, `pnpm check:contrast`; fix, commit,
+   then tag and push `v0.3.0` as the release marker.
+
+**Acceptance:**
+
+- 9 active lessons cover print pages 1–30, each stating its page range in body + `Attribution`.
+- Theme cards, sidebar and dashboard show all themes with separate progress; completion ids
+  `bluegreen-1...bluegreen-9` persist across reload.
+- Glossary filter shows a `blue-green` theme button and search hits new terms.
+- No extracted source text or the PDF itself is committed (`tools/.source/` stays gitignored).
+- All checks green; Pages URL serves the new routes under the base path.
 
 ## Definition of done
 
