@@ -1,0 +1,96 @@
+---
+title: টেকনিক ১ — Route 53-তে DNS routing আপডেট
+titleEn: Technique 1 — Update DNS Routing with Route 53
+description: DNS record আপডেট করে blue থেকে green-এ traffic সরানো, weighted distribution ও TTL-জনিত rollback-এর সীমাবদ্ধতা।
+theme: blue-green
+order: 4
+pages: [8, 9]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Blue/Green Deployment
+    bn: দুটি একই রকম পরিবেশের মাঝে traffic সরিয়ে রিলিজ করার কৌশল
+    tip: rollback মানে DNS record আবার blue-তে ঘুরিয়ে দেওয়া।
+  - term: Amazon Route 53
+    bn: AWS-এর managed authoritative DNS সার্ভিস
+    tip: hosted zone-এর alias record বদলে traffic shift করায়।
+  - term: TTL (DNS)
+    bn: DNS record কতক্ষণ cache থাকবে তার সময়
+    tip: rollback-এর গতি নির্ধারণ করে — বড় TTL মানে ধীর পরিবর্তন।
+  - term: Canary Testing
+    bn: খুব অল্প traffic দিয়ে নতুন পরিবেশ যাচাই
+    tip: weighted routing-এ ছোট শতাংশ green-এ দিয়ে শুরু হয়।
+  - term: Blast Radius
+    bn: ব্যর্থতার প্রভাব কত দূরে ছড়ায়
+    tip: অল্প traffic-তে সমস্যা ধরা পড়লে প্রভাব ছোট থাকে।
+  - term: Elastic Load Balancing
+    bn: incoming traffic একাধিক EC2 instance-এ ভাগ করা
+    tip: request-handling capacity নিজে নিজে বাড়ায়, তবে সাথে সাথে নয়।
+  - term: Auto Scaling Group
+    bn: নিয়ম অনুযায়ী EC2 capacity বাড়ায়-কমায়
+    tip: চাহিদা অনুযায়ী scale out করে খরচ নিয়ন্ত্রণে সাহায্য করে।
+  - term: Green Environment
+    bn: নতুন ভার্সন স্টেজ করা পরিবেশ
+    tip: weight ধীরে ধীরে বাড়িয়ে পুরো production traffic দেওয়া হয়।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৮–৯।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ৮–৯ (Update DNS Routing with Amazon Route 53)।
+
+## কৌশলটা কী
+
+DNS record আপডেট করে traffic সরানো blue/green-এর সবচেয়ে পরিচিত প্যাটার্ন। Route 53-এর hosted zone-এ **alias record** আপডেট করলেই traffic blue থেকে green-এ চলে যায়; rollback দরকার হলে record আবার blue-র দিকে ঘুরিয়ে দিতে হয়। শর্ত একটাই — পরিবেশের endpoint যেন DNS নাম বা IP দিয়ে প্রকাশ করা যায়।
+
+কোন কোন পরিবেশ এই প্যাটার্নে চলে:
+
+- public বা Elastic IP-যুক্ত single instance
+- ELB বা third-party load balancer-এর পেছনের instance group
+- ELB front-end সহ Auto Scaling group
+- ELB-এর পেছনের ECS cluster-এ চলা সার্ভিস
+- Elastic Beanstalk environment-এর web tier
+- সংক্ষেপে — যেকোনো কনফিগারেশন যা DNS/IP endpoint দেয়
+
+```mermaid
+flowchart LR
+  U[Client] --> R53[(Route 53 hosted zone)]
+  R53 -->|alias record: weight 100| B[Blue environment]
+  R53 -->|alias record: weight 0| G[Green environment]
+  B -.->|record আপডেট: weight সরানো| G
+```
+
+## একবারে সব, নাকি ধীরে ধীরে?
+
+- **All-at-once** — record এক আপডেটেই পুরো traffic green-এ। সহজ, কিন্তু ধীরে ধীরে যাচাই করার সুযোগ নেই।
+- **Weighted distribution** — green-এর জন্য একটা শতাংশ ঠিক করে ধীরে ধীরে weight বাড়ানো হয়, যতক্ষণ না green পুরো production traffic নেয়। এতে করে:
+  - **canary analysis** — অল্প শতাংশ production traffic নতুন পরিবেশে দিয়ে নতুন কোড পরীক্ষা ও error monitoring; সমস্যা হলে blast radius ছোট থাকে।
+  - green পরিবেশ পুরো load সামলাতে **scale out** করতে পারে (ELB থাকলে)।
+
+ELB-র request-handling capacity inbound traffic দেখে নিজে নিজে বাড়ে — কিন্তু প্রক্রিয়াটা মুহূর্তেই ঘটে না। তাই নিজের traffic pattern পরীক্ষা করে, পর্যবেক্ষণ করে বুঝে নেওয়া জরুরি। চাইলে support request করে load balancer **pre-warm** (সর্বোচ্চ capacity-তে কনফিগার) করানো যায়।
+
+## Rollback ও এর সীমাবদ্ধতা
+
+Deployment-এ সমস্যা হলে DNS record আপডেট করে traffic আবার blue-তে ফেরানো যায়। কিন্তু:
+
+- **DNS TTL** ঠিক করে দেয় client কতক্ষণ query result cache করবে — এটাই rollback-এর আসল ঘড়ি।
+- পুরনো client বা DNS record বেশি দিন cache ধরে রাখা client কিছু **session আগের পরিবেশে আটকে রাখতে পারে** — record বদলালেও সঙ্গে সঙ্গে সবাই আসে না।
+
+তবু এই প্যাটার্নের বড় সুবিধা হলো **নিজের গতিতে granular transition** — দীর্ঘ পরীক্ষা ও scaling activity-র সুযোগ। খরচ নিয়ন্ত্রণে Auto Scaling-কে actual demand অনুযায়ী scale out করানো যায়, weighted shift-এর সাথে এটা ভালো মেলে। Full cutover-এর সময় Auto Scaling policy ঠিকভাবে tune করা এবং নতুন ELB endpoint-ও scale-up-এর জন্য সময় নেয় — দুটোই মাথায় রাখতে হবে।
+
+## Exam traps
+
+- **বড় TTL = ধীর rollback**। "কেন ছোট TTL রাখা হয়?" — কারণ client দীর্ঘদিন পুরনো IP cache করে রাখে, record বদলালেও সবাই নতুন পরিবেশে আসে না।
+- Weighted routing-এ শতাংশ মানে **traffic-এর ভাগ**, সংখ্যা নয় — ১০% মানে দশভাগের একভাগ request green-এ যাবে।
+- ELB নিজে থেকে capacity বাড়ায়, কিন্তু **instant নয়** — বড় cutover-এর আগে pre-warm বা পর্যবেক্ষণ দরকার।
+- DNS pattern সব কনফিগারেশনে চলে — একমাত্র শর্ত endpoint-টা **DNS নাম বা IP** হিসেবে প্রকাশযোগ্য হওয়া।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-4" />

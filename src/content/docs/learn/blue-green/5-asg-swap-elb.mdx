@@ -1,0 +1,96 @@
+---
+title: টেকনিক ২ — ELB-এর পেছনে ASG swap
+titleEn: Technique 2 — Swap the ASG behind the ELB
+description: DNS জটিলতা এড়িয়ে load balancer-এর পেছনে নতুন Auto Scaling group জুড়ে দেওয়া — health check, Standby state ও দ্রুত rollback।
+theme: blue-green
+order: 5
+pages: [10, 12]
+sourceUrl: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+updated: 2026-09-16
+keywords:
+  - term: Swap Auto Scaling Group
+    bn: ELB-এর পেছনে নতুন ASG জুড়ে traffic সরানো
+    tip: DNS জটিলতা এড়ার সহজ পথ — green group attach করলেই হয়।
+  - term: Elastic Load Balancing
+    bn: incoming traffic একাধিক EC2 instance-এ ভাগ করা
+    tip: health check পাস করা instance-ই pool-এ ঢোকে।
+  - term: Auto Scaling Group
+    bn: নিয়ম অনুযায়ী EC2 capacity বাড়ায়-কমায়
+    tip: blue ও green দুই group-ই এখানে আলাদা ASG।
+  - term: Health Check
+    bn: load balancer-এর instance-সুস্থতা যাচাই
+    tip: ping বা connection attempt; interval ও threshold কনফিগারযোগ্য।
+  - term: InService
+    bn: health check পাস করে instance-এর সুস্থ অবস্থা
+    tip: যথেষ্ট সফল ping-এর পরেই InService ঘোষণা হয়।
+  - term: OutofService
+    bn: health check ব্যর্থ instance-এর অবস্থা
+    tip: Auto Scaling policy হলে এমন instance replace হয়।
+  - term: Connection Draining
+    bn: সরে যাওয়া instance-এ চলমান request শেষ হতে দেওয়া
+    tip: scale-in-এর সময় load balancer আগে drain করে, তারপর terminate।
+  - term: Standby State
+    bn: ASG instance বাদ না দিয়ে সরিয়ে রাখা
+    tip: rollback মানে Standby থেকে in service-এ ফেরত — দ্রুততম পথ।
+  - term: Least Outstanding Requests
+    bn: সবচেয়ে কম অসমাপ্ত request-যুক্ত target-এ routing
+    tip: HTTP/HTTPS listener-এ নতুন (green) group-এর দিকে ঝুঁকে যায়।
+sources:
+  - label: AWS Whitepaper — Blue/Green Deployments on AWS
+    href: https://docs.aws.amazon.com/pdfs/whitepapers/latest/blue-green-deployments/blue-green-deployments.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ১০–১২।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** Blue/Green Deployments on AWS, প্রিন্ট পেজ ১০–১২ (Swap the Auto Scaling Group behind the Elastic Load Balancer)।
+
+## কেন এই প্যাটার্ন
+
+DNS-এর জটিলতা (TTL, cache) বাধা হয়ে দাঁড়ালে traffic management-এর কাজটা load balancer-এর হাতে দিন। এই প্যাটার্নে **environment boundary ছোট হয়ে যায় Auto Scaling group-এ**: blue group production load বহন করে, green group নতুন কোড নিয়ে দাঁড়িয়ে থাকে। Deploy-এর সময় কাজ একটাই — **green group-কে চালু load balancer-এর সাথে attach করা**।
+
+```mermaid
+flowchart LR
+  U[Users] --> ELB[Elastic Load Balancer]
+  ELB -->|attach করা হয়েছে| G[Green ASG — নতুন কোড]
+  ELB -.->|পরে detach/size 0| B[Blue ASG — পুরনো কোড]
+  G -->|scale up শেষ| D[Blue group: terminate বা Standby]
+```
+
+## ELB কীভাবে instance যোগ-বিয়োগ করে
+
+- Auto Scaling ELB-র সাথে যুক্ত — **health check পাস করলে** নতুন instance স্বয়ংক্রিয়ভাবে load balancing pool-এ ঢোকে।
+- Health check মানে সাধারণ ping, আরও পরিশীলিত connection attempt বা request; **interval ও threshold** কনফিগারযোগ্য।
+- উদাহরণ: প্রতি ২০ সেকেন্ডে port 80-এ ping, ১০টি সফল ping-এর threshold পার হলে instance **InService**; যথেষ্ট ping time out হলে **OutofService** — Auto Scaling policy তাই বললে instance replace-ও হয়।
+- Scale-down-এর সময় উল্টো পথ: load balancer instance-কে pool থেকে বাদ দিয়ে terminate-এর আগে **চলমান connection drain** করে।
+
+## Traffic কেন green-এর দিকে ঝোঁকে
+
+HTTP/HTTPS listener-এ load balancer **least outstanding requests** routing algorithm ব্যবহার করে — যে target-এর অসমাপ্ত request সবচেয়ে কম, সে-ই আগে পায়। নতুন যুক্ত green group হালকা থাকায় traffic স্বাভাবিকভাবেই সেদিকে সরে যায়। কতটা traffic যাবে সেটা green group-এর **size কমিয়ে-বাড়িয়ে** নিয়ন্ত্রণ করা যায়।
+
+## Scale up, তারপর blue-র কী হবে
+
+1. Green group scale up হওয়ার সময় blue group-এর instance **out of service** করা হয় — দুইভাবে: **terminate**, অথবা **Standby state**-এ সরিয়ে রাখা।
+2. **Standby-ই ভালো পছন্দ**: rollback লাগলে blue instance-কে শুধু in service-এ ফেরত আনতে হয় — সঙ্গে সঙ্গে ব্যবহারের জন্য প্রস্তুত।
+3. Green group নির্বিঘ্নে scale up হলে blue group **group size 0** করে decommission করা হয়।
+4. Rollback দরকার হলে: load balancer থেকে **green group detach** করা, বা green group-এর size 0 করা।
+
+## প্যাটার্নের সুবিধা ও ট্রেড-অফ
+
+- Traffic management DNS-এর মতো granular নয়, তবু ASG-র কনফিগারেশন দিয়ে নিয়ন্ত্রণ মেলে — যেমন **আরও ছোট instance-এর বড় fleet** আর সূক্ষ্ম scaling policy, সাথে খরচ নিয়ন্ত্রণ।
+- DNS-এর জটিলতা বাদ পড়ায় **traffic shift দ্রুত** হয়।
+- Load balancer **আগে থেকেই warm** — production load-এর capacity নিয়ে নিশ্চিন্ত থাকা যায়।
+
+## Exam traps
+
+- **Standby ≠ terminate** — Standby instance ফেরত আনা যায়, terminate করা instance আর নয়; rollback-দৃষ্টিতে Standby-ই পছন্দ।
+- Instance pool-এ ঢোকার শর্ত **health check পাস** — InService হওয়ার আগে নতুন instance traffic পায় না।
+- Green-এর দিকে ঝোঁকের কারণ **least outstanding requests** — জাদু নয়, algorithm।
+- প্যাটার্নের ট্রেড-অফ মনে রাখুন: DNS-এর চেয়ে **কম granular**, কিন্তু shift দ্রুত আর load balancer warm।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl={frontmatter.sourceUrl} updated={frontmatter.updated} />
+<MarkComplete lessonId="bluegreen-5" />

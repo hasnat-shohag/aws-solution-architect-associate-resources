@@ -988,5 +988,53 @@
     "bn": "অ্যাপ নিজে deployment event বুঝতে পারা",
     "tip": "feature flag দিয়ে অনেক ক্ষেত্রে এড়ানো যায়।",
     "theme": "blue-green"
+  },
+  {
+    "term": "Swap Auto Scaling Group",
+    "bn": "ELB-এর পেছনে নতুন ASG জুড়ে traffic সরানো",
+    "tip": "DNS জটিলতা এড়ার সহজ পথ — green group attach করলেই হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Health Check",
+    "bn": "load balancer-এর instance-সুস্থতা যাচাই",
+    "tip": "ping বা connection attempt; interval ও threshold কনফিগারযোগ্য।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "InService",
+    "bn": "health check পাস করে instance-এর সুস্থ অবস্থা",
+    "tip": "যথেষ্ট সফল ping-এর পরেই InService ঘোষণা হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "OutofService",
+    "bn": "health check ব্যর্থ instance-এর অবস্থা",
+    "tip": "Auto Scaling policy হলে এমন instance replace হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Least Outstanding Requests",
+    "bn": "সবচেয়ে কম অসমাপ্ত request-যুক্ত target-এ routing",
+    "tip": "নতুন যুক্ত target group হালকা থাকায় traffic সেদিকেই ঝোঁকে।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Immutable Launch Configuration",
+    "bn": "তৈরির পরে বদলানো যায় না এমন সংজ্ঞা",
+    "tip": "বদলাতে হলে নতুনটা তৈরি করে replace করতে হয়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Termination Policy",
+    "bn": "scale-in-এ কোন instance বাদ যাবে তার নিয়ম",
+    "tip": "default — পুরনো launch configuration-এর instance আগে যায়।",
+    "theme": "blue-green"
+  },
+  {
+    "term": "Availability Zone Rebalancing",
+    "bn": "AZ-এর ভারসাম্য রক্ষায় instance সরানো",
+    "tip": "scale-in-এ নতুন config-এর instance-ও বাদ পড়তে পারে।",
+    "theme": "blue-green"
   }
 ]
