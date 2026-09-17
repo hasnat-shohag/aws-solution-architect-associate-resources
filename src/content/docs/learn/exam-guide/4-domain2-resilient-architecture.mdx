@@ -49,7 +49,7 @@ import MarkComplete from '../../../../components/progress/MarkComplete.astro';
 
 ## এক নজরে
 
-**২৬% of scored content** — দ্বিতীয় বৃহত্তম ভাগ। দুটি task statement: scalable/loosely coupled ডিজাইন এবং HA/fault-tolerant ডিজাইন। মাইক্রোসার্ভিসেস ও ব্লু/গ্রিন থিমের বেশিরভাগ বিষয় এই ডোমেইনেই গণনা হয়।
+**২৬% of scored content** — দ্বিতীয় বৃহত্তম ভাগ। দুটি task statement: scalable/loosely coupled ডিজাইন এবং HA/fault-tolerant ডিজাইন। মাইক্রোসার্ভিসেস ও ব্লু/গ্রিন থিমের বেশিরভাগ বিষয় এই ডোমেইনেই পড়ে।
 
 ```mermaid
 flowchart TD
@@ -79,13 +79,13 @@ flowchart TD
 - global infrastructure — Region, AZ, Route 53;
 - **DR strategies** — backup and restore, pilot light, warm standby, active-active failover; সঙ্গে **RPO/RTO**;
 - failover strategy ও distributed design pattern; **immutable infrastructure**;
-- load balancing (ALB), proxy (RDS Proxy);
+- load balancing (ALB), database proxy (RDS Proxy);
 - **service quotas ও throttling** — যেমন standby environment-এর quota configuration;
 - storage characteristics (durability, replication); workload visibility (X-Ray)।
 
 **যা করতে পারতে হবে:** Region/AZ জুড়ে HA স্থাপত্যের সার্ভিস নির্বাচন; business requirement থেকে metric চিহ্নিত করা; single point of failure দূর করা; ডেটার durability/availability নিশ্চিত করা; ব্যবসায়িক চাহিদা মেটাতে **সঠিক DR strategy বাছাই**; অ্যাপ পরিবর্তন সম্ভব না হলে legacy application-এর reliability বাড়ানো।
 
-**পরীক্ষার সংকেত:** RPO/RTO ছোট হলে খরচ বাড়ে — backup/restore (সবচেয়ে ধীর) → pilot light → warm standby → active-active (সবচেয়ে দ্রুত)। প্রশ্নে ব্যবসায়িক সীমা ও বাজেট দুটোই পড়ুন।
+**পরীক্ষার সংকেত:** RPO/RTO ছোট হলে খরচ বাড়ে — backup/restore (সবচেয়ে ধীর) → pilot light → warm standby → active-active (সবচেয়ে দ্রুত)। প্রশ্নে ব্যবসায়িক সীমা ও বাজেট দুটোই খেয়াল করুন।
 
 ## এই ডোমেইন অন্য থিমের কোথায়
 
@@ -99,7 +99,7 @@ flowchart TD
 - **"multi-AZ ডিজাইন দুর্যোগ-সহনশীল"** — multi-AZ এক Region-এর ভেতরের HA; পুরো Region ব্যর্থতার প্রস্তুতিতে multi-Region লাগে।
 - **"RPO ও RTO একই জিনিস"** — RPO ডেটা হানির সীমা, RTO ফিরে আসার সময়সীমা।
 - **"queue যোগ করলেই coupling কমে"** — ঠিক দিকে যোগ করতে হয়; কোন component-এর মাঝে bottleneck তা প্রশ্ন থেকে বের করুন।
-- **"auto scaling-ই সব সমস্যার সমাধান"** — scaling কাউন্টার মেট্রিকের উপর নির্ভর করে; মেট্রিক ভুল হলে scaling সঠিক সময়ে ঘটে না।
+- **"auto scaling-ই সব সমস্যার সমাধান"** — scaling কাউন্টার মেট্রিকের উপর নির্ভর করে; মেট্রিক ভুল হলে scaling ঠিক সময়ে ঘটে না।
 
 <KeywordTable keywords={frontmatter.keywords} />
 
