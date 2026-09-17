@@ -1,0 +1,111 @@
+---
+title: ডোমেইন ৪ — Cost-Optimized Architectures
+titleEn: Domain 4 — Cost-Optimized Architectures
+description: SAA-C03-এর চতুর্থ ডোমেইন (২০%) — cost-optimized storage, compute, database ও network-এর চারটি task statement বাংলা নোটে।
+theme: exam-guide
+order: 6
+pages: [10, 14]
+sourceUrl: https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
+updated: 2026-09-17
+keywords:
+  - term: Cost Explorer
+    bn: ব্যবহার ও খরচ দেখা, বিশ্লেষণ ও পূর্বাভাসের টুল
+    tip: খরচ কোথায় বাড়ছে জানতে চাইলেই এটি প্রথম উত্তর।
+  - term: AWS Budgets
+    bn: খরচ বা ব্যবহারের সীমা ঠিক করে alert দেওয়ার টুল
+    tip: সীমা ছুঁলে বিজ্ঞপ্তি দেয়, খরচ থামায় না।
+  - term: Cost and Usage Report
+    bn: সবচেয়ে বিস্তারিত খরচ-ব্যবহার ডেটাসেট
+    tip: বিশ্লেষণ S3-এ ডাম্প করে Athena দিয়ে করা হয়।
+  - term: Cost Allocation Tag
+    bn: resource-ভিত্তিক খরচ ভাগ করতে ব্যবহৃত ট্যাগ
+    tip: বহু-account/টিম-ভিত্তিক খরচ বিশ্লেষণে প্রথম ধাপ।
+  - term: Spot Instance
+    bn: ব্যবহার-না-হওয়া ক্ষমতা বড় ছাড়ে, তবে যেকোনো মুহূর্ত ফেরত নেওয়া যায়
+    tip: বাধাহীন/ব্যর্থতা-সহনশীল workload-এই ব্যবহার করুন।
+  - term: Reserved Instance ও Savings Plans
+    bn: ১/৩ বছরের প্রতিশ্রুতির বিনিময়ে ছাড়
+    tip: স্থির, দীর্ঘমেয়াদি workload-এ; অনিশ্চিত চাহিদায় নয়।
+  - term: S3 Lifecycle Policy
+    bn: বয়স/ব্যবহার অনুযায়ী অবজেক্টকে সস্তা tier-এ সরানোর নীতি
+    tip: পুরোনো log/archive প্রশ্নের স্ট্যান্ডার্ড উত্তর।
+  - term: NAT Gateway খরচ
+    bn: processed data-ভিত্তিক চার্জ ছাড়াও ঘণ্টাভিত্তিক ফি
+    tip: বেশি traffic-এ NAT instance সস্তা হতে পারে — প্রশ্ন পড়ুন।
+  - term: VPC Endpoint
+    bn: NAT/ইন্টারনেট এড়িয়ে AWS সার্ভিসে private সংযোগ
+    tip: S3-এ বড় ট্রান্সফার খরচ কমানোর প্রশ্নে Gateway endpoint মনে রাখুন।
+sources:
+  - label: AWS Certified Solutions Architect – Associate (SAA-C03) Exam Guide
+    href: https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ১০–১৪।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** SAA-C03 Exam Guide (v1.1), প্রিন্ট পেজ ১০–১৪ (Domain 4: Task Statement 4.1–4.4)।
+
+## এক নজরে
+
+**২০% of scored content** — সবচেয়ে হালকা ডোমেইন, কিন্তু প্রশ্নগুলো প্রায়ই অন্য ডোমেইনের প্রশ্নের সঙ্গে মিশে থাকে ("কাজটিও করবে, খরচও কমবে")। চারটি task statement: storage, compute, database, network।
+
+```mermaid
+flowchart TD
+    A[Domain 4 Cost-Optimized — 20%] --> B[4.1 Storage]
+    A --> C[4.2 Compute]
+    A --> D[4.3 Database]
+    A --> E[4.4 Network]
+```
+
+## Task 4.1 — Cost-optimized storage
+
+**যা জানতে হবে:** access options (যেমন **Requester Pays**); cost management feature — cost allocation tag, multi-account billing; টুল — **Cost Explorer, AWS Budgets, Cost and Usage Report**; storage সার্ভিস (FSx, EFS, S3, EBS); backup strategy; block storage type (HDD/SSD); **data lifecycle**; hybrid options; access pattern; **storage tiering** (cold tiering)।
+
+**যা করতে হবে:** সঠিক storage strategy (যেমন একে একে নয়, **batch upload**); সঠিক আকার; ডেটা আনতে সবচেয়ে সস্তা পথ; কখন storage auto scaling; **S3 object lifecycle** ব্যবস্থাপনা; সঠিক backup/archival সমাধান; সঠিক tier ও lifecycle; workload-এর সবচেয়ে cost-effective সার্ভিস।
+
+**সংকেত:** পুরোনো অ্যাক্সেস-হারানো ডেটা = lifecycle → Glacier tier; আকার-অজানা বারবার ফাইল = EFS auto scaling; বিশাল আপলোড = batch/multipart।
+
+## Task 4.2 — Cost-optimized compute
+
+**যা জানতে হবে:** purchasing option — **Spot, Reserved Instance, Savings Plans**; hybrid compute (Outposts, Snowball Edge); instance family/size (memory-optimized, compute-optimized); utilization optimization — containers, serverless, microservices; scaling strategy (auto scaling, **EC2 hibernation**)।
+
+**যা করতে হবে:** সঠিক load balancing strategy (ALB Layer 7 / NLB Layer 4 / Gateway LB); elastic workload-এ scaling method (horizontal বনাম vertical, hibernation); cost-effective compute service (Lambda, EC2, Fargate); workload শ্রেণি অনুযায়ী availability (production বনাম non-production); সঠিক instance family ও size।
+
+**সংকেত:** বাধাহীন batch/render = Spot; স্থির চাহিদা = RI/Savings Plan; মাঝে মাঝে চলা dev server = hibernation; কম ব্যবহৃত environment-এ ছোট instance/শিডিউলিং।
+
+## Task 4.3 — Cost-optimized database
+
+**যা জানতে হবে:** cost tools; caching; **data retention policy**; capacity planning; connection/proxy; engine নির্বাচন; replication; database types (relational বনাম non-relational, Aurora, DynamoDB)।
+
+**যা করতে হবে:** backup/retention policy (snapshot frequency); engine নির্বাচন; cost-effective service (DynamoDB বনাম RDS, **serverless**); cost-effective type (time series, columnar); schema ও ডেটা অন্য engine/location-এ স্থানান্তর।
+
+**সংকেত:** সাধারণ key-value ও প্রচুর scale = DynamoDB (RDS-এর চেয়ে সস্তা); বিশ্লেষণ workload = columnar (Athena-র সঙ্গে parquet); দুর্বল ব্যবহৃত database = serverless option।
+
+## Task 4.4 — Cost-optimized network
+
+**যা জানতে হবে:** cost tools; load balancing; **NAT gateway** খরচ (NAT instance বনাম NAT gateway); connectivity (private/dedicated line, VPN); routing/topology/peering (**Transit Gateway, VPC peering**); network services (DNS)।
+
+**যা করতে হবে:** NAT gateway বিন্যাস (একটি ভাগ করা বনাম প্রতি AZ-এ একটি); সঠিক সংযোগ (Direct Connect বনাম VPN বনাম internet); **transfer খরচ কমানো রুট** (Region-to-Region, AZ-to-AZ, private-to-public, Global Accelerator, **VPC endpoint**); CDN/edge caching-এর প্রয়োজন নির্ধারণ; বিদ্যমান workload-এর network অপটিমাইজেশন পর্যালোচনা; throttling strategy; bandwidth allocation (একটি VPN বনাম একাধিক, Direct Connect speed)।
+
+**সংকেত:** S3/DynamoDB-তে বিশাল ট্রান্সফার = Gateway VPC endpoint (NAT খরচ ও data processing এড়ায়); সব AZ-এ প্রয়োজন হলে প্রতি AZ-এ NAT — availability ও খরচের ট্রেড-অফ প্রশ্নে ব্যাখ্যা চাই।
+
+## এই ডোমেইন অন্য থিমের কোথায়
+
+- Lambda-ভিত্তিক খরচ মডেল — মাইক্রোসার্ভিসেস থিমের **cost ও sustainability** লেসনে;
+- ASG scale-in ও অব্যবহৃত resource বন্ধ করার প্রয়োগ — ব্লু/গ্রিন থিমের deployment লেসনে।
+
+## Exam trap
+
+- **"Spot সব workload-এ সস্তা"** — মাঝপথে ফেরত নেওয়া যায়; stateless/বাধাহীন workload ছাড়া ঝুঁকিপূর্ণ।
+- **"Budgets খরচ নিয়ন্ত্রণ করে"** — শুধু জানায়; খরচ আটকায় না।
+- **"RI কিনলেই সাশ্রয়"** — প্রতিশ্রুতির সময়ের চেয়ে কম চললে ব্যবহার-না-হওয়া ক্ষমতা অপচয়।
+- **"VPC peering-ই সব নেটওয়ার্ক সমাধান"** — অনেক VPC হলে mesh জটিল; Transit Gateway ভাবুন।
+- **"lifecycle policy ডেটা মুছে দেয়"** — সরায় সস্তা tier-এ; মুছতে হলে নীতিতে expiration আলাদাভাবে দিতে হয়।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf" updated="2026-09-17" />
+
+<MarkComplete lessonId="examguide-6" />

@@ -196,9 +196,9 @@ as a theme so readers get the exam frame before/alongside the content themes. Sa
 theme-folder → lesson model; ids `examguide-1...examguide-8`, folder
 `src/content/docs/learn/exam-guide/`, theme value `exam-guide`.
 
-**Source:** official exam guide PDF (v1.1, 23 PDF pages, print pages 1–21 confirmed from
-footers). Extracted text lives in gitignored `tools/.source/exam-guide/` — never commit the
-PDF or the extracted text.
+**Source:** official exam guide PDF (v1.1, 23 PDF pages, print pages 1–23 confirmed from
+footers; appendix runs 14–23, out-of-scope list ends p22, survey on p23). Extracted text
+lives in gitignored `tools/.source/exam-guide/` — never commit the PDF or the extracted text.
 
 **Facts locked to the guide (do not "improve" from memory):**
 
@@ -225,7 +225,7 @@ PDF or the extracted text.
 | 5 | `5-domain3-high-performing-architecture` | 8–10 | Tasks 3.1–3.5: storage, compute, database, network, data ingestion & transformation |
 | 6 | `6-domain4-cost-optimized-architecture` | 10–12 | Tasks 4.1–4.4: cost-optimized storage, compute, database, network |
 | 7 | `7-question-patterns` | 1–2, 13–14 | Question anatomy, distractor logic, scenario-verb → domain mapping (synthesis; uses the technologies-and-concepts list) |
-| 8 | `8-study-plan` | 13–21 | Appendix as a study compass: in-scope vs out-of-scope service lists; 6-week plan tying the microservices and blue-green themes to each domain |
+| 8 | `8-study-plan` | 14–23 | Appendix as a study compass: in-scope vs out-of-scope service lists; 6-week plan tying the microservices and blue-green themes to each domain |
 
 **Plan decisions:**
 
@@ -263,7 +263,7 @@ PDF or the extracted text.
 
 **Acceptance:**
 
-- 8 lessons covering the guide's print pages 1–21, each stating its page range in body +
+- 8 lessons covering the guide's print pages 1–23, each stating its page range in body +
   `Attribution`; the fact box above (65 = 50+15, 720 pass, compensatory scoring, 30/26/24/20)
   is stated correctly in lessons 1–2.
 - All three themes appear on home/learn/dashboard with independent progress; completion ids

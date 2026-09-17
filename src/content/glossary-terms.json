@@ -1238,5 +1238,214 @@
     "term": "Skills In",
     "bn": "task statement-এর 'কী করতে পারতে হবে' তালিকা — সিনারিওতে ডিজাইন নির্বাচন",
     "theme": "exam-guide"
+  },
+  {
+    "term": "AWS STS",
+    "bn": "সাময়িক, সীমিত-অধিকারের credential দেওয়া Security Token Service",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "IAM Identity Center",
+    "bn": "একাধিক account-এ কেন্দ্রীভূত identity ও access ব্যবস্থাপনার সার্ভিস",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Service Control Policy (SCP)",
+    "bn": "AWS organization-এর account-গুলোর সর্বোচ্চ অনুমতিসীমা নির্ধারণকারী নীতি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Shared Responsibility Model",
+    "bn": "AWS ও গ্রাহকের মধ্যে নিরাপত্তা দায়িত্বের বিভাজন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Network Segmentation",
+    "bn": "public ও private subnet দিয়ে নেটওয়ার্ক ভাগ করার কৌশল",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "AWS WAF ও Shield",
+    "bn": "web exploit (WAF) ও DDoS (Shield) থেকে অ্যাপ রক্ষার সার্ভিস",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Encryption at Rest ও in Transit",
+    "bn": "সংরক্ষিত ডেটায় KMS, চলমান ডেটায় ACM/TLS দিয়ে এনক্রিপশন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Data Retention ও Classification",
+    "bn": "ডেটা কত দিন ও কোন গোপনীয়তা-স্তরে রাখা হবে তার নীতি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Loose Coupling",
+    "bn": "component-গুলো স্বাধীনভাবে পরিবর্তন ও scale করতে পারে এমন ডিজাইন নীতি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Horizontal বনাম Vertical Scaling",
+    "bn": "instance সংখ্যা বাড়ানো বনাম একটি instance-এর সাইজ বাড়ানো",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Event-Driven Architecture",
+    "bn": "ঘটনা প্রকাশ ও সেবন করে component-গুলোর মধ্যে সংযোগ করা প্যাটার্ন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Publish/Subscribe",
+    "bn": "প্রেরক ও প্রাপকের মধ্যে সরাসরি সম্পর্ক ছাড়া message আদান-প্রদান",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "RPO ও RTO",
+    "bn": "কত ডেটা হারানো সহনীয় (RPO) ও কত দ্রুত ফিরতে হবে (RTO)",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Disaster Recovery Strategies",
+    "bn": "backup and restore → pilot light → warm standby → active-active ক্রম",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Multi-AZ ও Multi-Region",
+    "bn": "এক Region-এর একাধিক AZ বা একাধিক Region জুড়ে উপলব্ধতা ডিজাইন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Immutable Infrastructure",
+    "bn": "চালু server-এ পরিবর্তন না করে নতুন সংস্করণ replace করার নীতি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Single Point of Failure",
+    "bn": "ব্যর্থ হলে পুরো স্থাপত্য বন্ধ করে দেয় এমন একক component",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Storage Types",
+    "bn": "object (S3), file (EFS) ও block (EBS) — তিন ধরনের storage ও তাদের বৈশিষ্ট্য",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Decoupled Scaling",
+    "bn": "workload ভেঙে প্রতিটি অংশকে স্বাধীনভাবে scale করানো",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Read Replica",
+    "bn": "ডেটাবেসের পঠন-কপি, যা read-heavy workload-এর চাপ ভাগ করে",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Provisioned IOPS",
+    "bn": "ডেটাবেসের জন্য নিশ্চিত করা উচ্চ I/O ক্ষমতা",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "CloudFront ও Global Accelerator",
+    "bn": "edge থেকে content ও network performance বাড়ানোর দুই সার্ভিস",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Kinesis",
+    "bn": "streaming data সংগ্রহ ও প্রক্রিয়াকরণের সার্ভিস পরিবার",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "AWS Glue",
+    "bn": "serverless data transformation ও catalog সার্ভিস",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Data Lake",
+    "bn": "বিভিন্ন ফরম্যাটের কাঁচা ডেটার কেন্দ্রীয় সংগ্রহস্থল",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Cost Allocation Tag",
+    "bn": "resource-ভিত্তিক খরচ ভাগ করতে ব্যবহৃত ট্যাগ",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Cost and Usage Report",
+    "bn": "সবচেয়ে বিস্তারিত খরচ-ব্যবহার ডেটাসেট",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Reserved Instance ও Savings Plans",
+    "bn": "১/৩ বছরের প্রতিশ্রুতির বিনিময়ে ছাড়",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "S3 Lifecycle Policy",
+    "bn": "বয়স/ব্যবহার অনুযায়ী অবজেক্টকে সস্তা tier-এ সরানোর নীতি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "NAT Gateway খরচ",
+    "bn": "processed data-ভিত্তিক চার্জ ছাড়াও ঘণ্টাভিত্তিক ফি",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "VPC Endpoint",
+    "bn": "NAT/ইন্টারনেট এড়িয়ে AWS সার্ভিসে private সংযোগ",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Scenario Verb",
+    "theme": "exam-guide",
+    "bn": "প্রশ্নের মূল ক্রিয়া — design, secure, troubleshoot ইত্যাদি",
+    "tip": "কোন ডোমেইনের task statement থেকে প্রশ্ন এসেছে তার ইঙ্গিত।"
+  },
+  {
+    "term": "Most Operationally Efficient",
+    "theme": "exam-guide",
+    "bn": "পরিচালনাগত দিক থেকে সবচেয়ে দক্ষ সমাধান বাছাইয়ের প্রশ্ন-নির্দেশনা",
+    "tip": "কাজ করে এমন অপশনগুলোর মধ্যে সহজ ও টেকসইটি বেছে নিতে বলে।"
+  },
+  {
+    "term": "In-Scope Services",
+    "theme": "exam-guide",
+    "bn": "পরীক্ষায় আসতে পারে এমন AWS সার্ভিস ও ফিচারের তালিকা",
+    "tip": "Exam guide-এর appendix-এ বিভাগভিত্তিক; তালিকা non-exhaustive।"
+  },
+  {
+    "term": "Out-of-Scope Services",
+    "theme": "exam-guide",
+    "bn": "পরীক্ষায় আসবে না এমন AWS সার্ভিস ও ফিচারের তালিকা",
+    "tip": "প্রস্তুতির সময় বাঁচায়; তালিকা অ-নিশ্চিত ও পরিবর্তনশীল।"
+  },
+  {
+    "term": "Technologies and Concepts",
+    "theme": "exam-guide",
+    "bn": "পরীক্ষায় আসতে পারে এমন বিষয়-এলাকার তালিকা (Compute, Storage, Security…)",
+    "tip": "১৩টি এলাকা; ক্রম কোনো আপেক্ষিক গুরুত্ব নির্দেশ করে না।"
+  },
+  {
+    "term": "Non-Exhaustive List",
+    "theme": "exam-guide",
+    "bn": "অসম্পূর্ণ তালিকা — সময়ের সঙ্গে পরিবর্তনের সম্ভাবনা আছে",
+    "tip": "Exam guide দুই scope-তালিকাতেই এই সতর্কতা দেয়।"
+  },
+  {
+    "term": "Study Compass",
+    "theme": "exam-guide",
+    "bn": "পরীক্ষার scope-তালিকাকে পাঠ্যসূচি ও বাদ-সূচি হিসেবে ব্যবহারের পদ্ধতি",
+    "tip": "In-scope বলে কী শিখবেন, out-of-scope বলে কী বাদ দেবেন।"
+  },
+  {
+    "term": "Skill Gap Review",
+    "theme": "exam-guide",
+    "bn": "সাপ্তাহিক দুর্বলতা-যাচাই ও task statement পুনরাবৃত্তির অভ্যাস",
+    "tip": "প্রতি সপ্তাহের শেষে সেই ডোমেইনের দুর্বল task আবার পড়ুন।"
+  },
+  {
+    "term": "Six-Week Plan",
+    "theme": "exam-guide",
+    "bn": "চার ডোমেইনের weighting অনুযায়ী সময় ভাগ করা প্রস্তুতি কাঠামো",
+    "tip": "ডোমেইন ১-এ দুই সপ্তাহ, বাকি তিন ডোমেইনে এক-এক সপ্তাহ, শেষ সপ্তাহ মিশ্র রিভিশন।"
   }
 ]

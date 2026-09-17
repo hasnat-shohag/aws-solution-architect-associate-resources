@@ -1,0 +1,119 @@
+---
+title: ডোমেইন ১ — Secure Architectures
+titleEn: Domain 1 — Secure Architectures
+description: SAA-C03-এর সবচেয়ে ভারী ডোমেইন (৩০%) — secure access, secure workloads ও data security controls-এর তিনটি task statement বাংলা নোটে।
+theme: exam-guide
+order: 3
+pages: [3, 5]
+sourceUrl: https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
+updated: 2026-09-17
+keywords:
+  - term: Least Privilege
+    bn: কাজটি করার জন্য প্রয়োজনীয় সর্বনিম্ন অনুমতি দেওয়ার নীতি
+    tip: প্রশ্নে সবচেয়ে সংকীর্ণ অনুমতির অপশনটিই সাধারণত সঠিক।
+  - term: Shared Responsibility Model
+    bn: AWS ও গ্রাহকের মধ্যে নিরাপত্তা দায়িত্বের বিভাজন
+    tip: cloud-এর নিরাপত্তা AWS-এর; cloud-এর মধ্যের নিরাপত্তা গ্রাহকের।
+  - term: IAM Identity Center
+    bn: একাধিক account-এ কেন্দ্রীভূত identity ও access ব্যবস্থাপনার সার্ভিস
+    tip: পুরোনো নাম AWS Single Sign-On; বহু-account প্রশ্নে প্রথম পছন্দ।
+  - term: Service Control Policy (SCP)
+    bn: AWS organization-এর account-গুলোর সর্বোচ্চ অনুমতিসীমা নির্ধারণকারী নীতি
+    tip: Control Tower-এর সঙ্গে বহু-account governance-এ ব্যবহৃত হয়।
+  - term: AWS STS
+    bn: সাময়িক, সীমিত-অধিকারের credential দেওয়া Security Token Service
+    tip: role switching ও cross-account access এর মাধ্যমেই হয়।
+  - term: Network Segmentation
+    bn: public ও private subnet দিয়ে নেটওয়ার্ক ভাগ করার কৌশল
+    tip: ভুল হলে প্রথমে যাচাই করুন কোন resource-এ কোন subnet দরকার।
+  - term: AWS WAF ও Shield
+    bn: web exploit (WAF) ও DDoS (Shield) থেকে অ্যাপ রক্ষার সার্ভিস
+    tip: SQL injection/XSS-এ WAF, volumetric DDoS-এ Shield।
+  - term: Encryption at Rest ও in Transit
+    bn: সংরক্ষিত ডেটায় KMS, চলমান ডেটায় ACM/TLS দিয়ে এনক্রিপশন
+    tip: প্রশ্ন অনুযায়ী কোনটি বলা হয়েছে আগে চিহ্নিত করুন।
+  - term: Data Retention ও Classification
+    bn: ডেটা কত দিন ও কোন গোপনীয়তা-স্তরে রাখা হবে তার নীতি
+    tip: compliance প্রশ্নে retention/classification উল্লেখ খুঁজুন।
+sources:
+  - label: AWS Certified Solutions Architect – Associate (SAA-C03) Exam Guide
+    href: https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
+    note: স্টাডি-নোট, প্রিন্ট পেজ ৩–৫।
+---
+
+import KeywordTable from '../../../../components/content/KeywordTable.astro';
+import Attribution from '../../../../components/content/Attribution.astro';
+import MarkComplete from '../../../../components/progress/MarkComplete.astro';
+
+> **Source:** SAA-C03 Exam Guide (v1.1), প্রিন্ট পেজ ৩–৫ (Domain 1: Task Statement 1.1–1.3)।
+
+## এক নজরে
+
+**৩০% of scored content** — চার ডোমেইনের সবচেয়ে ভারী। ৫০টি scored প্রশ্নের প্রায় ১৫টি এখান থেকে আসে, তাই স্টাডি বাজেটেরও সবচেয়ে বড় অংশ এটি পাওয়ার কথা। ডোমেইনটিতে তিনটি task statement আছে।
+
+```mermaid
+flowchart TD
+    A[Domain 1 Secure Architectures — 30%] --> B[1.1 Secure access to AWS resources]
+    A --> C[1.2 Secure workloads and applications]
+    A --> D[1.3 Data security controls]
+```
+
+## Task 1.1 — AWS resource-এ secure access ডিজাইন
+
+**যা জানতে হবে:** বহু-account access control; federated access ও identity সার্ভিস (IAM, **IAM Identity Center**); global infrastructure (Region, AZ); security best practice (এবং এর কেন্দ্রে **least privilege**); **shared responsibility model**।
+
+**যা করতে পারতে হবে:**
+
+- IAM user ও **root user**-এ best practice — root-এ MFA, দৈনন্দিন কাজে root ব্যবহার না করা;
+- user, group, role ও policy মিলিয়ে নমনীয় authorization model ডিজাইন;
+- **AWS STS** দিয়ে role-based access: role switching, cross-account access;
+- বহু-account কৌশল: **AWS Control Tower**, **service control policies (SCP)**;
+- কোন সার্ভিসে **resource policy** ব্যবহার করা যায় তা নির্ধারণ;
+- কখন directory service-কে IAM role-এর সঙ্গে federate করতে হয়।
+
+**পরীক্ষার সংকেত:** বহু-account + governance = Control Tower/SCP; সাময়িক access = STS role; কেন্দ্রীয় identity ব্যবস্থাপনা = IAM Identity Center।
+
+## Task 1.2 — Secure workloads ও application ডিজাইন
+
+**যা জানতে হবে:** application configuration ও credential security; AWS service endpoint; port, protocol ও network traffic নিয়ন্ত্রণ; secure application access; সার্ভিস-ভিত্তিক নিরাপত্তা সার্ভিস (**Cognito**, **GuardDuty**, **Macie**); AWS-এর বাইরের threat vector — **DDoS, SQL injection**।
+
+**যা করতে পারতে হবে:**
+
+- **security group, route table, network ACL, NAT gateway** দিয়ে VPC security architecture ডিজাইন;
+- **public/private subnet** দিয়ে network segmentation কৌশল ঠিক করা;
+- **AWS Shield, AWS WAF, IAM Identity Center, AWS Secrets Manager** ইত্যাদি দিয়ে অ্যাপ রক্ষা;
+- **VPN ও AWS Direct Connect** দিয়ে AWS-এর ভেতরে-বাইরের সংযোগ সুরক্ষিত করা।
+
+**পরীক্ষার সংকেত:** SQL injection/web exploit = WAF; volumetric DDoS = Shield; secret সংরক্ষণ = Secrets Manager (কোডে নয়); VPC সীমানার ভিত = security group বনাম NACL-এর পার্থক্য।
+
+## Task 1.3 — Data security controls নির্ধারণ
+
+**যা জানতে হবে:** data access ও governance; data recovery; **data retention ও classification**; এনক্রিপশন ও উপযুক্ত **key management**।
+
+**যা করতে পারতে হবে:**
+
+- compliance requirement অনুযায়ী AWS প্রযুক্তি নির্বাচন;
+- **at rest** এনক্রিপশন — **AWS KMS**; **in transit** — **ACM** দিয়ে TLS;
+- এনক্রিপশন key-র access policy ও key rotation, certificate renewal;
+- backup ও replication; data access, lifecycle ও protection policy।
+
+**পরীক্ষার সংকেত:** প্রশ্নে "at rest" থাকলে KMS, "in transit" থাকলে TLS/ACM — দুটো মেশানো অপশন ফাঁদ হয়।
+
+## এই ডোমেইন অন্য থিমের কোথায়
+
+- IAM ও least privilege-এর বিস্তারিত আলোচনা মাইক্রোসার্ভিসেস থিমের security লেসনে;
+- VPC-ভিত্তিক workload security নিয়ে microservices-এর networking লেসনেও কাজে লাগে।
+
+## Exam trap
+
+- **"root user দিয়ে দৈনন্দিন কাজ"** — কখনই নয়; root-এ MFA, বাকি সব IAM user/role-এ।
+- **"SCP অনুমতি দেয়"** — SCP শুধু **সীমা** টানে; অনুমতি দিতে IAM policy লাগে।
+- **"secret কোডে বা environment variable-এ রাখা"** — Secrets Manager বা সমতুল্য ব্যবস্থাই সঠিক উত্তর।
+- **"এনক্রিপশন মানেই শুধু at rest"** — প্রশ্ন in-transit (TLS/ACM) চাইলে at-rest অপশন ফাঁদ।
+- **"GuardDuty ডেটা এনক্রিপ্ট করে"** — GuardDuty threat detection করে; এনক্রিপশন KMS-এর কাজ; Macie S3-এ সংবেদনশীল ডেটা খোঁজে।
+
+<KeywordTable keywords={frontmatter.keywords} />
+
+<Attribution sourceUrl="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf" updated="2026-09-17" />
+
+<MarkComplete lessonId="examguide-3" />
