@@ -40,6 +40,14 @@ export const LESSONS: LessonMeta[] = [
   { id: 'bluegreen-7', theme: 'blue-green', slug: '7-beanstalk-opsworks', titleEn: 'Techniques 4 & 5 — Beanstalk Swap and OpsWorks Clone', titleBn: 'টেকনিক ৪ ও ৫ — Beanstalk swap আর OpsWorks clone', pages: [16, 21] },
   { id: 'bluegreen-8', theme: 'blue-green', slug: '8-data-sync-schema', titleEn: 'Data Sync, Schema Changes and Anti-Patterns', titleBn: 'ডেটা সিঙ্ক, schema change ও ব্যতিক্রম', pages: [22, 25] },
   { id: 'bluegreen-9', theme: 'blue-green', slug: '9-conclusion-appendix', titleEn: 'Conclusion and Risk Comparison', titleBn: 'উপসংহার ও risk তুলনা', pages: [26, 30] },
+  { id: 'examguide-1', theme: 'exam-guide', slug: '1-exam-overview', titleEn: 'SAA-C03 Exam Overview', titleBn: 'SAA-C03 পরীক্ষা এক নজরে', pages: [1, 2] },
+  { id: 'examguide-2', theme: 'exam-guide', slug: '2-domain-weighting', titleEn: 'The Four Domains and Their Weightings', titleBn: 'চারটি ডোমেইন ও ওয়েটিং', pages: [2, 3] },
+  { id: 'examguide-3', theme: 'exam-guide', slug: '3-domain1-secure-architecture', titleEn: 'Domain 1 — Secure Architectures', titleBn: 'ডোমেইন ১ — Secure Architectures', pages: [3, 6] },
+  { id: 'examguide-4', theme: 'exam-guide', slug: '4-domain2-resilient-architecture', titleEn: 'Domain 2 — Resilient Architectures', titleBn: 'ডোমেইন ২ — Resilient Architectures', pages: [5, 8] },
+  { id: 'examguide-5', theme: 'exam-guide', slug: '5-domain3-high-performing-architecture', titleEn: 'Domain 3 — High-Performing Architectures', titleBn: 'ডোমেইন ৩ — High-Performing Architectures', pages: [8, 10] },
+  { id: 'examguide-6', theme: 'exam-guide', slug: '6-domain4-cost-optimized-architecture', titleEn: 'Domain 4 — Cost-Optimized Architectures', titleBn: 'ডোমেইন ৪ — Cost-Optimized Architectures', pages: [10, 12] },
+  { id: 'examguide-7', theme: 'exam-guide', slug: '7-question-patterns', titleEn: 'Question Patterns and Distractor Logic', titleBn: 'প্রশ্নের ধরন ও distractor লজিক', pages: [1, 14] },
+  { id: 'examguide-8', theme: 'exam-guide', slug: '8-study-plan', titleEn: 'Study Plan and Exam Scope', titleBn: 'স্টাডি প্ল্যান ও পরীক্ষার scope', pages: [13, 21] },
 ];
 
 export function themeLessons(theme: ThemeId): LessonMeta[] {

@@ -1,4 +1,4 @@
-export type ThemeId = 'microservices' | 'blue-green';
+export type ThemeId = 'microservices' | 'blue-green' | 'exam-guide';
 
 export interface ThemeMeta {
   id: ThemeId;
@@ -43,6 +43,22 @@ export const THEMES: ThemeMeta[] = [
     // sky-500 (#0ea5e9) failed the light-theme floor at 2.77:1.
     accent: '#0891b2',
   },
+  {
+    id: 'exam-guide',
+    slug: 'exam-guide',
+    labelBn: 'SAA-C03 এক্সাম গাইড',
+    labelEn: 'SAA-C03 Exam Guide',
+    sourceBn: 'AWS Certification — SAA-C03 Exam Guide (v1.1)',
+    sourceEn: 'AWS Certified Solutions Architect – Associate (SAA-C03) Exam Guide',
+    sourceUrl: 'https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf',
+    pages: 21,
+    lessons: 8,
+    // Violet-600: distinct from microservices amber (#f97316) and blue-green
+    // cyan (#0891b2), and from Starlight's indigo default. Validated ≥3:1 on
+    // white (5.70:1) and dark (3.11:1); the accent renders as card border and
+    // progress fill, never as text.
+    accent: '#7c3aed',
+  },
 ];
 
 export const TOTAL_LESSONS = THEMES.reduce((sum, theme) => sum + theme.lessons, 0);
@@ -59,6 +75,5 @@ export interface PlannedTheme {
 }
 
 export const PLANNED_THEMES: PlannedTheme[] = [
-  { labelBn: 'এক্সাম গাইড', labelEn: 'SAA-C03 Exam Guide', noteBn: 'ডোমেইন ওয়েটিং, প্রশ্নের ধরন' },
   { labelBn: 'নতুন রিসোর্স', labelEn: 'More resources', noteBn: 'পরবর্তীতে যোগ হবে' },
 ];

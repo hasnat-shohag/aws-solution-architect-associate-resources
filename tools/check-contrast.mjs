@@ -55,6 +55,8 @@ const PAGES = [
 	{ path: 'learn/microservices/12-configuration-secrets', domain: 'microservices' },
 	{ path: 'learn/blue-green/1-introduction', domain: 'blue-green' },
 	{ path: 'learn/blue-green/3-services-overview', domain: 'blue-green' },
+	{ path: 'learn/exam-guide/1-exam-overview', domain: 'exam-guide' },
+	{ path: 'learn/exam-guide/2-domain-weighting', domain: 'exam-guide' },
 	{ path: 'about', domain: 'none' },
 	{ path: 'glossary', domain: 'none' },
 ];
@@ -94,7 +96,7 @@ const TARGETS = [
 const KNOWN_GAPS = new Map();
 
 /** Lessons seeded into localStorage so the completed-tick target has something to measure. */
-const SEEDED_LESSONS = ['microservices-1', 'microservices-9', 'microservices-16'];
+const SEEDED_LESSONS = ['microservices-1', 'microservices-9', 'microservices-16', 'bluegreen-1', 'examguide-1'];
 
 const MIME = {
 	'.html': 'text/html; charset=utf-8',

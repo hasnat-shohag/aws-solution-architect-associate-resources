@@ -1168,5 +1168,75 @@
     "bn": "মানুষের হাতে না গিয়ে script/IaC দিয়ে কাজ চালানো",
     "tip": "process দ্রুত করে, human error কমায়, cost নিয়ন্ত্রণে রাখে।",
     "theme": "blue-green"
+  },
+  {
+    "term": "Multiple Choice",
+    "bn": "একটি সঠিক উত্তর ও তিনটি ভুল উত্তর (distractor)-যুক্ত প্রশ্ন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Multiple Response",
+    "bn": "৫টি বা তার বেশি অপশনের মধ্যে ২টি বা তার বেশি সঠিক উত্তর বাছাইয়ের প্রশ্ন",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Distractor",
+    "bn": "বিশ্বাসযোগ্য দেখায় এমন ভুল উত্তর-অপশন, যেখানে অসম্পূর্ণ জ্ঞানের প্রার্থী ভুল করতে পারে",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Unscored Question",
+    "bn": "পরীক্ষার ১৫টি প্রশ্নের মধ্যে যেগুলো স্কোরে গণনা হয় না এবং চেনা যায় না",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Scaled Score",
+    "bn": "১০০-১,০০০ রেঞ্জে রিপোর্ট হওয়া পরীক্ষার স্কোর",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Minimum Passing Score",
+    "bn": "SAA-C03-এ পাসের সর্বনিম্ন scaled score — ৭২০",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Compensatory Scoring",
+    "bn": "প্রতি সেকশনে আলাদা পাস না রেখে সামগ্রিক স্কোরে পাস-ব্যর্থতা নির্ধারণের মডেল",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Section-Level Feedback",
+    "bn": "স্কোর রিপোর্টে প্রতিটি ডোমেইনের পারফরম্যান্সের সাধারণ শ্রেণিবিভাগ",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Well-Architected Framework",
+    "bn": "AWS-এর স্থাপত্য-ডিজাইন কাঠামো, যার ভিত্তিতে SAA-C03 সমাধান ডিজাইন যাচাই করে",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Target Candidate",
+    "bn": "পরীক্ষার জন্য প্রত্যাশিত প্রার্থী — অন্তত ১ বছরের AWS hands-on অভিজ্ঞতা",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Weighting",
+    "bn": "৫০টি scored প্রশ্নের মধ্যে প্রতিটি ডোমেইনের আনুপাতিক ভাগ",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Task Statement",
+    "bn": "প্রতিটি ডোমেইনের ভেতরের নম্বরযুক্ত দক্ষতা-বিবরণ, যেমন Task Statement 1.1",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Knowledge Of",
+    "bn": "task statement-এর 'কী জানতে হবে' তালিকা — সার্ভিস, বৈশিষ্ট্য ও ধারণা",
+    "theme": "exam-guide"
+  },
+  {
+    "term": "Skills In",
+    "bn": "task statement-এর 'কী করতে পারতে হবে' তালিকা — সিনারিওতে ডিজাইন নির্বাচন",
+    "theme": "exam-guide"
   }
 ]

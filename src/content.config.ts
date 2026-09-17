@@ -4,7 +4,7 @@ import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
 
 export const lessonFrontmatter = z.object({
   titleEn: z.string().optional(),
-  theme: z.enum(['microservices', 'blue-green']).optional(),
+  theme: z.enum(['microservices', 'blue-green', 'exam-guide']).optional(),
   task: z.literal('unknown').optional(),
   order: z.number().optional(),
   pages: z
